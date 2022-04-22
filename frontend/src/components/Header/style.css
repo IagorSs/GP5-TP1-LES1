@@ -1,0 +1,21 @@
+.main-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-between;
+    background-color: #fA3937;
+    height: 80px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight:400;
+    font-size: 40px;
+    color: #FFFFFF;
+    padding: 30px;
+}
+
+.name {
+    display: contents;
+}
+
+.header-menu-logo {
+    margin-right: 25px;
+}
