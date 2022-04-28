@@ -1,0 +1,15 @@
+.main-login {
+  align-items: center;
+  display: grid;
+  justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--gray);
+  padding: 30px;
+  text-align: center;
+  background-color: var(--white);
+  height: 590px;
+}
+
+.login {
+  font-size: 50px;
+}
