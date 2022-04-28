@@ -1,13 +1,20 @@
-import Header from './components/Header';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Cardapio from "./pages/Cardapio";
 
 function App() {
   return (
-    <div className='App'>
+    <BrowserRouter>
       <Header />
-      <h1>
-        Trabalho TP1-LES1 grupo 5
-      </h1>
-    </div>
+      <Routes>
+        <Route path="/" exact element={<Login />} />
+        <Route path="/cardapio" exact element={<Cardapio />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
