@@ -23,7 +23,7 @@
 
 body {
   margin: 0;
-  /* background-color: var(--gray); */
+  background-color: var(--secondary-color-hover);
 }
 
 code {
@@ -44,7 +44,7 @@ code {
 
 @keyframes slidein {
   from {
-    margin-top: 10%;
+    margin-top: 5%;
     width: 300%;
   }
 
