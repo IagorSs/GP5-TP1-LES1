@@ -1,0 +1,10 @@
+{
+  "name": "GP5-TP1-LES1",
+  "version": "1.0.0",
+  "repository": "git@github.com:IagorSs/GP5-TP1-LES1.git",
+  "license": "MIT",
+  "scripts": {
+    "start-frontend": "cd frontend && yarn start",
+    "start": "yarn start-frontend"
+  }
+}
