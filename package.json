@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start-frontend": "cd frontend && yarn start",
-    "start": "yarn start-frontend"
+    "start": "yarn start-frontend",
+    "install": "cd frontend && yarn"
   }
 }
