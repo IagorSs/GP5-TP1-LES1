@@ -9,6 +9,8 @@
   --secondary-color-hover: #039431;
 
   --white: #f5f5f5;
+
+  --gray: #5e5e5e;
 }
 
 * {
@@ -21,9 +23,33 @@
 
 body {
   margin: 0;
+  /* background-color: var(--gray); */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.link {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.link:hover {
+  animation-duration: 3s;
+  animation-name: slidein;
+  animation-iteration-count: infinite;
+}
+
+@keyframes slidein {
+  from {
+    margin-top: 10%;
+    width: 300%;
+  }
+
+  to {
+    margin-top: 0%;
+    width: 100%;
+  }
 }

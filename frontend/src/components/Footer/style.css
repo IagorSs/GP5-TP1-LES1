@@ -1,26 +1,27 @@
-.main-header {
+.main-footer {
   display: flex;
-  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
-  justify-content: space-between;
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color-hover);
   height: 80px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 400;
-  font-size: 40px;
+  font-size: 18px;
   color: var(--white);
   padding: 30px;
 }
 
-.menu {
+.authors {
+  text-align: -webkit-center;
+}
+
+.authors_links {
   display: flex;
   max-width: min-content;
   text-align: -webkit-center;
-  font-size: 20px;
   align-items: center;
 }
 
-.name {
-  display: contents;
-  align-items: center;
+.infos {
+  text-align: center;
 }
