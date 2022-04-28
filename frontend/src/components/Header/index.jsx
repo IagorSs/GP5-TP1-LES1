@@ -11,7 +11,7 @@ function Header() {
     <header>
       <section className="main-header">
         <Box className="name" sx={{ "& > :not(style)": { m: 3 } }}>
-          <a href="http://localhost:3000/" className="link">
+          <a href="http://localhost:3000/" className="logo">
             {<LocalPizzaIcon sx={{ fontSize: 80 }} />}
           </a>
           Pizzaria Pizzada
