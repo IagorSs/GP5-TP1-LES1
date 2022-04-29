@@ -12,22 +12,22 @@ function Header() {
       <section className="main-header">
         <Box className="name" sx={{ "& > :not(style)": { m: 3 } }}>
           <a href="http://localhost:3000/" className="logo">
-            {<LocalPizzaIcon sx={{ fontSize: 80 }} />}
+            {<LocalPizzaIcon sx={{ fontSize: 50 }} />}
           </a>
           Pizzaria Pizzada
         </Box>
 
         <Box className="menu" sx={{ "& > :not(style)": { m: 3 } }}>
-          <a className="link" href="http://localhost:3000/">
-            {<RestaurantMenuIcon sx={{ fontSize: 35 }} />}
+          <a className="link" href="http://localhost:3000/cardapio">
+            {<RestaurantMenuIcon />}
           </a>
 
           <a className="link" href="http://localhost:3000/carrinho">
-            {<ShoppingCartIcon sx={{ fontSize: 35 }} />}
+            {<ShoppingCartIcon />}
           </a>
 
           <a className="link" href="http://localhost:3000/user">
-            {<PersonIcon sx={{ fontSize: 35 }} />}
+            {<PersonIcon />}
           </a>
         </Box>
       </section>

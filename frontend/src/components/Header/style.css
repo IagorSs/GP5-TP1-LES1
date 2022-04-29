@@ -4,8 +4,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--primary-color);
-  height: 80px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 40px;
   font-weight: 400;
   font-size: 40px;
   color: var(--white);
@@ -15,8 +14,6 @@
 .menu {
   display: flex;
   max-width: min-content;
-  text-align: -webkit-center;
-  font-size: 20px;
   align-items: center;
 }
 
@@ -25,6 +22,25 @@
   align-items: center;
 }
 
-.logo {
-  color: var(--white);
+@media (orientation: landscape) {
+  .main-header {
+    font-size: 40px;
+  }
+
+  .logo {
+    color: var(--white);
+  }
+}
+
+@media (orientation: portrait) {
+  .main-header {
+    font-size: 30px;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .MuiIcon-root {
+  }
 }
