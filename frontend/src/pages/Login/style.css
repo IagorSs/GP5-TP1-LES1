@@ -2,14 +2,28 @@
   align-items: center;
   display: grid;
   justify-content: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--gray);
   padding: 30px;
   text-align: center;
   background-color: var(--white);
-  height: 590px;
 }
 
-.login {
-  font-size: 50px;
+@media (orientation: landscape) {
+  .main-login {
+    height: 590px;
+  }
+
+  .login {
+    font-size: 50px;
+  }
+}
+
+@media (orientation: portrait) {
+  .main-login {
+    height: 450px;
+  }
+
+  .login {
+    font-size: 40px;
+  }
 }
