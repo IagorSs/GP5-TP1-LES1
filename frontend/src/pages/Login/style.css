@@ -13,7 +13,7 @@
     height: 590px;
   }
 
-  .login {
+  .login-title {
     font-size: 50px;
   }
 }
@@ -23,7 +23,7 @@
     height: 450px;
   }
 
-  .login {
+  .login-title {
     font-size: 40px;
   }
 }

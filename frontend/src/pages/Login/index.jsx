@@ -36,7 +36,7 @@ export default function InputAdornments() {
 
   return (
     <Box sx={{ "& > :not(style)": { m: 1 } }} className="main-login">
-      <span className="login">Login</span>
+      <h1 className="login-title">Login</h1>
       <div className="dados">
         <Box>
           <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
