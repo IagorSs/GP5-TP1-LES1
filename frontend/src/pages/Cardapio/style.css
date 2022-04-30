@@ -1,0 +1,21 @@
+.cardapio-title {
+  text-align: center;
+  color: var(--white);
+}
+
+.list-pizzas {
+  text-align: center;
+}
+
+@media (orientation: landscape) {
+  .cardapio-title {
+    font-size: 50px;
+  }
+}
+
+@media (orientation: portrait) {
+  .cardapio-title {
+    font-size: 40px;
+    padding: 0;
+  }
+}
