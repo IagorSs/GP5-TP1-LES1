@@ -1,0 +1,38 @@
+.main-cart {
+  color: var(--gray);
+}
+
+.cart-title {
+  text-align: center;
+  color: var(--white);
+}
+
+.list-products-carrinho {
+  text-align: center;
+  padding: 40px;
+  display: block;
+}
+
+.delivery {
+  background-color: var(--white);
+  text-align: center;
+  padding: 10px;
+  padding-bottom: 30px;
+}
+
+.buttom-realizar-pedido {
+  padding: 20px;
+}
+
+@media (orientation: landscape) {
+  .cart-title {
+    font-size: 50px;
+  }
+}
+
+@media (orientation: portrait) {
+  .cart-title {
+    font-size: 40px;
+    padding: 0;
+  }
+}

@@ -47,6 +47,7 @@ code {
 }
 
 button.MuiButton-root.MuiButton-contained {
+  margin: 20px;
   background-color: var(--secondary-color-hover);
   justify-self: center;
   inline-size: min-content;
