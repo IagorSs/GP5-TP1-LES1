@@ -11,6 +11,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
+import BadgeIcon from "@mui/icons-material/Badge";
+import Link from "@mui/material/Link";
 import "./style.css";
 
 export default function InputAdornments() {
@@ -67,11 +69,18 @@ export default function InputAdornments() {
       <Button
         variant="contained"
         endIcon={<SendIcon />}
-        className="button"
-        color="success"
+        onClick={() => {
+          alert("clicou entrar");
+        }}
       >
         Entrar
       </Button>
+
+      <Link href="/cadastrar/usuario">
+        <Button variant="outlined" startIcon={<BadgeIcon />}>
+          Cadastrar
+        </Button>
+      </Link>
     </Box>
   );
 }
