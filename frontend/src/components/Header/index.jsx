@@ -4,6 +4,7 @@ import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import Box from "@mui/material/Box";
+
 import "./style.css";
 
 function Header() {
@@ -11,7 +12,7 @@ function Header() {
     <header>
       <section className="main-header">
         <Box className="name" sx={{ "& > :not(style)": { m: 3 } }}>
-          <a href="http://localhost:3000/" className="logo">
+          <a href="/" className="logo">
             {<LocalPizzaIcon sx={{ fontSize: 50 }} />}
           </a>
           Pizzaria Pizzada
