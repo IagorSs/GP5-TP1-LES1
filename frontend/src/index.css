@@ -22,6 +22,10 @@
   text-decoration: none;
 }
 
+a.MuiTypography-root {
+  text-decoration: none;
+}
+
 body {
   margin: 0;
   background-color: var(--secondary-color-hover);

@@ -48,6 +48,7 @@ export default function CadastroUsuario() {
           />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
+              inputFormat="dd/MM/yyyy"
               label="Data de Nascimento"
               value={value}
               onChange={(newValue) => {
@@ -65,7 +66,7 @@ export default function CadastroUsuario() {
       </Box>
       <Button
         className="button-register"
-        variant="text"
+        variant="contained"
         endIcon={<BadgeIcon />}
       >
         Cadastrar
