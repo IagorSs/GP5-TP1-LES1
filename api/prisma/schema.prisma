@@ -73,13 +73,14 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Name     String
-  CPF      String
-  birthday DateTime
-  Password String
-  Zipcode  String
-  Address  String
-  Orders   Order[]
+  Name       String
+  CPF        String      @unique
+  Birthday   DateTime
+  Password   String
+  Zipcode    String
+  Address    String
+  Orders     Order[]
+  Permission Permissions @default(client)
 }
 
 enum pizza_size {
