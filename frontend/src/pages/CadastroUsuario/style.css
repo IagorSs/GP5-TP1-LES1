@@ -1,0 +1,34 @@
+.userRegister-main {
+  background-color: var(--white);
+  display: grid;
+  color: var(--gray);
+  height: 800px;
+  align-items: center;
+  justify-content: center;
+}
+
+.userRegister-title {
+  text-align: center;
+  color: var(--gray);
+}
+
+.user-infos {
+  background-color: var(--white);
+  text-align: center;
+}
+
+.user-address {
+  text-align: center;
+}
+
+@media (orientation: portrait) {
+  .userRegister-main {
+    font-size: 15px;
+    height: 1100px;
+  }
+
+  .button-register {
+    justify-self: center;
+    inline-size: min-content;
+  }
+}

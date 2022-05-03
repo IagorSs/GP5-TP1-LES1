@@ -19,7 +19,7 @@ function Header() {
         </Box>
 
         <Box className="menu" sx={{ "& > :not(style)": { m: 3 } }}>
-          <a className="link" href="http://localhost:3000/cardapio">
+          <a className="link" href="/cardapio">
             {
               <RestaurantMenuIcon
                 onClick={() => {
@@ -29,7 +29,7 @@ function Header() {
             }
           </a>
 
-          <a className="link" href="http://localhost:3000/carrinho">
+          <a className="link" href="/carrinho">
             {
               <ShoppingCartIcon
                 onClick={() => {
@@ -39,7 +39,7 @@ function Header() {
             }
           </a>
 
-          <a className="link" href="http://localhost:3000/user">
+          <a className="link" href="/user">
             {
               <PersonIcon
                 onClick={() => {

@@ -19,6 +19,7 @@
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-decoration: none;
 }
 
 body {
@@ -33,13 +34,26 @@ code {
 
 .link {
   color: var(--white);
-  text-decoration: none;
 }
 
 .link:hover {
   animation-duration: 3s;
   animation-name: slidein;
   animation-iteration-count: infinite;
+}
+
+button.MuiButton-root.MuiButton-contained {
+  background-color: var(--secondary-color-hover);
+  justify-self: center;
+  inline-size: min-content;
+}
+
+button.MuiButton-root.MuiButton-outlined {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  justify-self: center;
+  inline-size: min-content;
+  text-decoration: none;
 }
 
 @keyframes slidein {
