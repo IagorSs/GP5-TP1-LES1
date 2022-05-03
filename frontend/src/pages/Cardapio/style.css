@@ -3,8 +3,10 @@
   color: var(--white);
 }
 
-.list-pizzas {
+.list-products-cardapio {
   text-align: center;
+  padding: 40px;
+  display: block;
 }
 
 @media (orientation: landscape) {
