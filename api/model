@@ -1,0 +1,45 @@
+Back-> Node (L + T)
+	- Mongoose
+	- Express
+
+--specs
+	- Dois tipo de usuário com permissões em rotas
+
+--rotas
+	- get todas as pizzas
+	- get todas as bebidas
+	- get promoções
+	- post criar pedido
+		esse post vai receber
+			- vetor de pizzas
+				- tamanho da pizza (P,M,G,GG)
+				- sabores (vetor de até dois ids)
+			- vetor de ids de refrigerantes
+			- vetor de ids de combos
+
+	- get todos os pedidos do usuário
+
+	- post da pizzaria para atualizar status de pedido
+		(preparando, análise, entregue, etc.)
+
+	- post criação de usuário cliente
+		- passar só o CEP, número, complemento
+
+	- get pizzaria - todos os pedidos do dia de todos os usuários
+---
+Front-> React (I + E)
+	- MaterialUI
+
+--------Usuário
+	- Tela de login
+	- Listagem de pizzas
+		- Adição ao carrinho
+	- Tela do carrinho
+		- Confirmar pedido
+		- Fazer pagamento
+	- Histórico de pedidos
+
+--------Pizzaria
+	- Tela de login
+	- Histórico de pedidos
+		- Poder mudar status de cada pedido
