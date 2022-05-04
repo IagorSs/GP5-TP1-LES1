@@ -14,6 +14,7 @@ export default function Cardapio() {
       data = {
         link: "https://claudia.abril.com.br/wp-content/uploads/2020/07/pizza-pepperoni.jpg",
         page: "Cardápio",
+        type: "Pizza",
       };
       productInfo.push(data);
     }

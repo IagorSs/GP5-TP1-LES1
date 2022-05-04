@@ -7,9 +7,19 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import "./style.css";
 
 function Produto(cardInfo) {
+  const [size, setSize] = React.useState("");
+
+  const handleChangeSize = (event) => {
+    setSize(event.target.value);
+  };
+
   return (
     <div className="main-card">
       <Card>
@@ -21,6 +31,36 @@ function Produto(cardInfo) {
         />
         <CardContent className="description_product">
           <Typography> Descrição do produto </Typography>
+          <FormControl sx={{ m: 1, minWidth: 150 }}>
+            <InputLabel id="size-select">Tamanho</InputLabel>
+            {cardInfo.product.type === "Pizza" ? (
+              <Select
+                id="size-select"
+                value={size}
+                onChange={handleChangeSize}
+                autoWidth
+                label="Tamanho"
+              >
+                <MenuItem value={"P"}>P - 4 Fatias</MenuItem>
+                <MenuItem value={"M"}>M - 6 Fatias</MenuItem>
+                <MenuItem value={"G"}>G - 8 Fatias</MenuItem>
+                <MenuItem value={"GG"}>GG - 10 Fatias</MenuItem>
+              </Select>
+            ) : (
+              <Select
+                id="size-select"
+                value={size}
+                onChange={handleChangeSize}
+                autoWidth
+                label="Tamanho"
+              >
+                <MenuItem value={"1L"}>1L</MenuItem>
+                <MenuItem value={"2L"}>2L</MenuItem>
+                <MenuItem value={"3L"}>3L</MenuItem>
+              </Select>
+            )}
+          </FormControl>
+
           <h3> R$ XX,XX </h3>
         </CardContent>
         <CardActions>
