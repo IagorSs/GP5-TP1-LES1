@@ -1,11 +1,49 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+
 import SearchIcon from "@mui/icons-material/Search";
+
+import IconButton from "@mui/material/IconButton";
+
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+
+import FormControl from "@mui/material/FormControl";
+
 import "./style.css";
 
+import zipcode from "../../services/zipcode";
+
 export default function Endereco() {
+  const [address, setAddress] = useState();
+  const [street, setStreet] = useState();
+  const [cityState, setCityState] = useState();
+  const [cep, setCEP] = useState();
+
+  async function handleChangeCEP(e) {
+    setCEP(e.target.value);
+  }
+
+  async function handleGetAddress() {
+    setAddress(await zipcode(cep));
+  }
+  console.log(address);
+
+  async function handleSetAddressComplet() {
+    if (address && address.status === 200) {
+      setStreet(address.data.logradouro);
+      setCityState(address.data.localidade + " / " + address.data.uf);
+      console.log(street);
+      console.log(cityState);
+    }
+  }
+
+  useEffect(() => {
+    handleSetAddressComplet();
+  });
+
   return (
     <div className="main-address">
       <Box
@@ -18,32 +56,34 @@ export default function Endereco() {
       >
         <div className="main-address">
           <div className="cepSearch">
-            <TextField
-              required
-              id="cep-required"
-              label="CEP"
-              variant="standard"
-            />
-            <Button
-              variant="outlined"
-              endIcon={<SearchIcon />}
-              onClick={() => {
-                alert("Clicou no pesquisa cep");
-              }}
-            >
-              {" "}
-              Localizar{" "}
-            </Button>
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-cep">CEP</InputLabel>
+              <OutlinedInput
+                id="cep-required"
+                onChange={async (e) => handleChangeCEP(e)}
+                variant="standard"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleGetAddress} edge="end">
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="CEP"
+              />
+            </FormControl>
           </div>
 
           <TextField
-            id="address-read-only-input"
-            label="Endereço"
+            id="address-street"
+            label={street ? "" : "Rua"}
+            value={street}
             InputProps={{
               readOnly: true,
             }}
-            variant="standard"
+            variant="outlined"
           />
+
           <TextField
             id="address-number"
             label="Número"
@@ -54,38 +94,18 @@ export default function Endereco() {
             variant="standard"
           />
           <TextField
-            id="neighborhood-number"
-            label="Bairro"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-          />
-        </div>
-        <div>
-          <TextField
-            id="city-number"
-            label="Cidade"
-            InputProps={{
-              readOnly: true,
-            }}
+            id="address-complement"
+            label="Complemento"
             variant="standard"
           />
           <TextField
-            id="state-number"
-            label="Estado"
+            id="address-complete"
+            label={cityState ? "" : "Cidade, Estado"}
+            value={cityState}
             InputProps={{
               readOnly: true,
             }}
-            variant="standard"
-          />
-          <TextField
-            id="country-number"
-            label="País"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
+            variant="outlined"
           />
         </div>
       </Box>
