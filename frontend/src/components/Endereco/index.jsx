@@ -32,6 +32,7 @@ export default function Endereco() {
   }
 
   useEffect(() => {
+    handleGetAddress();
     handleSetAddressComplet();
   });
 
