@@ -22,33 +22,15 @@ function Header() {
 
         <Box className="menu" sx={{ "& > :not(style)": { m: 3 } }}>
           <a className="link" href="/cardapio">
-            {
-              <RestaurantMenuIcon
-                onClick={() => {
-                  alert("clicou cardapio");
-                }}
-              />
-            }
+            {<RestaurantMenuIcon />}
           </a>
 
           <a className="link" href="/carrinho">
-            {
-              <ShoppingCartIcon
-                onClick={() => {
-                  alert("clicou carrinho");
-                }}
-              />
-            }
+            {<ShoppingCartIcon />}
           </a>
 
           <a className="link" href="/user">
-            {
-              <PersonIcon
-                onClick={() => {
-                  alert("clicou usuario");
-                }}
-              />
-            }
+            {<PersonIcon />}
           </a>
         </Box>
       </section>
