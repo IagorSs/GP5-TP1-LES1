@@ -1,20 +1,21 @@
 import React from "react";
-import CardPizza from "../../components/CardPizza";
+import Produto from "../../components/Produto";
 import "./style.css";
 
 export default function Cardapio() {
-  let quantPizzaCards = 9;
-  let pizzasInfo = [];
+  let quantProductCards = 10;
+  let productInfo = [];
 
   async function handleGetPizzaDetail() {
     let data;
 
-    for (var i = 0; i < quantPizzaCards; i++) {
+    for (var i = 0; i < quantProductCards; i++) {
       // data = await getMovieDetail(moviesListOfGenre.at(initial).id);
       data = {
         link: "https://claudia.abril.com.br/wp-content/uploads/2020/07/pizza-pepperoni.jpg",
+        page: "Cardápio",
       };
-      pizzasInfo.push(data);
+      productInfo.push(data);
     }
   }
 
@@ -24,10 +25,10 @@ export default function Cardapio() {
     <section className="main-cardapio">
       <h1 className="cardapio-title">Cardápio</h1>
 
-      {pizzasInfo.length > 0 && (
-        <div className="list-pizzas">
-          {pizzasInfo.map((pizzaInfo) => (
-            <CardPizza pizza={pizzaInfo} />
+      {productInfo.length > 0 && (
+        <div className="list-products-cardapio">
+          {productInfo.map((product) => (
+            <Produto product={product} />
           ))}
         </div>
       )}
