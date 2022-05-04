@@ -67,6 +67,9 @@ export default function CadastroUsuario() {
       <Button
         className="button-register"
         variant="contained"
+        onClick={() => {
+          alert("apertou no botao cadastrar usuario");
+        }}
         endIcon={<BadgeIcon />}
       >
         Cadastrar
