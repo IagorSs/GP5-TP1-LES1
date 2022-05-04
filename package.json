@@ -4,8 +4,12 @@
   "repository": "git@github.com:IagorSs/GP5-TP1-LES1.git",
   "license": "MIT",
   "scripts": {
+    "install-frontend": "cd frontend && yarn",
+    "install-backend": "cd api && yarn",
+    "install": "yarn install-backend && yarn install-frontend",
     "start-frontend": "cd frontend && yarn start",
-    "start": "yarn start-frontend",
-    "install": "cd frontend && yarn"
+    "start-backend": "cd api && yarn dev",
+    "start-prisma-studio": "cd api && yarn prisma-studio",
+    "start": "concurrently \"yarn start-frontend\" \"yarn start-backend\" \"yarn start-prisma-studio\""
   }
 }
