@@ -4,6 +4,7 @@ import Produto from "../../components/Produto";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import InputAdornment from "@mui/material/InputAdornment";
 import "./style.css";
 
 export default function Carrinho() {
@@ -44,9 +45,12 @@ export default function Carrinho() {
         <div>
           <TextField
             id="value-read-only-input"
-            label="R$"
+            label="Valor do pedido (R$)"
             InputProps={{
               readOnly: true,
+              startAdornment: (
+                <InputAdornment position="start">R$</InputAdornment>
+              ),
             }}
             variant="standard"
           />

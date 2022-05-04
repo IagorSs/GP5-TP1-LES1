@@ -15,7 +15,9 @@ function Header() {
           <a href="/" className="logo">
             {<LocalPizzaIcon sx={{ fontSize: 50 }} />}
           </a>
-          Pizzaria Pizzada
+          <a href="/" className="company-title">
+            Pizzaria Pizzada
+          </a>
         </Box>
 
         <Box className="menu" sx={{ "& > :not(style)": { m: 3 } }}>
