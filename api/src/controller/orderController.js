@@ -1,6 +1,6 @@
 import Controller from "./database/controller.js";
 
-const Ortder = new Controller("Order");
+const Order = new Controller("Order");
 
 class OrderController {
   arrayParams(idString) {
@@ -10,7 +10,7 @@ class OrderController {
     const idArray = idString.split(",");
 
     idArray.map((id) => {
-      params.push({ id: id });
+      params.push(id);
     });
 
     return params;
@@ -21,22 +21,44 @@ class OrderController {
     const User = "6271c867ec5a14eb69406997";
     const params = {
       data: {
-        Pizzas: {
-          connect: this.arrayParams(Pizzas),
+        Pizzas: this.arrayParams(Pizzas),
+        Drinks: this.arrayParams(Drinks),
+        Combos: this.arrayParams(Combos),
+        User: {
+          connect: { id: User },
         },
-        Drinks: {
-          connect: this.arrayParams(Drinks),
-        },
-        Combos: {
-          connect: this.arrayParams(Combos),
-        },
-        User,
         Total: 15.3,
         Date: new Date(),
       },
     };
 
-    response.send({ ...params });
+    const order = await Order.Create(params);
+
+    if (order.error)
+      return response.send({
+        Errro: true,
+        message: "Server error. Can't create a new Order",
+      });
+
+    response.send({ ...order.data });
+  }
+
+  async GetOrder(request, response) {
+    const params = {
+      include: {
+        Drinks: true,
+      },
+    };
+
+    const order = await Order.GetMany(params);
+
+    if (order.error)
+      return response.send({
+        Errro: true,
+        message: "Server error. Can't load Orders",
+      });
+
+    response.send({ ...order.data });
   }
 }
 

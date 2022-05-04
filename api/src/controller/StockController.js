@@ -60,9 +60,7 @@ class StockController {
 
     const params = {
       data: {
-        Flavor: {
-          connect: [{ id: flavor0 }, flavor1 ? { id: flavor1 } : undefined],
-        },
+        Flavor: [flavor0, flavor1 ? flavor1 : undefined],
         Name,
         Size,
         Price: parseFloat(Price),
@@ -110,13 +108,7 @@ class StockController {
   }
 
   async GetPizzas(request, response) {
-    const params = {
-      include: {
-        Flavor: true,
-      },
-    };
-
-    const pizzas = await Pizza.GetMany(params);
+    const pizzas = await Pizza.GetMany();
     if (pizzas.error)
       return response
         .send({

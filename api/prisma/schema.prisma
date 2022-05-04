@@ -18,12 +18,11 @@ model Combo {
   Description String
   Start       DateTime
   End         DateTime
-  Pizzas      Pizza[]
-  Drinks      Drink[]
+  //Pizzas      Pizza[]  @relation(fields: [PizzasIds], references: [id])
+  //Drinks      Drink[]  @relation(fields: [DrinksIds], references: [id])
   Price       Float
 
-  Order   Order?  @relation(fields: [orderId], references: [id])
-  orderId String? @db.ObjectId
+
 }
 
 model Order {
@@ -35,12 +34,13 @@ model Order {
   Status    Status   @default(Recebido)
   Date      DateTime
 
-  Pizzas Pizza[]
-  Drinks Drink[]
-  Combos Combo[]
-  Total  Float
 
-  userId String @db.ObjectId
+
+
+  Total Float
+
+
+  userId String
 }
 
 model Drink {
@@ -52,29 +52,17 @@ model Drink {
   Size        String
   Price       Float
   Quantity    Int
-
-  // Apenas para controle do banco
-  Combo   Combo?  @relation(fields: [comboId], references: [id])
-  comboId String? @db.ObjectId
-  Order   Order?  @relation(fields: [orderId], references: [id])
-  orderId String? @db.ObjectId
 }
 
 model Pizza {
 
-  id        String        @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   Name      String
-  Size      pizza_size    @default(Media)
-  Flavor    PizzaFlavor[]
+  Size      pizza_size @default(Media)
+  Flavor    String[]   @db.ObjectId 
   Price     Float
-
-  // Apenas para controle do banco
-  Combo   Combo?  @relation(fields: [comboId], references: [id])
-  comboId String? @db.ObjectId
-  Order   Order?  @relation(fields: [orderId], references: [id])
-  orderId String? @db.ObjectId
 }
 
 model PizzaFlavor {
@@ -84,9 +72,6 @@ model PizzaFlavor {
   Name        String
   Description String
 
-  // Apenas para controle do banco
-  Pizza   Pizza?  @relation(fields: [pizzaId], references: [id])
-  pizzaId String? @db.ObjectId
 }
 
 model User {

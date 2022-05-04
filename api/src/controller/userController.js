@@ -48,6 +48,9 @@ class UserController extends Controller {
       });
     response.send({ message: "Usuário criado" });
   }
+
+
+ 
 }
 
 export default UserController;
