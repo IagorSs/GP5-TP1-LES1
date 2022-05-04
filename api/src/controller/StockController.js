@@ -94,6 +94,20 @@ class StockController {
 
     return response.send({ ...flavors.data }).status(200);
   }
+
+  async GetDrinks(request, response) {
+    const drinks = await Drink.GetMany();
+
+    if (drinks.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't load Flavors",
+        })
+        .status(500);
+
+    return response.send({ ...drinks.data }).status(200);
+  }
 }
 
 export default StockController;
