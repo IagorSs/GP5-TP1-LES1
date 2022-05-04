@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
 import SearchIcon from "@mui/icons-material/Search";
-
 import IconButton from "@mui/material/IconButton";
-
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import FormControl from "@mui/material/FormControl";
-
-import "./style.css";
-
 import zipcode from "../../services/zipcode";
+import "./style.css";
 
 export default function Endereco() {
   const [address, setAddress] = useState();
@@ -29,14 +23,11 @@ export default function Endereco() {
   async function handleGetAddress() {
     setAddress(await zipcode(cep));
   }
-  console.log(address);
 
   async function handleSetAddressComplet() {
     if (address && address.status === 200) {
       setStreet(address.data.logradouro);
       setCityState(address.data.localidade + " / " + address.data.uf);
-      console.log(street);
-      console.log(cityState);
     }
   }
 
