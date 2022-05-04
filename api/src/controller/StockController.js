@@ -21,7 +21,7 @@ class StockController {
       return response
         .send({
           Errro: true,
-          message: "Server error to create a new Flavor",
+          message: "Server error. Can't create a new Flavor",
         })
         .status(500);
 
@@ -46,14 +46,87 @@ class StockController {
       return response
         .send({
           Errro: true,
-          message: "Server error to create a new Drink",
+          message: "Server error. Can't create a new Drink",
         })
         .status(500);
 
     return response.send({ message: "Drink created!" }).status(200);
   }
 
+  async CreatePizza(request, response) {
+    const { Flavors, Name, Size, Price } = request.body;
 
+    const [flavor0, flavor1] = Flavors.split(",");
+
+    const params = {
+      data: {
+        Flavor: {
+          connect: [{ id: flavor0 }, flavor1 ? { id: flavor1 } : undefined],
+        },
+        Name,
+        Size,
+        Price: parseFloat(Price),
+      },
+    };
+
+    const pizza = await Pizza.Create(params);
+    if (pizza.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't create a new Pizza",
+        })
+        .status(500);
+
+    return response.send({ message: "Pizza created!" }).status(200);
+  }
+
+  async GetFlavors(request, response) {
+    const flavors = await PizzaFlavor.GetMany();
+
+    if (flavors.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't load Flavors",
+        })
+        .status(500);
+
+    return response.send({ ...flavors.data }).status(200);
+  }
+
+  async GetDrinks(request, response) {
+    const drinks = await Drink.GetMany();
+
+    if (drinks.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't load Drinks",
+        })
+        .status(500);
+
+    return response.send({ ...drinks.data }).status(200);
+  }
+
+  async GetPizzas(request, response) {
+    const params = {
+      include: {
+        Flavor: true,
+      },
+    };
+
+    const pizzas = await Pizza.GetMany(params);
+    if (pizzas.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't load Pizzas",
+        })
+        .status(500);
+
+    return response.send({ ...pizzas.data }).status(200);
+  }
 }
 
 export default StockController;
