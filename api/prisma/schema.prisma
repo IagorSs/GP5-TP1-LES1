@@ -18,9 +18,12 @@ model Combo {
   Description String
   Start       DateTime
   End         DateTime
-  Pizzas      String[] @db.ObjectId
-  Drinks      String[] @db.ObjectId
+  Pizzas      Pizza[]
+  Drinks      Drink[]
   Price       Float
+
+  Order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @db.ObjectId
 }
 
 model Order {
@@ -28,16 +31,19 @@ model Order {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @db.ObjectId
-  Pizzas    String[] @db.ObjectId
-  Drinks    String[] @db.ObjectId
-  Combo     String[] @db.ObjectId
-  Total     Float
+  User      User     @relation(fields: [userId], references: [id])
+  Status    Status   @default(Recebido)
+  Date      DateTime
 
+  Pizzas Pizza[]
+  Drinks Drink[]
+  Combo  Combo[]
+  Total  Float
+
+  userId String @db.ObjectId
 }
 
-model Drinks {
+model Drink {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -45,19 +51,29 @@ model Drinks {
   Description String
   Size        String
   Price       Float
+  Quantity    Int
 
+  // Apenas para controle do banco
+  Combo   Combo?  @relation(fields: [comboId], references: [id])
+  comboId String? @db.ObjectId
+  Order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @db.ObjectId
 }
 
 model Pizza {
 
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
   Name      String
-  Tamanho   pizza_size @default(Medium)
-  Flavor    String[]   @db.ObjectId
-  Price     Float
+  Tamanho   pizza_size    @default(Media)
+  Flavor    PizzaFlavor[]
 
+  // Apenas para controle do banco
+  Combo   Combo?  @relation(fields: [comboId], references: [id])
+  comboId String? @db.ObjectId
+  Order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @db.ObjectId
 }
 
 model PizzaFlavor {
@@ -66,6 +82,10 @@ model PizzaFlavor {
   updatedAt   DateTime @updatedAt
   Name        String
   Description String
+
+  // Apenas para controle do banco
+  Pizza   Pizza?  @relation(fields: [pizzaId], references: [id])
+  pizzaId String? @db.ObjectId
 }
 
 model User {
@@ -79,17 +99,26 @@ model User {
   Password   String
   Zipcode    String
   Address    String
-  Orders     Order[]
   Permission Permissions @default(client)
+  // Histórico de pedidos
+  Orders     Order[]
+
 }
 
 enum pizza_size {
-  Small
-  Medium
-  Large
+  Pequena
+  Media
+  Grande
 }
 
 enum Permissions {
   client
   administrator
+}
+
+enum Status {
+  Recebido
+  Preparando
+  Enviado
+
 }
