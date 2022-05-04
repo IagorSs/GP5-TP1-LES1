@@ -66,8 +66,9 @@ model Pizza {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   Name      String
-  Tamanho   pizza_size    @default(Media)
+  Size      pizza_size    @default(Media)
   Flavor    PizzaFlavor[]
+  Price     Float
 
   // Apenas para controle do banco
   Combo   Combo?  @relation(fields: [comboId], references: [id])

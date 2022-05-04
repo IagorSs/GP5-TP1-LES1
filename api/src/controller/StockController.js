@@ -53,7 +53,31 @@ class StockController {
     return response.send({ message: "Drink created!" }).status(200);
   }
 
+  async CreatePizza(request, response) {
+    const { Flavors, Name, Size, Price } = request.body;
 
+    const params = {
+      data: {
+        Flavor: {
+          connect: [{ id: Flavors }],
+        },
+        Name,
+        Size,
+        Price: parseFloat(Price),
+      },
+    };
+
+    const pizza = await Pizza.Create(params);
+    if (pizza.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error to create a new Pizza",
+        })
+        .status(500);
+
+    return response.send({ message: "Pizza created!" }).status(200);
+  }
 }
 
 export default StockController;
