@@ -56,18 +56,15 @@ function Footer() {
             >
               <Avatar
                 style={{ margin: "10px" }}
-                src="https://github.com/IagorSs.png"
+                src="https://github.com/vitor-laguardia.png"
               />
               Vitor Laguardia
             </a>
 
-            <a
-              className="link"
-              href="https://www.linkedin.com/in/vitor-laguardia-xavier-25200819b/"
-            >
+            <a className="link" href="https://www.linkedin.com/in/t4rcisio/">
               <Avatar
                 style={{ margin: "10px" }}
-                src="https://github.com/IagorSs.png"
+                src="https://github.com/t4rcisio.png"
               />
               Tarcisio Amaral
             </a>
