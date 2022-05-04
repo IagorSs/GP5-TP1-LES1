@@ -102,11 +102,30 @@ class StockController {
       return response
         .send({
           Errro: true,
-          message: "Server error. Can't load Flavors",
+          message: "Server error. Can't load Drinks",
         })
         .status(500);
 
     return response.send({ ...drinks.data }).status(200);
+  }
+
+  async GetPizzas(request, response) {
+    const params = {
+      include: {
+        Flavor: true,
+      },
+    };
+
+    const pizzas = await Pizza.GetMany(params);
+    if (pizzas.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't load Pizzas",
+        })
+        .status(500);
+
+    return response.send({ ...pizzas.data }).status(200);
   }
 }
 
