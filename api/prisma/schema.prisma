@@ -37,7 +37,7 @@ model Order {
 
   Pizzas Pizza[]
   Drinks Drink[]
-  Combo  Combo[]
+  Combos Combo[]
   Total  Float
 
   userId String @db.ObjectId

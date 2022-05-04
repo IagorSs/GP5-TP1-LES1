@@ -50,25 +50,4 @@ class UserController extends Controller {
   }
 }
 
-
-
-
-
-
-
 export default UserController;
-
-/*model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  Name     String
-  CPF      String
-  birthday DateTime
-  Password String
-  Zipcode  String
-  Address  String
-  Orders   Order[]
-}
-*/
