@@ -107,6 +107,18 @@ class StockController {
     return response.send({ ...drinks.data }).status(200);
   }
 
+  async LoadFlavors(pizza) {
+    const params = {
+      where: {
+        id: { in: pizza.Flavor },
+      },
+    };
+
+    const flavors = await PizzaFlavor.GetMany(params);
+
+    return { ...flavors.data };
+  }
+
   async GetPizzas(request, response) {
     const pizzas = await Pizza.GetMany();
     if (pizzas.error)
@@ -117,7 +129,13 @@ class StockController {
         })
         .status(500);
 
-    return response.send({ ...pizzas.data }).status(200);
+    const list = Object.values(pizzas.data);
+
+    for (let index = 0; index < list.length; index++) {
+      list[index].Flavor = await this.LoadFlavors(list[index]);
+    }
+
+    return response.send({ ...list }).status(200);
   }
 }
 
