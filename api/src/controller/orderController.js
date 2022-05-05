@@ -43,14 +43,9 @@ class OrderController {
     response.send({ ...order.data });
   }
 
-  async GetOrder(request, response) {
-    const params = {
-      include: {
-        Drinks: true,
-      },
-    };
+  async GetAllOrders(request, response) {
 
-    const order = await Order.GetMany(params);
+    const order = await Order.GetMany();
 
     if (order.error)
       return response.send({

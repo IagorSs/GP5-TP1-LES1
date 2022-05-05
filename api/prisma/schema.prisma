@@ -10,20 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Combo {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  Name        String
-  Description String
-  Start       DateTime
-  End         DateTime
-  //Pizzas      Pizza[]  @relation(fields: [PizzasIds], references: [id])
-  //Drinks      Drink[]  @relation(fields: [DrinksIds], references: [id])
-  Price       Float
 
-
-}
 
 model Order {
 
@@ -34,24 +21,34 @@ model Order {
   Status    Status   @default(Recebido)
   Date      DateTime
 
-
-
-
   Total Float
 
 
   userId String
 }
 
-model Drink {
+
+model Combo {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Name        String
   Description String
+  Pizzas      String[] @db.ObjectId
+  Drinks      String[] @db.ObjectId
+  Price       Float
+
+}
+
+model Drink {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Url         String?
+  Name        String
+  Description String
   Size        String
   Price       Float
-  Quantity    Int
 }
 
 model Pizza {
@@ -59,9 +56,10 @@ model Pizza {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  Url       String?
   Name      String
   Size      pizza_size @default(Media)
-  Flavor    String[]   @db.ObjectId 
+  Flavor    String[]   @db.ObjectId
   Price     Float
 }
 
@@ -78,7 +76,6 @@ model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   Name       String
   CPF        String      @unique
   Birthday   DateTime

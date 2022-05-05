@@ -5,6 +5,5 @@ const route = Router();
 const client = new OrderController();
 
 route.post("/new", client.CreateOrder.bind(client));
-route.post("/all", client.GetOrder.bind(client));
 
 export default route;

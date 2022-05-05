@@ -5,6 +5,19 @@ const PizzaFlavor = new Controller("PizzaFlavor");
 const Drink = new Controller("Drink");
 
 class StockController {
+  // Busca no banco de sabores de pizza para retornar no objeto
+  async LoadFlavors(pizza) {
+    const params = {
+      where: {
+        id: { in: pizza.Flavor },
+      },
+    };
+
+    const flavors = await PizzaFlavor.GetMany(params);
+
+    return { ...flavors.data };
+  }
+
   async CreatePizzaFlavor(request, response) {
     const { Name, Description } = request.body;
 
@@ -57,10 +70,12 @@ class StockController {
     const { Flavors, Name, Size, Price } = request.body;
 
     const [flavor0, flavor1] = Flavors.split(",");
+    const list = [flavor0];
+    if (flavor1) list.push(flavor1);
 
     const params = {
       data: {
-        Flavor: [flavor0, flavor1 ? flavor1 : undefined],
+        Flavor: list,
         Name,
         Size,
         Price: parseFloat(Price),
@@ -79,8 +94,39 @@ class StockController {
     return response.send({ message: "Pizza created!" }).status(200);
   }
 
+  async CreateCombo (request, response){
+
+
+    const params = {
+      
+    }
+
+    /*
+  Name        String
+  Description String
+  Pizzas      String[] @db.ObjectId
+  Drinks      String[] @db.ObjectId
+  Price       Float
+    */
+
+
+  }
+
+
+
+
   async GetFlavors(request, response) {
-    const flavors = await PizzaFlavor.GetMany();
+    const { flavorId } = request.body;
+
+    let params = {};
+    if (flavorId) {
+      params = {
+        where: {
+          id: flavorId,
+        },
+      };
+    }
+    const flavors = await PizzaFlavor.GetMany(params);
 
     if (flavors.error)
       return response
@@ -94,7 +140,17 @@ class StockController {
   }
 
   async GetDrinks(request, response) {
-    const drinks = await Drink.GetMany();
+    const { drinkId } = request.body;
+
+    let params = {};
+    if (drinkId) {
+      params = {
+        where: {
+          id: drinkId,
+        },
+      };
+    }
+    const drinks = await Drink.GetMany(params);
 
     if (drinks.error)
       return response
@@ -107,20 +163,19 @@ class StockController {
     return response.send({ ...drinks.data }).status(200);
   }
 
-  async LoadFlavors(pizza) {
-    const params = {
-      where: {
-        id: { in: pizza.Flavor },
-      },
-    };
-
-    const flavors = await PizzaFlavor.GetMany(params);
-
-    return { ...flavors.data };
-  }
-
   async GetPizzas(request, response) {
-    const pizzas = await Pizza.GetMany();
+    const { pizzaId } = request.body;
+
+    let params = {};
+    if (pizzaId) {
+      params = {
+        where: {
+          id: pizzaId,
+        },
+      };
+    }
+
+    const pizzas = await Pizza.GetMany(params);
     if (pizzas.error)
       return response
         .send({
