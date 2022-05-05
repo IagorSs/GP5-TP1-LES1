@@ -1,38 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Produto from "../../components/Produto";
+import { getDrinks } from "../../services/drink";
+import * as PizzaService from "../../services/pizza";
 import "./style.css";
 
 export default function Cardapio() {
-  let quantProductCards = 10;
-  let productInfo = [];
+  const [drinksList, setDrinksList] = useState([]);
+  const [pizzaList, setPizzaList] = useState([]);
 
-  async function handleGetPizzaDetail() {
-    let data;
+  useEffect(() => {
+    const fetchDrinks = async () => {
+      const drinks = await getDrinks();
 
-    for (var i = 0; i < quantProductCards; i++) {
-      // data = await getMovieDetail(moviesListOfGenre.at(initial).id);
-      data = {
-        link: "https://claudia.abril.com.br/wp-content/uploads/2020/07/pizza-pepperoni.jpg",
-        page: "Cardápio",
-        type: "Pizza",
-      };
-      productInfo.push(data);
-    }
-  }
+      // drinks.data.link =
+      //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjzNQc_qrUdagrBW-B4xLe5rO_qysb9YSJ-itsDnqM6LiJ1vy0VfwDdj5&s=10";
 
-  handleGetPizzaDetail();
+      setDrinksList(drinks);
+    };
+
+    const fetchPizzas = async () => {
+      const pizzas = await PizzaService.getAll();
+
+      setPizzaList(pizzas);
+    };
+
+    fetchDrinks();
+    fetchPizzas();
+  }, []);
 
   return (
     <section className="main-cardapio">
       <h1 className="cardapio-title">Cardápio</h1>
 
-      {productInfo.length > 0 && (
-        <div className="list-products-cardapio">
-          {productInfo.map((product) => (
-            <Produto product={product} />
-          ))}
-        </div>
-      )}
+      <div className="list-products-cardapio">
+        {drinksList.map((drink) => (
+          <Produto key={drink.id} product={drink} />
+        ))}
+      </div>
+
+      <div className="list-products-cardapio">
+        {pizzaList.map((pizza) => (
+          <Produto key={pizza.id} product={pizza} />
+        ))}
+      </div>
     </section>
   );
 }

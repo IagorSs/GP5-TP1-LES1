@@ -1,5 +1,6 @@
 .description_product {
   text-align: justify;
+  color: var(--gray);
 }
 
 @media (orientation: landscape) {

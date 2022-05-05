@@ -1,42 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Endereco from "../../components/Endereco";
 import Produto from "../../components/Produto";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import InputAdornment from "@mui/material/InputAdornment";
+import { getDrinks } from "../../services/drink";
+import * as PizzaService from "../../services/pizza";
 import "./style.css";
 
 export default function Carrinho() {
-  let quantProductCards = 3;
-  let productInfo = [];
+  const [drinksList, setDrinksList] = useState([]);
+  const [pizzaList, setPizzaList] = useState([]);
 
-  async function handleGetProductDetail() {
-    let data;
+  useEffect(() => {
+    const fetchDrinks = async () => {
+      // TODO: mudar para o getCarrinho
+      const drinks = await getDrinks();
 
-    for (var i = 0; i < quantProductCards; i++) {
-      // data = await getMovieDetail(moviesListOfGenre.at(initial).id);
-      data = {
-        link: "https://claudia.abril.com.br/wp-content/uploads/2020/07/pizza-pepperoni.jpg",
-        page: "Carrinho",
-      };
-      productInfo.push(data);
-    }
-  }
+      // drinks.data.link =
+      //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjzNQc_qrUdagrBW-B4xLe5rO_qysb9YSJ-itsDnqM6LiJ1vy0VfwDdj5&s=10";
 
-  handleGetProductDetail();
+      setDrinksList(drinks);
+    };
+
+    const fetchPizzas = async () => {
+      const pizzas = await PizzaService.getAll();
+
+      setPizzaList(pizzas);
+    };
+
+    fetchDrinks();
+    fetchPizzas();
+  }, []);
 
   return (
     <section className="main-cart">
       <h1 className="cart-title">Carrinho</h1>
 
-      {productInfo.length > 0 && (
-        <div className="list-products-carrinho">
-          {productInfo.map((product) => (
-            <Produto product={product} />
-          ))}
-        </div>
-      )}
+      <div className="list-products-cardapio">
+        {drinksList.map((drink) => (
+          <Produto key={drink.id} product={drink} />
+        ))}
+      </div>
+
+      <div className="list-products-cardapio">
+        {pizzaList.map((pizza) => (
+          <Produto key={pizza.id} product={pizza} />
+        ))}
+      </div>
       <div className="delivery">
         <h3>Receber em:</h3>
         <div>

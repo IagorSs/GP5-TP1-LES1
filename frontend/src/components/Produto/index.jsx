@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -11,10 +11,26 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Pizza } from "../../models/products";
+import { convertToMoney } from "../../utils/string";
 import "./style.css";
 
-function Produto(cardInfo) {
-  const [size, setSize] = React.useState("");
+// TODO buscar isso do backend
+const SIZES_PIZZA = {
+  P: "4 Fatias",
+  M: "6 Fatias",
+  G: "8 Fatias",
+  GG: "10 Fatias",
+};
+
+const SIZES_DRINK = {
+  1: "1L",
+  2: "2L",
+  3: "3L",
+};
+
+function Produto({ product }) {
+  const [size, setSize] = useState("");
 
   const handleChangeSize = (event) => {
     setSize(event.target.value);
@@ -26,49 +42,42 @@ function Produto(cardInfo) {
         <CardMedia
           component="img"
           height="194"
-          image={cardInfo.product.link}
+          // TODO
+          // image={cardInfo.product.link}
           alt="Pizza"
         />
         <CardContent className="description_product">
-          <Typography> Descrição do produto </Typography>
+          <h2>{product.Name}</h2>
+          <Typography>{product.Description}</Typography>
           <FormControl sx={{ m: 1, minWidth: 150 }}>
             <InputLabel id="size-select">Tamanho</InputLabel>
-            {cardInfo.product.type === "Pizza" ? (
-              <Select
-                id="size-select"
-                value={size}
-                onChange={handleChangeSize}
-                autoWidth
-                label="Tamanho"
-              >
-                <MenuItem value={"P"}>P - 4 Fatias</MenuItem>
-                <MenuItem value={"M"}>M - 6 Fatias</MenuItem>
-                <MenuItem value={"G"}>G - 8 Fatias</MenuItem>
-                <MenuItem value={"GG"}>GG - 10 Fatias</MenuItem>
-              </Select>
-            ) : (
-              <Select
-                id="size-select"
-                value={size}
-                onChange={handleChangeSize}
-                autoWidth
-                label="Tamanho"
-              >
-                <MenuItem value={"1L"}>1L</MenuItem>
-                <MenuItem value={"2L"}>2L</MenuItem>
-                <MenuItem value={"3L"}>3L</MenuItem>
-              </Select>
-            )}
+
+            <Select
+              id="size-select"
+              value={size}
+              onChange={handleChangeSize}
+              autoWidth
+              label="Tamanho"
+            >
+              {Object.entries(
+                product instanceof Pizza ? SIZES_PIZZA : SIZES_DRINK
+              ).map(([value, description]) => (
+                <MenuItem key={value} value={value}>
+                  {description}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
 
-          <h3> R$ XX,XX </h3>
+          <h3>{convertToMoney(product.Price)}</h3>
         </CardContent>
         <CardActions>
-          {cardInfo.product.page === "Cardápio" ? (
+          {window.location.pathname === "/cardapio" ? (
             <IconButton
               className="cart_icon"
               onClick={() => {
-                alert("clicou carrinho");
+                alert(window.location.pathname);
+                // console.log(window.location.href);
               }}
               style={{ color: "#fa3937" }}
             >
