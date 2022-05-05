@@ -1,5 +1,8 @@
 import Product from "./Product";
 
 export default class Drink extends Product {
-  price;
+  constructor(obj) {
+    super();
+    this.serialize(obj);
+  }
 }

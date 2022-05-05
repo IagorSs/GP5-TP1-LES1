@@ -1,7 +1,14 @@
 import Base from "../Base";
 
 export default class Product extends Base {
-  name;
+  Name;
 
-  description;
+  Description;
+
+  Price;
+
+  Size;
+
+  // TODO
+  // ImageURL;
 }
