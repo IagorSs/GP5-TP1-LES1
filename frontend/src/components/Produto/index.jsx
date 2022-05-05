@@ -29,8 +29,23 @@ const SIZES_DRINK = {
   3: "3L",
 };
 
+let productInsertCart = [];
+
 function Produto({ product }) {
   const [size, setSize] = useState("");
+
+  const handleSetProduct = async () => {
+    productInsertCart.push(product);
+    localStorage.setItem("cart", JSON.stringify(productInsertCart));
+  };
+
+  const handleRemoveProduct = async () => {
+    let productsStorage = JSON.parse(localStorage.getItem("cart"));
+    let index = productsStorage.findIndex((item) => item.id == product.id);
+    productsStorage.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(productsStorage));
+    window.location.reload();
+  };
 
   const handleChangeSize = (event) => {
     setSize(event.target.value);
@@ -43,7 +58,7 @@ function Produto({ product }) {
           component="img"
           height="194"
           // TODO
-          // image={cardInfo.product.link}
+          image={product.Url}
           alt="Pizza"
         />
         <CardContent className="description_product">
@@ -76,8 +91,7 @@ function Produto({ product }) {
             <IconButton
               className="cart_icon"
               onClick={() => {
-                alert(window.location.pathname);
-                // console.log(window.location.href);
+                handleSetProduct();
               }}
               style={{ color: "#fa3937" }}
             >
@@ -87,7 +101,7 @@ function Produto({ product }) {
             <IconButton
               className="delete_icon"
               onClick={() => {
-                alert("clicou deletar");
+                handleRemoveProduct();
               }}
               style={{ color: "#fa3937" }}
             >

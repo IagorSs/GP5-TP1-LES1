@@ -5,50 +5,32 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import InputAdornment from "@mui/material/InputAdornment";
-import { getDrinks } from "../../services/drink";
-import * as PizzaService from "../../services/pizza";
+
 import "./style.css";
 
 export default function Carrinho() {
-  const [drinksList, setDrinksList] = useState([]);
-  const [pizzaList, setPizzaList] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchDrinks = async () => {
-      // TODO: mudar para o getCarrinho
-      const drinks = await getDrinks();
+    const fetchProducts = async () => {
+      let productsStorage = JSON.parse(localStorage.getItem("cart"));
 
-      // drinks.data.link =
-      //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjzNQc_qrUdagrBW-B4xLe5rO_qysb9YSJ-itsDnqM6LiJ1vy0VfwDdj5&s=10";
-
-      setDrinksList(drinks);
+      setProducts(productsStorage);
     };
 
-    const fetchPizzas = async () => {
-      const pizzas = await PizzaService.getAll();
-
-      setPizzaList(pizzas);
-    };
-
-    fetchDrinks();
-    fetchPizzas();
+    fetchProducts();
   }, []);
 
   return (
     <section className="main-cart">
       <h1 className="cart-title">Carrinho</h1>
 
-      <div className="list-products-cardapio">
-        {drinksList.map((drink) => (
-          <Produto key={drink.id} product={drink} />
+      <div className="list-products-carrinho">
+        {products.map((product) => (
+          <Produto key={product.id} product={product} />
         ))}
       </div>
 
-      <div className="list-products-cardapio">
-        {pizzaList.map((pizza) => (
-          <Produto key={pizza.id} product={pizza} />
-        ))}
-      </div>
       <div className="delivery">
         <h3>Receber em:</h3>
         <div>
