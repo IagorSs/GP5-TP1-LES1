@@ -41,7 +41,7 @@ function Produto({ product }) {
 
   const handleRemoveProduct = async () => {
     let productsStorage = JSON.parse(localStorage.getItem("cart"));
-    let index = productsStorage.findIndex((item) => item.id == product.id);
+    let index = productsStorage.findIndex((item) => item.id === product.id);
     productsStorage.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(productsStorage));
     window.location.reload();
