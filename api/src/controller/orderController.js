@@ -43,9 +43,20 @@ class OrderController {
     response.send({ ...order.data });
   }
 
-  async GetAllOrders(request, response) {
+  async GetOrders(request, response) {
+    const { orderId } = request.body;
 
-    const order = await Order.GetMany();
+    let params = {};
+    
+    if(orderId) {
+      params = {
+        where: {
+          id: orderId,
+        },
+      };
+    }
+
+    const order = await Order.GetMany(params);
 
     if (order.error)
       return response.send({
