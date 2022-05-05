@@ -3,6 +3,7 @@ import Controller from "./database/controller.js";
 const Pizza = new Controller("Pizza");
 const PizzaFlavor = new Controller("PizzaFlavor");
 const Drink = new Controller("Drink");
+const Combo = new Controller("Combo");
 
 class StockController {
   // Busca no banco de sabores de pizza para retornar no objeto
@@ -96,7 +97,15 @@ class StockController {
   }
 
   async CreateCombo(request, response) {
-    const params = {};
+    const { Name, Description, Pizzas, Drinks, Price } = request.body;
+
+    const params = {
+      Name,
+      Description,
+      Pizzas: Pizza.split(","),
+      Drinks: Drinks.split(","),
+      Price,
+    };
 
     /*
   Name        String
