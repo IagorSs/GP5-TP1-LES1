@@ -3,6 +3,7 @@ import Controller from "./database/controller.js";
 const Pizza = new Controller("Pizza");
 const PizzaFlavor = new Controller("PizzaFlavor");
 const Drink = new Controller("Drink");
+const Combo = new Controller("Combo");
 
 class StockController {
   // Busca no banco de sabores de pizza para retornar no objeto
@@ -42,15 +43,15 @@ class StockController {
   }
 
   async CreateDrink(request, response) {
-    const { Name, Description, Size, Price, Quantity } = request.body;
+    const { Name, Description, Size, Price, Quantity, Url } = request.body;
 
     const params = {
       data: {
         Name,
         Description,
         Size,
+        Url,
         Price: parseFloat(Price),
-        Quantity: parseInt(Quantity),
       },
     };
     const drink = await Drink.Create(params);
@@ -67,7 +68,7 @@ class StockController {
   }
 
   async CreatePizza(request, response) {
-    const { Flavors, Name, Size, Price } = request.body;
+    const { Flavors, Name, Size, Price, Url } = request.body;
 
     const [flavor0, flavor1] = Flavors.split(",");
     const list = [flavor0];
@@ -77,6 +78,7 @@ class StockController {
       data: {
         Flavor: list,
         Name,
+        Url,
         Size,
         Price: parseFloat(Price),
       },
@@ -94,12 +96,16 @@ class StockController {
     return response.send({ message: "Pizza created!" }).status(200);
   }
 
-  async CreateCombo (request, response){
-
+  async CreateCombo(request, response) {
+    const { Name, Description, Pizzas, Drinks, Price } = request.body;
 
     const params = {
-      
-    }
+      Name,
+      Description,
+      Pizzas: Pizza.split(","),
+      Drinks: Drinks.split(","),
+      Price,
+    };
 
     /*
   Name        String
@@ -108,12 +114,7 @@ class StockController {
   Drinks      String[] @db.ObjectId
   Price       Float
     */
-
-
   }
-
-
-
 
   async GetFlavors(request, response) {
     const { flavorId } = request.body;
@@ -189,8 +190,8 @@ class StockController {
     for (let index = 0; index < list.length; index++) {
       list[index].Flavor = await this.LoadFlavors(list[index]);
     }
-
-    return response.send({ ...list }).status(200);
+    const data = Object.values(list);
+    return response.send(data).status(200);
   }
 }
 

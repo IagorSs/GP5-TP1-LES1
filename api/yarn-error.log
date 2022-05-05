@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\tarci\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add cors
+  C:\Program Files\nodejs\node.exe C:\Users\tarci\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add bcrypt
 
 PATH: 
   C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python310\Scripts\;C:\Python310\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\dotnet\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Ruby30-x64\bin;C:\Users\tarci\AppData\Local\Microsoft\WindowsApps;C:\Users\tarci\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\tarci\AppData\Roaming\npm;C:\altera\13.0sp1\modelsim_ase\win32aloem
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Cloud\OneDrive - aluno.cefetmg.br\CEFET\MD_CEFET\Periodo_7\eng_software\GP5-TP1-LES1\api\node_modules\prisma\engines\efdf9b1183dddfd4258cd181a72125755215ab7b\query_engine-windows.dll.node'
+  Error: EPERM: operation not permitted, unlink 'C:\Cloud\OneDrive - aluno.cefetmg.br\CEFET\MD_CEFET\Periodo_7\eng_software\GP5-TP1-LES1\api\node_modules\@prisma\engines\query_engine-windows.dll.node'
 
 npm manifest: 
   {
@@ -32,7 +32,6 @@ npm manifest:
     "license": "ISC",
     "dependencies": {
       "@prisma/client": "^3.13.0",
-      "bcrypt": "^5.0.1",
       "cors": "^2.8.5",
       "dotenv": "^16.0.0",
       "express": "^4.18.1",

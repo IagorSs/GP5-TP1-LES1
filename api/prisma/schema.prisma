@@ -10,8 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Order {
 
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -26,7 +24,6 @@ model Order {
 
   userId String
 }
-
 
 model Combo {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -73,9 +70,9 @@ model PizzaFlavor {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
   Name       String
   CPF        String      @unique
   Birthday   DateTime

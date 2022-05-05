@@ -1,10 +1,7 @@
+import api from "../config/axios";
 import { Pizza } from "../models/products";
-import wait from "../tmp/wait";
 
-export const getAll = async () => {
-  // TODO
-
-  await wait(1500);
-
-  return [new Pizza()];
+export const getAllPizzas = async () => {
+  const { data } = await api.get(`stock/pizza`);
+  return data.map((pizza) => new Pizza(pizza));
 };
