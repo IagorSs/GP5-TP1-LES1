@@ -102,7 +102,7 @@ class StockController {
     const params = {
       Name,
       Description,
-      Pizzas: Pizza.split(","),
+      Pizzas: Pizzas.split(","),
       Drinks: Drinks.split(","),
       Price,
     };

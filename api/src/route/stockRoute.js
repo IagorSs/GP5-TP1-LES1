@@ -13,4 +13,7 @@ route.get("/pizza", client.GetPizzas.bind(client));
 route.post("/pizza/flavor/new", client.CreatePizzaFlavor.bind(client));
 route.get("/pizza/flavor", client.GetFlavors.bind(client));
 
+route.post("/pizza/flavor/new", client.CreatePizzaFlavor.bind(client));
+route.get("/pizza/flavor", client.GetFlavors.bind(client));
+
 export default route;
