@@ -42,15 +42,15 @@ class StockController {
   }
 
   async CreateDrink(request, response) {
-    const { Name, Description, Size, Price, Quantity } = request.body;
+    const { Name, Description, Size, Price, Quantity, Url } = request.body;
 
     const params = {
       data: {
         Name,
         Description,
         Size,
+        Url,
         Price: parseFloat(Price),
-        Quantity: parseInt(Quantity),
       },
     };
     const drink = await Drink.Create(params);
