@@ -100,20 +100,26 @@ class StockController {
     const { Name, Description, Pizzas, Drinks, Price } = request.body;
 
     const params = {
-      Name,
-      Description,
-      Pizzas: Pizzas.split(","),
-      Drinks: Drinks.split(","),
-      Price,
+      data: {
+        Name,
+        Description,
+        Pizzas: Pizzas.split(","),
+        Drinks: Drinks.split(","),
+        Price: parseFloat(Price),
+      },
     };
 
-    /*
-  Name        String
-  Description String
-  Pizzas      String[] @db.ObjectId
-  Drinks      String[] @db.ObjectId
-  Price       Float
-    */
+    const combo = await Combo.Create(params);
+
+    if (combo.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't create a new Combo",
+        })
+        .status(500);
+
+    return response.send({ message: "Combo created!" }).status(200);
   }
 
   async GetFlavors(request, response) {
