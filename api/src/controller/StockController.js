@@ -67,7 +67,7 @@ class StockController {
   }
 
   async CreatePizza(request, response) {
-    const { Flavors, Name, Size, Price } = request.body;
+    const { Flavors, Name, Size, Price, Url } = request.body;
 
     const [flavor0, flavor1] = Flavors.split(",");
     const list = [flavor0];
@@ -77,6 +77,7 @@ class StockController {
       data: {
         Flavor: list,
         Name,
+        Url,
         Size,
         Price: parseFloat(Price),
       },
@@ -94,12 +95,8 @@ class StockController {
     return response.send({ message: "Pizza created!" }).status(200);
   }
 
-  async CreateCombo (request, response){
-
-
-    const params = {
-      
-    }
+  async CreateCombo(request, response) {
+    const params = {};
 
     /*
   Name        String
@@ -108,12 +105,7 @@ class StockController {
   Drinks      String[] @db.ObjectId
   Price       Float
     */
-
-
   }
-
-
-
 
   async GetFlavors(request, response) {
     const { flavorId } = request.body;
