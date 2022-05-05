@@ -181,8 +181,8 @@ class StockController {
     for (let index = 0; index < list.length; index++) {
       list[index].Flavor = await this.LoadFlavors(list[index]);
     }
-
-    return response.send({ ...list }).status(200);
+    const data = Object.values(list);
+    return response.send(data).status(200);
   }
 }
 
