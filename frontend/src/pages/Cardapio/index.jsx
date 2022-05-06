@@ -27,13 +27,13 @@ export default function Cardapio() {
     <section className="main-cardapio">
       <h1 className="cardapio-title">Cardápio</h1>
 
-      <div className="list-products-cardapio">
+      <div>
         {drinksList.map((drink) => (
           <Produto key={drink.id} product={drink} />
         ))}
       </div>
 
-      <div className="list-products-cardapio">
+      <div>
         {pizzaList.map((pizza) => (
           <Produto key={pizza.id} product={pizza} />
         ))}
