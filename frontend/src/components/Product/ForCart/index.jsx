@@ -12,6 +12,13 @@ import "./style.css";
 let productInsertCart = [];
 
 function ProductForCart({ product }) {
+  const handleSetProductInsertCart = async () => {
+    let productsStorage = JSON.parse(localStorage.getItem("cart"));
+    productsStorage.forEach((item) => {
+      productInsertCart.push(item);
+    });
+  };
+
   const handleSetProduct = async () => {
     console.log(product);
     productInsertCart.push(product);
@@ -25,6 +32,8 @@ function ProductForCart({ product }) {
     localStorage.setItem("cart", JSON.stringify(productsStorage));
     window.location.reload();
   };
+
+  handleSetProductInsertCart();
 
   return (
     <div>
