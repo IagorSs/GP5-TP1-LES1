@@ -1,4 +1,5 @@
 import Controller from "./database/controller.js";
+import { BuildPizza, BuildDrinks } from "./StockUtils.js";
 
 const Pizza = new Controller("Pizza");
 const PizzaFlavor = new Controller("PizzaFlavor");
@@ -6,19 +7,6 @@ const Drink = new Controller("Drink");
 const Combo = new Controller("Combo");
 
 class StockController {
-  // Busca no banco de sabores de pizza para retornar no objeto
-  async LoadFlavors(pizza) {
-    const params = {
-      where: {
-        id: { in: pizza.Flavor },
-      },
-    };
-
-    const flavors = await PizzaFlavor.GetMany(params);
-
-    return { ...flavors.data };
-  }
-
   async CreatePizzaFlavor(request, response) {
     const { Name, Description } = request.body;
 
@@ -122,6 +110,57 @@ class StockController {
     return response.send({ message: "Combo created!" }).status(200);
   }
 
+  async GetCombo(request, response) {
+    const { comboId } = request.body;
+    let params = {};
+
+    // Caso um id seja passado
+    if (comboId) {
+      params = {
+        where: {
+          id: comboId,
+        },
+      };
+    }
+
+    const combo = await Combo.GetMany(params);
+    const list = Object.values({ ...combo.data });
+
+    if (combo.error || !list.length)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't load Combo",
+        })
+        .status(500);
+
+    // Carrega as pizzas no objeto
+    for (let index = 0; index < list.length; index++) {
+      // Params recebe o vetor de ids
+      const params = {
+        in: list[index].Pizzas,
+      };
+      request.body = {
+        pizzaId: params,
+      };
+      list[index].Pizzas = await BuildPizza(request, response);
+    }
+
+    // Carrega os drinks no objeto
+    for (let index = 0; index < list.length; index++) {
+      // Params recebe o vetor de ids
+      const params = {
+        in: list[index].Drinks,
+      };
+      request.body = {
+        pizzaId: params,
+      };
+      list[index].Drinks = await BuildDrinks(request, response);
+    }
+
+    return response.send(list).status(200);
+  }
+
   async GetFlavors(request, response) {
     const { flavorId } = request.body;
 
@@ -143,61 +182,17 @@ class StockController {
         })
         .status(500);
 
-    return response.send({ ...flavors.data }).status(200);
+    return response.send(Object.values({ ...flavors.data })).status(200);
   }
 
   async GetDrinks(request, response) {
-    const { drinkId } = request.body;
-
-    let params = {};
-    if (drinkId) {
-      params = {
-        where: {
-          id: drinkId,
-        },
-      };
-    }
-    const drinks = await Drink.GetMany(params);
-
-    if (drinks.error)
-      return response
-        .send({
-          Errro: true,
-          message: "Server error. Can't load Drinks",
-        })
-        .status(500);
-
-    return response.send({ ...drinks.data }).status(200);
+    const drinks = await BuildDrinks(request, response);
+    return response.send(Object.values({ ...drinks })).status(200);
   }
 
   async GetPizzas(request, response) {
-    const { pizzaId } = request.body;
-
-    let params = {};
-    if (pizzaId) {
-      params = {
-        where: {
-          id: pizzaId,
-        },
-      };
-    }
-
-    const pizzas = await Pizza.GetMany(params);
-    if (pizzas.error)
-      return response
-        .send({
-          Errro: true,
-          message: "Server error. Can't load Pizzas",
-        })
-        .status(500);
-
-    const list = Object.values(pizzas.data);
-
-    for (let index = 0; index < list.length; index++) {
-      list[index].Flavor = await this.LoadFlavors(list[index]);
-    }
-    const data = Object.values(list);
-    return response.send(data).status(200);
+    const list = await BuildPizza(request, response);
+    return response.send(Object.values(list)).status(200);
   }
 }
 

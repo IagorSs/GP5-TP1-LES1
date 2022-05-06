@@ -49,8 +49,15 @@ class UserController extends Controller {
     response.send({ message: "Usuário criado" });
   }
 
+  async Login (request, response){
 
- 
+    
+
+
+
+  }
+
+
 }
 
 export default UserController;
