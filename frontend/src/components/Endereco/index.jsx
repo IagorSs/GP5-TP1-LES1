@@ -27,7 +27,13 @@ export default function Endereco() {
   async function handleSetAddressComplet() {
     if (address && address.status === 200) {
       setStreet(address.data.logradouro);
-      setCityState(address.data.localidade + " / " + address.data.uf);
+      setCityState(
+        address.data.bairro +
+          " / " +
+          address.data.localidade +
+          " / " +
+          address.data.uf
+      );
     }
   }
 
@@ -92,7 +98,7 @@ export default function Endereco() {
           />
           <TextField
             id="address-complete"
-            label={cityState ? "" : "Cidade, Estado"}
+            label={cityState ? "" : "Bairro, Cidade, Estado"}
             value={cityState}
             InputProps={{
               readOnly: true,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Produto from "../../components/Produto";
-import { getDrinks } from "../../services/drink";
+import * as DrinkService from "../../services/drink";
 import * as PizzaService from "../../services/pizza";
 import "./style.css";
 
@@ -10,17 +10,12 @@ export default function Cardapio() {
 
   useEffect(() => {
     const fetchDrinks = async () => {
-      const drinks = await getDrinks();
-
-      // drinks.data.link =
-      //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjzNQc_qrUdagrBW-B4xLe5rO_qysb9YSJ-itsDnqM6LiJ1vy0VfwDdj5&s=10";
-
+      const drinks = await DrinkService.getAllDrinks();
       setDrinksList(drinks);
     };
 
     const fetchPizzas = async () => {
-      const pizzas = await PizzaService.getAll();
-
+      const pizzas = await PizzaService.getAllPizzas();
       setPizzaList(pizzas);
     };
 
