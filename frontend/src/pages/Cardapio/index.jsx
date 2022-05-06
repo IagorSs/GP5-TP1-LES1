@@ -29,14 +29,14 @@ export default function Cardapio() {
       <h1 className="cardapio-title">Cardápio</h1>
 
       <div>
-        {drinksList.map((drink) => (
-          <Drink key={drink.id} product={drink} />
+        {pizzaList.map((pizza) => (
+          <Pizza key={pizza.id} product={pizza} />
         ))}
       </div>
 
       <div>
-        {pizzaList.map((pizza) => (
-          <Pizza key={pizza.id} product={pizza} />
+        {drinksList.map((drink) => (
+          <Drink key={drink.id} product={drink} />
         ))}
       </div>
     </section>
