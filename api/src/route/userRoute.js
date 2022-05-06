@@ -5,5 +5,6 @@ const route = Router();
 const client = new UserController();
 
 route.post("/new", client.Create.bind(client));
+route.post("/login", client.Login.bind(client));
 
 export default route;
