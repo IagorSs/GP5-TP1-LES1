@@ -29,13 +29,23 @@ const SIZES_DRINK = {
   3: "3L",
 };
 
+const FLAVORS_PIZZA = {
+  ID1: "Mussarela",
+  ID2: "Calabresa",
+  ID3: "Peperoni",
+  ID4: "Portuguesa",
+};
+
 let productInsertCart = [];
 
 function Produto({ product }) {
   const [size, setSize] = useState("");
+  const [flavorOne, setFlavorOne] = useState("");
+  const [flavorTwo, setFlavorTwo] = useState("");
 
   const handleSetProduct = async () => {
     productInsertCart.push(product);
+    // console.log(productInsertCart);
     localStorage.setItem("cart", JSON.stringify(productInsertCart));
   };
 
@@ -51,19 +61,82 @@ function Produto({ product }) {
     setSize(event.target.value);
   };
 
+  async function handleSetFlavor(newValue, flavor) {
+    if (flavor === 0) {
+      setFlavorOne(newValue);
+    } else {
+      setFlavorTwo(newValue);
+    }
+  }
+
   return (
     <div className="main-card">
       <Card>
         <CardMedia
           component="img"
           height="194"
-          // TODO
           image={product.Url}
-          alt="Pizza"
+          // alt="Pizza"
         />
         <CardContent className="description_product">
           <h2>{product.Name}</h2>
           <Typography>{product.Description}</Typography>
+
+          {/* {Object.entries(LABELS).map(([value]) => (
+            <FormControl sx={{ m: 1, minWidth: 80 }}>
+              <InputLabel>1/2</InputLabel>
+              <Select
+                id={"pizza-select" + value}
+                value={value === 0 ? flavorOne : flavorTwo}
+                onChange={(newValue) =>
+                  handleSetFlavor(newValue.target.value, value)
+                }
+                autoWidth
+                label="1/2"
+              >
+                {Object.entries(FLAVORS_PIZZA).map(([key, description]) => (
+                  <MenuItem key={key} value={key}>
+                    {description}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          ))} */}
+
+          <FormControl sx={{ m: 1, minWidth: 80 }}>
+            <InputLabel>1/2</InputLabel>
+            <Select
+              id={"pizza-select" + 0}
+              value={flavorOne}
+              onChange={(newValue) => handleSetFlavor(newValue.target.value, 0)}
+              autoWidth
+              label="1/2"
+            >
+              {Object.entries(FLAVORS_PIZZA).map(([key, description]) => (
+                <MenuItem key={key} value={key}>
+                  {description}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ m: 1, minWidth: 80 }}>
+            <InputLabel>1/2</InputLabel>
+            <Select
+              id={"pizza-select" + 1}
+              value={flavorTwo}
+              onChange={(newValue) => handleSetFlavor(newValue.target.value, 1)}
+              autoWidth
+              label="1/2"
+            >
+              {Object.entries(FLAVORS_PIZZA).map(([key, description]) => (
+                <MenuItem key={key} value={key}>
+                  {description}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <FormControl sx={{ m: 1, minWidth: 150 }}>
             <InputLabel id="size-select">Tamanho</InputLabel>
 
@@ -75,6 +148,7 @@ function Produto({ product }) {
               label="Tamanho"
             >
               {Object.entries(
+                // FIXME: os produtos estao instaciados de maneira incorreta no carrinho
                 product instanceof Pizza ? SIZES_PIZZA : SIZES_DRINK
               ).map(([value, description]) => (
                 <MenuItem key={value} value={value}>
