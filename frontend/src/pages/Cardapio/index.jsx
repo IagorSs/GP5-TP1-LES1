@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Produto from "../../components/Produto";
+import Pizza from "../../components/Product/Pizza";
+import Drink from "../../components/Product/Drink";
 import * as DrinkService from "../../services/drink";
 import * as PizzaService from "../../services/pizza";
 import "./style.css";
@@ -29,13 +30,13 @@ export default function Cardapio() {
 
       <div>
         {drinksList.map((drink) => (
-          <Produto key={drink.id} product={drink} />
+          <Drink key={drink.id} product={drink} />
         ))}
       </div>
 
       <div>
         {pizzaList.map((pizza) => (
-          <Produto key={pizza.id} product={pizza} />
+          <Pizza key={pizza.id} product={pizza} />
         ))}
       </div>
     </section>

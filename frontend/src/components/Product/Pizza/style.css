@@ -1,10 +1,9 @@
-.description_product {
-  text-align: justify;
-  color: var(--gray);
+.flavors-pizza {
+  margin-top: 20px;
+  text-align: center;
 }
-
 @media (orientation: landscape) {
-  .main-card {
+  .pizza-card {
     padding: 50px;
     display: inline-block;
     min-width: 440px;
@@ -12,7 +11,7 @@
 }
 
 @media (orientation: portrait) {
-  .main-card {
+  .pizza-card {
     padding: 20px;
     display: block;
     align-items: center;
