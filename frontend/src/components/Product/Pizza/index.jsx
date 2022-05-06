@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import ProductDescription from "../Description";
 import ProductForCart from "../ForCart";
