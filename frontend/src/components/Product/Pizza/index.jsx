@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import ProductDescription from "../Description";
 import ProductForCart from "../ForCart";
@@ -6,18 +6,22 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import * as PizzaFlavorService from "../../../services/flavor";
 
 import "./style.css";
 
-// TODO buscar isso do backend
-const FLAVORS_PIZZA = {
-  ID1: "Mussarela",
-  ID2: "Calabresa",
-  ID3: "Peperoni",
-  ID4: "Portuguesa",
-};
-
 function Pizza({ product }) {
+  const [flavorsPizza, setFlavorsPizza] = useState([]);
+  useEffect(() => {
+    const fetchFlavors = async () => {
+      const flavors = await PizzaFlavorService.getAllFlavors();
+      console.log("flavors=" + JSON.stringify(flavors));
+      setFlavorsPizza(flavors);
+    };
+
+    fetchFlavors();
+  }, []);
+
   const [flavorOne, setFlavorOne] = useState("");
   const [flavorTwo, setFlavorTwo] = useState("");
 
@@ -64,10 +68,8 @@ function Pizza({ product }) {
               autoWidth
               label="1/2"
             >
-              {Object.entries(FLAVORS_PIZZA).map(([key, description]) => (
-                <MenuItem key={key} value={key}>
-                  {description}
-                </MenuItem>
+              {flavorsPizza.map((flavor) => (
+                <MenuItem value={flavor.Name}>{flavor.Name}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -81,10 +83,8 @@ function Pizza({ product }) {
               autoWidth
               label="1/2"
             >
-              {Object.entries(FLAVORS_PIZZA).map(([key, description]) => (
-                <MenuItem key={key} value={key}>
-                  {description}
-                </MenuItem>
+              {flavorsPizza.map((flavor) => (
+                <MenuItem value={flavor.Name}>{flavor.Name}</MenuItem>
               ))}
             </Select>
           </FormControl>
