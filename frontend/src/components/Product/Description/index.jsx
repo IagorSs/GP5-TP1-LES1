@@ -34,7 +34,6 @@ function ProductDescription({ product }) {
 
   useEffect(() => {
     product.Size = size;
-    console.log(product);
   });
 
   return (
