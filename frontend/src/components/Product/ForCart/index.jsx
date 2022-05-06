@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -13,6 +14,7 @@ let productInsertCart = [];
 
 function ProductForCart({ product }) {
   const handleSetProductInsertCart = async () => {
+    productInsertCart = [];
     let productsStorage = JSON.parse(localStorage.getItem("cart"));
     productsStorage.forEach((item) => {
       productInsertCart.push(item);
@@ -33,7 +35,9 @@ function ProductForCart({ product }) {
     window.location.reload();
   };
 
-  handleSetProductInsertCart();
+  useEffect(() => {
+    handleSetProductInsertCart();
+  });
 
   return (
     <div>
