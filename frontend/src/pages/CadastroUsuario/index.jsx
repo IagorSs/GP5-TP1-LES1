@@ -1,17 +1,24 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Button from "@mui/material/Button";
 import BadgeIcon from "@mui/icons-material/Badge";
-
 import Endereco from "../../components/Endereco";
+import User from "../../components/User";
+// import * as UserService from "../../services/user";
 import "./style.css";
 
 export default function CadastroUsuario() {
-  const [value, setValue] = React.useState(null);
+  async function handleInsertUser() {
+    let userInfos = JSON.parse(localStorage.getItem("user"));
+    let addressInfos = JSON.parse(localStorage.getItem("address"));
+
+    // console.log(userInfos);
+    // console.log(addressInfos);
+    // let index = productsStorage.findIndex((item) => item.id === product.id);
+    // productsStorage.splice(index, 1);
+    // localStorage.setItem("cart", JSON.stringify(productsStorage));
+    // window.location.reload();
+  }
 
   return (
     <section className="userRegister-main">
@@ -27,36 +34,7 @@ export default function CadastroUsuario() {
       >
         <div className="user-infos">
           <h3 className="user-infos-title">Dados cadastrais</h3>
-          <TextField
-            required
-            id="name-required"
-            label="Nome"
-            variant="standard"
-          />
-          <TextField
-            required
-            id="login-required"
-            label="Login"
-            variant="standard"
-          />
-          <TextField
-            id="password-input"
-            label="Senha"
-            type="password"
-            autoComplete="current-password"
-            variant="standard"
-          />
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DatePicker
-              inputFormat="dd/MM/yyyy"
-              label="Data de Nascimento"
-              value={value}
-              onChange={(newValue) => {
-                setValue(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
+          <User />
         </div>
 
         <div className="user-address">
@@ -68,7 +46,8 @@ export default function CadastroUsuario() {
         className="button-register"
         variant="contained"
         onClick={() => {
-          alert("apertou no botao cadastrar usuario");
+          // alert("apertou no botao cadastrar usuario");
+          handleInsertUser();
         }}
         endIcon={<BadgeIcon />}
       >
