@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Produto from "../../components/Produto";
+import Pizza from "../../components/Product/Pizza";
+import Drink from "../../components/Product/Drink";
 import * as DrinkService from "../../services/drink";
 import * as PizzaService from "../../services/pizza";
 import "./style.css";
@@ -27,15 +28,15 @@ export default function Cardapio() {
     <section className="main-cardapio">
       <h1 className="cardapio-title">Cardápio</h1>
 
-      <div className="list-products-cardapio">
-        {drinksList.map((drink) => (
-          <Produto key={drink.id} product={drink} />
+      <div>
+        {pizzaList.map((pizza) => (
+          <Pizza key={pizza.id} product={pizza} />
         ))}
       </div>
 
-      <div className="list-products-cardapio">
-        {pizzaList.map((pizza) => (
-          <Produto key={pizza.id} product={pizza} />
+      <div>
+        {drinksList.map((drink) => (
+          <Drink key={drink.id} product={drink} />
         ))}
       </div>
     </section>

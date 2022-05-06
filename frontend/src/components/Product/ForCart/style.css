@@ -1,0 +1,24 @@
+/* .description_product {
+  text-align: justify;
+  color: var(--gray);
+}
+
+.input-flavor-drink {
+  display: none;
+}
+
+@media (orientation: landscape) {
+  .main-card {
+    padding: 50px;
+    display: inline-block;
+    min-width: 440px;
+  }
+}
+
+@media (orientation: portrait) {
+  .main-card {
+    padding: 20px;
+    display: block;
+    align-items: center;
+  }
+} */

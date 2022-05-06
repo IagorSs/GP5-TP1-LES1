@@ -1,0 +1,9 @@
+.description_product {
+  text-align: justify;
+  color: var(--gray);
+}
+
+.MuiFormControl-root.input-size {
+  margin-top: 20px;
+  display: flex;
+}

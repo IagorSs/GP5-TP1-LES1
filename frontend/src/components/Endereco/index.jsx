@@ -12,9 +12,13 @@ import "./style.css";
 
 export default function Endereco() {
   const [address, setAddress] = useState();
-  const [street, setStreet] = useState();
-  const [cityState, setCityState] = useState();
   const [cep, setCEP] = useState();
+
+  const [street, setStreet] = useState();
+  const [number, setNumber] = useState();
+  const [complement, setComplement] = useState();
+  const [neightboardCityState, setNeightboardCityState] = useState();
+  let addressRegister = [];
 
   async function handleChangeCEP(e) {
     setCEP(e.target.value);
@@ -27,7 +31,7 @@ export default function Endereco() {
   async function handleSetAddressComplet() {
     if (address && address.status === 200) {
       setStreet(address.data.logradouro);
-      setCityState(
+      setNeightboardCityState(
         address.data.bairro +
           " / " +
           address.data.localidade +
@@ -37,9 +41,26 @@ export default function Endereco() {
     }
   }
 
+  async function handleSetAddress() {
+    let addressData = {
+      Zipcode: cep,
+      Address:
+        street +
+        ", " +
+        number +
+        " - " +
+        complement +
+        " - " +
+        neightboardCityState,
+    };
+    addressRegister.push(addressData);
+    localStorage.setItem("address", JSON.stringify(addressRegister));
+  }
+
   useEffect(() => {
     handleGetAddress();
     handleSetAddressComplet();
+    handleSetAddress();
   });
 
   return (
@@ -57,6 +78,7 @@ export default function Endereco() {
             <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-cep">CEP</InputLabel>
               <OutlinedInput
+                required
                 id="cep-required"
                 onChange={async (e) => handleChangeCEP(e)}
                 variant="standard"
@@ -86,20 +108,27 @@ export default function Endereco() {
             id="address-number"
             label="Número"
             type="number"
+            // value={number}
             InputLabelProps={{
               shrink: true,
             }}
             variant="standard"
+            onChange={(newValue) => {
+              setNumber(newValue.target.value);
+            }}
           />
           <TextField
             id="address-complement"
             label="Complemento"
             variant="standard"
+            onChange={(newValue) => {
+              setComplement(newValue.target.value);
+            }}
           />
           <TextField
             id="address-complete"
-            label={cityState ? "" : "Bairro, Cidade, Estado"}
-            value={cityState}
+            label={neightboardCityState ? "" : "Bairro, Cidade, Estado"}
+            value={neightboardCityState}
             InputProps={{
               readOnly: true,
             }}
