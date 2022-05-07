@@ -58,23 +58,29 @@ export default function Cardapio() {
 
       <div>
         <h2 className="pizzas-title">Pizzas</h2>
-        {pizzaList.map((pizza) => (
-          <Product key={pizza.id} product={pizza} />
-        ))}
+        {pizzaList.map(
+          (pizza) => (
+            (pizza.Type = "Pizza"), (<Product key={pizza.id} product={pizza} />)
+          )
+        )}
       </div>
 
       <div>
         <h2 className="drinks-title">Drinks</h2>
-        {drinksList.map((drink) => (
-          <Product key={drink.id} product={drink} />
-        ))}
+        {drinksList.map(
+          (drink) => (
+            (drink.Type = "Drink"), (<Product key={drink.id} product={drink} />)
+          )
+        )}
       </div>
 
       <div>
         <h2 className="combos-title">Combos</h2>
-        {comboList.map((combo) => (
-          <Product key={combo.id} product={combo} />
-        ))}
+        {comboList.map(
+          (combo) => (
+            (combo.Type = "Combo"), (<Product key={combo.id} product={combo} />)
+          )
+        )}
       </div>
     </section>
   );

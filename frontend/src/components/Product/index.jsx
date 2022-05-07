@@ -6,12 +6,10 @@ import ProductForCart from "./components/ForCart";
 import "./style.css";
 
 function Product({ product }) {
-  console.log("product");
-  console.log(product);
   return (
     <div className="product-card">
       <Card>
-        {product instanceof Pizza ? (
+        {/* {product instanceof Pizza ? (
           // (
           //   <Pizza key={product.id} product={product} />
           // ) : (
@@ -24,9 +22,14 @@ function Product({ product }) {
         ) : (
           // <Pizza key={product.id} product={product} />
           <Combo key={product.id} product={product} />
+        )} */}
+        {product.Type === "Pizza" ? (
+          <Pizza key={product.id} product={product} />
+        ) : product.Type === "Drink" ? (
+          <Drink key={product.id} product={product} />
+        ) : (
+          <Combo key={product.id} product={product} />
         )}
-
-        {/* <Combo key={product.id} product={product} /> */}
 
         <ProductForCart key={product.id} product={product} />
       </Card>

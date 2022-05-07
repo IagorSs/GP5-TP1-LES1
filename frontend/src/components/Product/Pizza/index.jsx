@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import ProductDescription from "../components/Description";
-import ProductForCart from "../components/ForCart";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -11,7 +10,6 @@ import * as PizzaFlavorService from "../../../services/flavor";
 import "./style.css";
 
 function Pizza({ product }) {
-  console.log(product);
   const [flavorsPizza, setFlavorsPizza] = useState([]);
   const [flavorOne, setFlavorOne] = useState(product.Flavor[0].Name);
   const [flavorTwo, setFlavorTwo] = useState(product.Flavor[1].Name);
@@ -64,7 +62,7 @@ function Pizza({ product }) {
             </FormControl>
           ))} */}
 
-          <FormControl sx={{ m: 1, minWidth: 800 }}>
+          <FormControl sx={{ m: 1, minWidth: 80 }}>
             <InputLabel>1/2</InputLabel>
             <Select
               id={"pizza-select" + 0}
@@ -94,7 +92,6 @@ function Pizza({ product }) {
             </Select>
           </FormControl>
         </div>
-        {/* <ProductForCart key={product.id} product={product} /> */}
       </Card>
     </div>
   );

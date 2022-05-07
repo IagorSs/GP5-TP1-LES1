@@ -12,6 +12,9 @@ import { Pizza, Drink } from "../../../../models/products";
 import "./style.css";
 
 // TODO buscar isso do backend
+const SIZE_COMBO = {
+  U: "Único",
+};
 const SIZES_PIZZA = {
   P: "4 Fatias",
   M: "6 Fatias",
@@ -54,13 +57,25 @@ function ProductDescription({ product }) {
               autoWidth
               label="Tamanho"
             >
-              {Object.entries(
+              {/* {Object.entries(
                 // FIXME: os produtos estao instaciados de maneira incorreta no carrinho
                 product instanceof Pizza
                   ? SIZES_PIZZA
                   : product instanceof Drink
                   ? SIZES_DRINK
                   : SIZES_DRINK
+              ).map(([value, description]) => (
+                <MenuItem key={value} value={value}>
+                  {description}
+                </MenuItem>
+              ))} */}
+
+              {Object.entries(
+                product.Type === "Pizza"
+                  ? SIZES_PIZZA
+                  : product.Type === "Drink"
+                  ? SIZES_DRINK
+                  : SIZE_COMBO
               ).map(([value, description]) => (
                 <MenuItem key={value} value={value}>
                   {description}

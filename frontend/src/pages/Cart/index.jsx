@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Endereco from "../../components/Endereco";
-import Pizza from "../../components/Product/Pizza";
-import Drink from "../../components/Product/Drink";
-import Combo from "../../components/Product/Combo";
+// import Pizza from "../../components/Product/Pizza";
+// import Drink from "../../components/Product/Drink";
+// import Combo from "../../components/Product/Combo";
+import Product from "../../components/Product";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
@@ -35,7 +36,7 @@ export default function Carrinho() {
     <section className="main-cart">
       <h1 className="cart-title">Carrinho</h1>
 
-      <div>
+      {/* <div>
         {products.map((product) =>
           // FIXME: os produtos estao instaciados de maneira incorreta no carrinho
           product instanceof Pizza ? (
@@ -46,6 +47,12 @@ export default function Carrinho() {
             <Combo key={product.id} product={product} />
           )
         )}
+      </div> */}
+
+      <div>
+        {products.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
       </div>
 
       <div className="delivery">
