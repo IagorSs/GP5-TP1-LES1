@@ -2,7 +2,6 @@ import Controller from "./database/controller.js";
 const Pizza = new Controller("Pizza");
 const PizzaFlavor = new Controller("PizzaFlavor");
 const Drink = new Controller("Drink");
-const Combo = new Controller("Combo");
 
 const LoadFlavors = async (pizza) => {
   const params = {
@@ -17,7 +16,7 @@ const LoadFlavors = async (pizza) => {
 };
 
 //
-const BuildPizza = async (request, response) => {
+const BuildPizza = async (request) => {
   const { pizzaId } = request.body;
 
   let params = {};
@@ -30,13 +29,7 @@ const BuildPizza = async (request, response) => {
   }
 
   const pizzas = await Pizza.GetMany(params);
-  if (pizzas.error)
-    return response
-      .send({
-        Errro: true,
-        message: "Server error. Can't load Pizzas",
-      })
-      .status(500);
+  if (pizzas.error) return { message: "Server error. Can't load Pizzas" };
 
   const list = Object.values(pizzas.data);
 
@@ -46,7 +39,7 @@ const BuildPizza = async (request, response) => {
   return list;
 };
 
-const BuildDrinks = async (request, response) => {
+const BuildDrinks = async (request) => {
   const { drinkId } = request.body;
 
   let params = {};
@@ -59,15 +52,40 @@ const BuildDrinks = async (request, response) => {
   }
   const drinks = await Drink.GetMany(params);
 
-  if (drinks.error)
-    return response
-      .send({
-        Errro: true,
-        message: "Server error. Can't load Drinks",
-      })
-      .status(500);
+  if (drinks.error) return { message: "Server error. Can't load Drinks" };
 
   return Object.values({ ...drinks.data });
 };
 
-export { BuildPizza, BuildDrinks };
+const BuildCombo = async (request) => {
+  const { list } = request.body;
+
+  if (!list || !list.length) return [];
+
+  for (let index = 0; index < list.length; index++) {
+    // Params recebe o vetor de ids
+    const params = {
+      in: list[index].Pizzas,
+    };
+    request.body = {
+      pizzaId: params,
+    };
+    list[index].Pizzas = await BuildPizza(request);
+  }
+
+  // Carrega os drinks no objeto
+  for (let index = 0; index < list.length; index++) {
+    // Params recebe o vetor de ids
+    const params = {
+      in: list[index].Drinks,
+    };
+    request.body = {
+      pizzaId: params,
+    };
+    list[index].Drinks = await BuildDrinks(request);
+  }
+
+  return list;
+};
+
+export { BuildPizza, BuildDrinks, BuildCombo };

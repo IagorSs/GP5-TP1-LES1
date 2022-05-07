@@ -18,8 +18,10 @@ model Order {
   User      User     @relation(fields: [userId], references: [id])
   Status    Status   @default(Recebido)
   Date      DateTime
-
-  Total Float
+  Pizzas    String[] @db.ObjectId
+  Drinks    String[] @db.ObjectId
+  Combos    String[] @db.ObjectId
+  Total     Float
 
 
   userId String
@@ -101,5 +103,6 @@ enum Status {
   Recebido
   Preparando
   Enviado
+  Concluido
 
 }
