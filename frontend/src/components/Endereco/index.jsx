@@ -26,17 +26,22 @@ export default function Endereco() {
 
   async function handleGetAddress() {
     setAddress(await zipcode(cep));
+    console.log(address);
   }
 
   async function handleSetAddressComplet() {
-    if (address && address.status === 200) {
-      setStreet(address.data.logradouro);
+    if (address.data.info) {
+      setStreet("");
+      setNeightboardCityState("");
+    } else if (address && address.status === 200) {
+      // console.log(address);
+      setStreet(address.data.address);
       setNeightboardCityState(
-        address.data.bairro +
+        address.data.district +
           " / " +
-          address.data.localidade +
+          address.data.city +
           " / " +
-          address.data.uf
+          address.data.state
       );
     }
   }

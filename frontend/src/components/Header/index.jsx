@@ -21,11 +21,11 @@ function Header() {
         </Box>
 
         <Box className="menu" sx={{ "& > :not(style)": { m: 3 } }}>
-          <a className="link" href="/cardapio">
+          <a className="link" href="/menu">
             {<RestaurantMenuIcon />}
           </a>
 
-          <a className="link" href="/carrinho">
+          <a className="link" href="/cart">
             {<ShoppingCartIcon />}
           </a>
 

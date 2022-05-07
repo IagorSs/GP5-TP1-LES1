@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -6,13 +7,14 @@ import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { convertToMoney } from "../../../utils/string";
+import { convertToMoney } from "../../../../utils/string";
 import "./style.css";
 
 let productInsertCart = [];
 
 function ProductForCart({ product }) {
   const handleSetProductInsertCart = async () => {
+    productInsertCart = [];
     let productsStorage = JSON.parse(localStorage.getItem("cart"));
     productsStorage.forEach((item) => {
       productInsertCart.push(item);
@@ -20,7 +22,6 @@ function ProductForCart({ product }) {
   };
 
   const handleSetProduct = async () => {
-    console.log(product);
     productInsertCart.push(product);
     localStorage.setItem("cart", JSON.stringify(productInsertCart));
   };
@@ -33,7 +34,9 @@ function ProductForCart({ product }) {
     window.location.reload();
   };
 
-  handleSetProductInsertCart();
+  useEffect(() => {
+    handleSetProductInsertCart();
+  });
 
   return (
     <div>
@@ -42,7 +45,7 @@ function ProductForCart({ product }) {
           <h3>{convertToMoney(product.Price)}</h3>
         </CardContent>
         <CardActions>
-          {window.location.pathname === "/cardapio" ? (
+          {window.location.pathname === "/menu" ? (
             <IconButton
               className="cart_icon"
               onClick={() => {

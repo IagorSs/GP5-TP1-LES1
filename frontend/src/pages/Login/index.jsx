@@ -76,7 +76,7 @@ export default function InputAdornments() {
         Entrar
       </Button>
 
-      <Link href="/cadastrar/usuario">
+      <Link href="/user/register">
         <Button variant="outlined" startIcon={<BadgeIcon />}>
           Cadastrar
         </Button>
