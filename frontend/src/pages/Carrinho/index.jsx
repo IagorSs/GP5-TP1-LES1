@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import Endereco from "../../components/Endereco";
 import Pizza from "../../components/Product/Pizza";
 import Drink from "../../components/Product/Drink";
-
-// import Produto from "../../components/Produto";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
@@ -17,7 +15,7 @@ export default function Carrinho() {
 
   async function handleSetValue() {
     let value = 0;
-    products.map((product) => {
+    products.forEach((product) => {
       value += product.Price;
     });
     setOrderValue(value);
@@ -25,7 +23,6 @@ export default function Carrinho() {
   useEffect(() => {
     const fetchProducts = async () => {
       let productsStorage = JSON.parse(localStorage.getItem("cart"));
-      console.log(productsStorage);
       setProducts(productsStorage);
       handleSetValue();
     };
@@ -41,9 +38,14 @@ export default function Carrinho() {
         {products.map((product) =>
           // FIXME: os produtos estao instaciados de maneira incorreta no carrinho
           product instanceof Pizza ? (
-            <Pizza key={product.id} product={product} />
-          ) : (
+            // (
+            //   <Pizza key={product.id} product={product} />
+            // ) : (
+            //   <Drink key={product.id} product={product} />
+            // )
             <Drink key={product.id} product={product} />
+          ) : (
+            <Pizza key={product.id} product={product} />
           )
         )}
       </div>

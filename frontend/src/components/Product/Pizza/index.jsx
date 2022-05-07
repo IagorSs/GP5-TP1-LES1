@@ -11,27 +11,32 @@ import * as PizzaFlavorService from "../../../services/flavor";
 import "./style.css";
 
 function Pizza({ product }) {
+  console.log(product);
   const [flavorsPizza, setFlavorsPizza] = useState([]);
+  const [flavorOne, setFlavorOne] = useState(product.Flavor[0].Name);
+  const [flavorTwo, setFlavorTwo] = useState(product.Flavor[1].Name);
+
+  async function handleSetFlavor(newValue, flavor) {
+    let index = flavorsPizza.findIndex((item) => item.Name === newValue);
+    let newFlavor = flavorsPizza[index];
+
+    if (flavor === 0) {
+      product.Flavor[0] = newFlavor;
+      setFlavorOne(newFlavor.Name);
+    } else {
+      product.Flavor[1] = newFlavor;
+      setFlavorTwo(newFlavor.Name);
+    }
+  }
+
   useEffect(() => {
     const fetchFlavors = async () => {
       const flavors = await PizzaFlavorService.getAllFlavors();
-      console.log("flavors=" + JSON.stringify(flavors));
       setFlavorsPizza(flavors);
     };
 
     fetchFlavors();
   }, []);
-
-  const [flavorOne, setFlavorOne] = useState("");
-  const [flavorTwo, setFlavorTwo] = useState("");
-
-  async function handleSetFlavor(newValue, flavor) {
-    if (flavor === 0) {
-      setFlavorOne(newValue);
-    } else {
-      setFlavorTwo(newValue);
-    }
-  }
 
   return (
     <div className="pizza-card">
