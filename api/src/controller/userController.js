@@ -1,5 +1,6 @@
 import Controller from "./database/controller.js";
 import bcrypt from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
 
 class UserController extends Controller {
   constructor() {
@@ -49,15 +50,48 @@ class UserController extends Controller {
     response.send({ message: "Usuário criado" });
   }
 
-  async Login (request, response){
+  async Login(request, response) {
+    const { CPF, Password } = request.body;
 
-    
+    const params = {
+      where: {
+        CPF,
+      },
+    };
 
+    const user = await super.GetOne(params);
 
+    if (user.error)
+      return response.send({ message: "Can't locate user" }).status(500);
+    if (!user.data)
+      return response
+        .send({
+          message: "CPF ou senha incorretos",
+        })
+        .status(501);
 
+    const hashPassword = user.data.Password;
+    const hash = bcrypt.compareSync(Password, hashPassword);
+    if (!hash)
+      return response.send({
+        message: "CPF ou senha incorretos",
+      });
+
+    // Envia um token para o cliente
+    const { _id, Name, Permission } = user.data;
+    const payload = {
+      _id,
+      Name,
+      Permission,
+    };
+
+    const token = jsonwebtoken.sign(payload, process.env.SECRET_KEY_TOKEN, {
+      expiresIn: "8h",
+    });
+
+    // Return token to client
+    return response.send({ token });
   }
-
-
 }
 
 export default UserController;

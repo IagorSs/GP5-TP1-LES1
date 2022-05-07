@@ -1,5 +1,10 @@
 import Controller from "./database/controller.js";
-import { BuildPizza, BuildDrinks } from "./StockUtils.js";
+import {
+  BuildPizza,
+  BuildDrinks,
+  BuildComboItens,
+  BuildOrder,
+} from "./StockUtils.js";
 
 const Pizza = new Controller("Pizza");
 const PizzaFlavor = new Controller("PizzaFlavor");
@@ -135,30 +140,10 @@ class StockController {
         .status(500);
 
     // Carrega as pizzas no objeto
-    for (let index = 0; index < list.length; index++) {
-      // Params recebe o vetor de ids
-      const params = {
-        in: list[index].Pizzas,
-      };
-      request.body = {
-        pizzaId: params,
-      };
-      list[index].Pizzas = await BuildPizza(request, response);
-    }
+    request.body = { list };
+    const combos = await BuildComboItens(request);
 
-    // Carrega os drinks no objeto
-    for (let index = 0; index < list.length; index++) {
-      // Params recebe o vetor de ids
-      const params = {
-        in: list[index].Drinks,
-      };
-      request.body = {
-        pizzaId: params,
-      };
-      list[index].Drinks = await BuildDrinks(request, response);
-    }
-
-    return response.send(list).status(200);
+    return response.send(combos).status(200);
   }
 
   async GetFlavors(request, response) {
@@ -186,12 +171,12 @@ class StockController {
   }
 
   async GetDrinks(request, response) {
-    const drinks = await BuildDrinks(request, response);
+    const drinks = await BuildDrinks(request);
     return response.send(Object.values({ ...drinks })).status(200);
   }
 
   async GetPizzas(request, response) {
-    const list = await BuildPizza(request, response);
+    const list = await BuildPizza(request);
     return response.send(Object.values(list)).status(200);
   }
 }

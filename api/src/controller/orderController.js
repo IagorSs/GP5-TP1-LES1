@@ -1,4 +1,10 @@
 import Controller from "./database/controller.js";
+import {
+  BuildPizza,
+  BuildDrinks,
+  BuildComboItens,
+  BuildOrder,
+} from "./StockUtils.js";
 
 const Order = new Controller("Order");
 
@@ -17,7 +23,7 @@ class OrderController {
   }
 
   async CreateOrder(request, response) {
-    const { Pizzas, Drinks, Combos } = request.body;
+    const { Pizzas, Drinks, Combos, Observation } = request.body;
     const User = "6271c867ec5a14eb69406997";
     const params = {
       data: {
@@ -29,6 +35,7 @@ class OrderController {
         },
         Total: 15.3,
         Date: new Date(),
+        Observation: [Observation ? Observation : " ", " "],
       },
     };
 
@@ -40,15 +47,16 @@ class OrderController {
         message: "Server error. Can't create a new Order",
       });
 
-    response.send({ ...order.data });
+    response.send({ ...order.data }).status(200);
   }
 
-  async GetOrders(request, response) {
+  async GetOrder(request, response) {
     const { orderId } = request.body;
 
     let params = {};
-    
-    if(orderId) {
+
+    if (orderId) {
+      // Pesquisa por id
       params = {
         where: {
           id: orderId,
@@ -64,8 +72,106 @@ class OrderController {
         message: "Server error. Can't load Orders",
       });
 
-    response.send({ ...order.data });
+    // Converte o objeto para um vetor de ordens
+    const list = Object.values({ ...order.data });
+    request.body = { list };
+    const orders = await BuildOrder(request);
+
+    response.send(orders).status(200);
   }
+
+  // Busca pelos pedidos em aberto
+  async GetQueuebyStatus(request, response) {
+    const { Status } = request.body;
+    const params = {
+      where: {
+        Status,
+      },
+    };
+
+    const order = await Order.GetMany(params);
+
+    if (order.error)
+      return response.send({
+        Errro: true,
+        message: "Server error. Can't load Orders",
+      });
+
+    // Converte o objeto para um vetor de ordens
+    const list = Object.values({ ...order.data });
+    request.body = { list };
+    const orders = await BuildOrder(request);
+    response.send(orders);
+  }
+
+  async UpdateStatusOrder(request, response) {
+    const { orderId, Status } = request.body;
+
+    const params = {
+      where: {
+        id: orderId,
+      },
+      data: {
+        Status,
+      },
+    };
+
+    const order = await Order.Update(params);
+
+    if (order.error || !Object.keys(order.data).length)
+      return response
+        .send({ message: "Não foi possível fazer a alteração" })
+        .status(501);
+
+    return response.send({ message: "Pedido atualizado" }).status(200);
+  }
+
+  async CancelOrder(request, response) {
+    const { orderId, Observation } = request.body;
+
+    let params = {
+      where: {
+        id: orderId,
+      },
+    };
+
+    const order = await Order.GetOne(params);
+
+    if (order.error || !Object.keys(order.data).length)
+      return response
+        .send({ message: "Não foi possível localizar a ordem" })
+        .status(501);
+
+    const message = order.data.Observation;
+    message[1] = Observation || "Motivo não informado";
+
+    params = {
+      where: {
+        id: orderId,
+      },
+      data: {
+        Status: "Cancelado",
+        Observation: message,
+      },
+    };
+
+    const canceled = await Order.Update(params);
+
+    if (canceled.error || !Object.keys(canceled.data).length)
+      return response
+        .send({ message: "Não foi possível fazer a alteração" })
+        .status(501);
+
+    return response.send({ message: "This order was cancelled" }).status(200);
+  }
+
+  
 }
 
 export default OrderController;
+
+/*
+  Recebido
+  Preparando
+  Enviado
+*/

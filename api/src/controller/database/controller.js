@@ -50,7 +50,7 @@ class Controller {
       clientData.data = error;
       clientData.error = true;
     }
-
+    console.log({ ...clientData });
     return clientData;
   }
 
@@ -98,7 +98,7 @@ class Controller {
       clientData.data = error;
       clientData.error = true;
     }
-    console.log(clientData);
+    //console.log(clientData);
     return clientData;
   }
 }

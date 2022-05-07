@@ -17,7 +17,7 @@ const LoadFlavors = async (pizza) => {
 };
 
 //
-const BuildPizza = async (request, response) => {
+const BuildPizza = async (request) => {
   const { pizzaId } = request.body;
 
   let params = {};
@@ -30,13 +30,7 @@ const BuildPizza = async (request, response) => {
   }
 
   const pizzas = await Pizza.GetMany(params);
-  if (pizzas.error)
-    return response
-      .send({
-        Errro: true,
-        message: "Server error. Can't load Pizzas",
-      })
-      .status(500);
+  if (pizzas.error) return { message: "Server error. Can't load Pizzas" };
 
   const list = Object.values(pizzas.data);
 
@@ -46,7 +40,7 @@ const BuildPizza = async (request, response) => {
   return list;
 };
 
-const BuildDrinks = async (request, response) => {
+const BuildDrinks = async (request) => {
   const { drinkId } = request.body;
 
   let params = {};
@@ -59,15 +53,90 @@ const BuildDrinks = async (request, response) => {
   }
   const drinks = await Drink.GetMany(params);
 
-  if (drinks.error)
-    return response
-      .send({
-        Errro: true,
-        message: "Server error. Can't load Drinks",
-      })
-      .status(500);
+  if (drinks.error) return { message: "Server error. Can't load Drinks" };
 
   return Object.values({ ...drinks.data });
 };
 
-export { BuildPizza, BuildDrinks };
+const BuildComboItens = async (request) => {
+  const { list } = request.body;
+
+  if (!list || !list.length) return [];
+
+  for (let index = 0; index < list.length; index++) {
+    // Params recebe o vetor de ids
+    const params = {
+      in: list[index].Pizzas,
+    };
+    request.body = {
+      pizzaId: params,
+    };
+    list[index].Pizzas = await BuildPizza(request);
+  }
+
+  // Carrega os drinks no objeto
+  for (let index = 0; index < list.length; index++) {
+    // Params recebe o vetor de ids
+    const params = {
+      in: list[index].Drinks,
+    };
+    request.body = {
+      pizzaId: params,
+    };
+    list[index].Drinks = await BuildDrinks(request);
+  }
+
+  return list;
+};
+
+const BuildOrder = async (request) => {
+  const { list } = request.body;
+
+  // Carrega as pizzas
+  for (let index = 0; index < list.length; index++) {
+    const params = {
+      in: list[index].Pizzas,
+    };
+    request.body = {
+      pizzaId: params,
+    };
+    // Busca no banco a lista de Pizzas da ordem
+    list[index].Pizzas = await BuildPizza(request);
+  }
+
+  // Carrega as bebidas
+  for (let index = 0; index < list.length; index++) {
+    const params = {
+      in: list[index].Drinks,
+    };
+    request.body = {
+      drinkId: params,
+    };
+    // Busca no banco a lista de bebidas da ordem
+    list[index].Drinks = await BuildDrinks(request);
+  }
+
+  // Carrega combos
+  for (let index = 0; index < list.length; index++) {
+    if (list[index].Combos.length) {
+      const params = {
+        where: {
+          id: { in: list[index].Combos },
+        },
+      };
+
+      // Carrega um objeto contendo todos os combos da ordem
+      const combos = await Combo.GetMany(params);
+
+      // Gera um lista de combos
+      request.body = {
+        list: Object.values({ ...combos.data }),
+      };
+      // Carrega o conteúdo de cada combo no objeto
+      list[index].Combos = await BuildComboItens(request);
+    }
+  }
+  return list;
+};
+
+export { BuildPizza, BuildDrinks, BuildComboItens, BuildOrder };

@@ -12,14 +12,17 @@ datasource db {
 
 model Order {
 
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id])
-  Status    Status   @default(Recebido)
-  Date      DateTime
-
-  Total Float
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  User        User     @relation(fields: [userId], references: [id])
+  Status      Status   @default(Recebido)
+  Date        DateTime
+  Pizzas      String[] @db.ObjectId
+  Drinks      String[] @db.ObjectId
+  Combos      String[] @db.ObjectId
+  Observation String[]
+  Total       Float
 
 
   userId String
@@ -101,5 +104,6 @@ enum Status {
   Recebido
   Preparando
   Enviado
-
+  Concluido
+  Cancelado
 }
