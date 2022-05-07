@@ -90,12 +90,14 @@ class StockController {
   }
 
   async CreateCombo(request, response) {
-    const { Name, Description, Pizzas, Drinks, Price } = request.body;
+    const { Name, Description, Pizzas, Drinks, Price, Url, Tag } = request.body;
 
     const params = {
       data: {
         Name,
         Description,
+        Url,
+        Tag,
         Pizzas: Pizzas.split(","),
         Drinks: Drinks.split(","),
         Price: parseFloat(Price),

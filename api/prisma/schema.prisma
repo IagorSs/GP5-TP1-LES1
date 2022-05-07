@@ -32,7 +32,8 @@ model Combo {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  Url         String?
+  Tag         String
+  Url         String
   Name        String
   Description String
   Pizzas      String[] @db.ObjectId
