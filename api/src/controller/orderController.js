@@ -23,7 +23,7 @@ class OrderController {
   }
 
   async CreateOrder(request, response) {
-    const { Pizzas, Drinks, Combos } = request.body;
+    const { Pizzas, Drinks, Combos, Observation } = request.body;
     const User = "6271c867ec5a14eb69406997";
     const params = {
       data: {
@@ -35,6 +35,7 @@ class OrderController {
         },
         Total: 15.3,
         Date: new Date(),
+        Observation: [Observation ? Observation : " ", " "],
       },
     };
 
@@ -123,6 +124,45 @@ class OrderController {
         .status(501);
 
     return response.send({ message: "Pedido atualizado" }).status(200);
+  }
+
+  async CancelOrder(request, response) {
+    const { orderId, Observation } = request.body;
+
+    let params = {
+      where: {
+        id: orderId,
+      },
+    };
+
+    const order = await Order.GetOne(params);
+
+    if (order.error || !Object.keys(order.data).length)
+      return response
+        .send({ message: "Não foi possível localizar a ordem" })
+        .status(501);
+
+    const message = order.data.Observation;
+    message[1] = Observation || "Motivo não informado";
+
+    params = {
+      where: {
+        id: orderId,
+      },
+      data: {
+        Status: "Cancelado",
+        Observation: message,
+      },
+    };
+
+    const canceled = await Order.Update(params);
+
+    if (canceled.error || !Object.keys(canceled.data).length)
+      return response
+        .send({ message: "Não foi possível fazer a alteração" })
+        .status(501);
+
+    return response.send({ message: "This order was cancelled" }).status(200);
   }
 }
 
