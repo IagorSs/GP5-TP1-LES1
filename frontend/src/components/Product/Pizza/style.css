@@ -1,12 +1,12 @@
 .flavors-pizza {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   text-align: center;
 }
 @media (orientation: landscape) {
   .pizza-card {
-    padding: 50px;
+    /* padding: 50px; */
     display: inline-block;
-    min-width: 440px;
+    /* min-width: 440px; */
   }
 }
 

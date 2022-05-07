@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { convertToMoney } from "../../../utils/string";
+import { convertToMoney } from "../../../../utils/string";
 import "./style.css";
 
 let productInsertCart = [];

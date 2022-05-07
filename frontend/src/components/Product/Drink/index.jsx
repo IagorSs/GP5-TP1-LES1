@@ -1,6 +1,6 @@
 import Card from "@mui/material/Card";
-import ProductDescription from "../Description";
-import ProductForCart from "../ForCart";
+import ProductDescription from "../components/Description";
+import ProductForCart from "../components/ForCart";
 import "./style.css";
 
 function Drink({ product }) {
@@ -9,7 +9,7 @@ function Drink({ product }) {
       <Card>
         <ProductDescription key={product.id} product={product} />
 
-        <ProductForCart key={product.id} product={product} />
+        {/* <ProductForCart key={product.id} product={product} /> */}
       </Card>
     </div>
   );

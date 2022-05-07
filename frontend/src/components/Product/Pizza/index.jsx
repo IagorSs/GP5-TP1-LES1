@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
-import ProductDescription from "../Description";
-import ProductForCart from "../ForCart";
+import ProductDescription from "../components/Description";
+import ProductForCart from "../components/ForCart";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -64,7 +64,7 @@ function Pizza({ product }) {
             </FormControl>
           ))} */}
 
-          <FormControl sx={{ m: 1, minWidth: 80 }}>
+          <FormControl sx={{ m: 1, minWidth: 800 }}>
             <InputLabel>1/2</InputLabel>
             <Select
               id={"pizza-select" + 0}
@@ -94,7 +94,7 @@ function Pizza({ product }) {
             </Select>
           </FormControl>
         </div>
-        <ProductForCart key={product.id} product={product} />
+        {/* <ProductForCart key={product.id} product={product} /> */}
       </Card>
     </div>
   );

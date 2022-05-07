@@ -7,7 +7,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Pizza } from "../../../models/products";
+import { Pizza, Drink } from "../../../../models/products";
 
 import "./style.css";
 
@@ -39,12 +39,12 @@ function ProductDescription({ product }) {
   return (
     <div>
       <Card>
-        <CardMedia component="img" height="194" image={product.Url} />
+        <CardMedia component="img" height="250" image={product.Url} />
         <CardContent>
           <h2>{product.Name}</h2>
           <Typography>{product.Description}</Typography>
 
-          <FormControl className="input-size" sx={{ m: 1, minWidth: 150 }}>
+          <FormControl className="input-size" sx={{ m: 1, minWidth: 80 }}>
             <InputLabel id="size-select">Tamanho</InputLabel>
 
             <Select
@@ -56,7 +56,11 @@ function ProductDescription({ product }) {
             >
               {Object.entries(
                 // FIXME: os produtos estao instaciados de maneira incorreta no carrinho
-                product instanceof Pizza ? SIZES_PIZZA : SIZES_DRINK
+                product instanceof Pizza
+                  ? SIZES_PIZZA
+                  : product instanceof Drink
+                  ? SIZES_DRINK
+                  : SIZES_DRINK
               ).map(([value, description]) => (
                 <MenuItem key={value} value={value}>
                   {description}

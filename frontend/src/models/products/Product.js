@@ -9,6 +9,5 @@ export default class Product extends Base {
 
   Size;
 
-  // TODO
-  // ImageURL;
+  Url;
 }
