@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const zipcode = async (cep) => {
-  return axios.get("https://viacep.com.br/ws/" + cep + "/json");
+  return axios.get("https://cep.awesomeapi.com.br/json/" + cep);
 };
 
 export default zipcode;
