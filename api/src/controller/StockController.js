@@ -133,13 +133,15 @@ class StockController {
     const combo = await Combo.GetMany(params);
     const list = Object.values({ ...combo.data });
 
-    if (combo.error || !list.length)
+    if (combo.error)
       return response
         .send({
           Errro: true,
           message: "Server error. Can't load Combo",
         })
         .status(500);
+
+    if (!list.length) return response.send([]).status(200);
 
     // Carrega as pizzas no objeto
     request.body = { list };
