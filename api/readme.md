@@ -52,6 +52,36 @@
 ---
 
 # Estoque
+
+
+```sh
+# Criar  Pizza  [POST]
+stock/pizza/new
+
+> BodyParams:
+{
+"Name":"Pizza Queijo",
+"Description":"Vem muito queijos",
+"Flavors": "6271cf1ead8eb6d3b008822b,6271d11c5ce6a59d6ee2f12b", # Lista de 1 ou dois sabores
+"Url": "https://i.imgur.com/FLB54LU.png",
+"Price": "45.50",
+"Size": "Media",
+}
+> Response: Mensagem de sucesso ou erro
+```
+---
+```sh
+# Obter Pizza  [GET]
+stock/pizza
+
+> BodyParams:
+{
+null || "pizzaId": "6271cf1ead8eb6d3b008822b"
+}
+> Response: Caso não seja especificado, retorna um array com todos os sabores
+```
+---
+
 ```sh
 # Criar sabor de Pizza  [POST]
 stock/pizza/flavor/new
@@ -61,9 +91,17 @@ stock/pizza/flavor/new
 "Name": "Mussarela",
 "Description": "Sabor mussarela defumada",
 }
-> Response: Retorna um token com validade de 8h
+> Response: Mensagem de sucesso ou erro
+```
+---
+```sh
+# Obter sabor de pizza  [GET]
+stock/pizza/flavor/
+
+> BodyParams:
 {
-	"token": "eyJhbGci...zUClg"
+null || "flavorId": "6271cf1ead8eb6d3b008822b"
 }
+> Response: Caso não seja especificado, retorna um array com todos os sabores
 ```
 ---
