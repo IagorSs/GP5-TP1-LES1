@@ -1,6 +1,10 @@
 import Controller from "./database/controller.js";
-import { BuildPizza, BuildDrinks, BuildCombo } from "./StockUtils.js";
-const Combo = new Controller("Combo");
+import {
+  BuildPizza,
+  BuildDrinks,
+  BuildComboItens,
+  BuidOrder,
+} from "./StockUtils.js";
 
 const Order = new Controller("Order");
 
@@ -69,53 +73,10 @@ class OrderController {
 
     // Converte o objeto para um vetor de ordens
     const list = Object.values({ ...order.data });
+    request.body = { list };
+    const orders = await BuidOrder(request);
 
-    // Carrega as pizzas
-    for (let index = 0; index < list.length; index++) {
-      const params = {
-        in: list[index].Pizzas,
-      };
-      request.body = {
-        pizzaId: params,
-      };
-      // Busca no banco a lista de Pizzas da ordem
-      list[index].Pizzas = await BuildPizza(request);
-    }
-
-    // Carrega as bebidas
-    for (let index = 0; index < list.length; index++) {
-      const params = {
-        in: list[index].Drinks,
-      };
-      request.body = {
-        drinkId: params,
-      };
-      // Busca no banco a lista de bebidas da ordem
-      list[index].Drinks = await BuildDrinks(request);
-    }
-
-    // Carrega combos
-    for (let index = 0; index < list.length; index++) {
-      if (list[index].Combos.length) {
-        const params = {
-          where: {
-            id: { in: list[index].Combos },
-          },
-        };
-
-        // Carrega um objeto contendo todos os combos da ordem
-        const combos = await Combo.GetMany(params);
-
-        // Gera um lista de combos
-        request.body = {
-          list: Object.values({ ...combos.data }),
-        };
-        // Carrega o conteúdo de cada combo no objeto
-        list[index].Combo = await BuildCombo(request);
-      }
-    }
-
-    response.send(list);
+    response.send(orders);
   }
 
   // Busca pelos pedidos em aberto

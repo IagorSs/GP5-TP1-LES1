@@ -1,5 +1,10 @@
 import Controller from "./database/controller.js";
-import { BuildPizza, BuildDrinks, BuildCombo } from "./StockUtils.js";
+import {
+  BuildPizza,
+  BuildDrinks,
+  BuildComboItens,
+  BuidOrder,
+} from "./StockUtils.js";
 
 const Pizza = new Controller("Pizza");
 const PizzaFlavor = new Controller("PizzaFlavor");
@@ -136,7 +141,7 @@ class StockController {
 
     // Carrega as pizzas no objeto
     request.body = { list };
-    const combos = await BuildCombo(request);
+    const combos = await BuildComboItens(request);
 
     return response.send(combos).status(200);
   }
