@@ -46,7 +46,7 @@ class OrderController {
         message: "Server error. Can't create a new Order",
       });
 
-    response.send({ ...order.data });
+    response.send({ ...order.data }).status(200);
   }
 
   async GetOrder(request, response) {
@@ -76,27 +76,53 @@ class OrderController {
     request.body = { list };
     const orders = await BuidOrder(request);
 
-    response.send(orders);
+    response.send(orders).status(200);
   }
 
   // Busca pelos pedidos em aberto
-  async GetQueue(request, response) {
-    response.send("Fila");
+  async GetQueuebyStatus(request, response) {
+    const { Status } = request.body;
+    const params = {
+      where: {
+        Status,
+      },
+    };
+
+    const order = await Order.GetMany(params);
+
+    if (order.error)
+      return response.send({
+        Errro: true,
+        message: "Server error. Can't load Orders",
+      });
+
+    // Converte o objeto para um vetor de ordens
+    const list = Object.values({ ...order.data });
+    request.body = { list };
+    const orders = await BuidOrder(request);
+    response.send(orders);
   }
 
-  // Busca pelos pedidos em preparando
-  async getPreparing(request, response) {
-    response.send("Fila");
-  }
+  async UpdateStatusOrder(request, response) {
+    const { orderId, Status } = request.body;
 
-  // Busca pelos pedidos enviados
-  async GetSent(request, response) {
-    response.send("Fila");
-  }
+    const params = {
+      where: {
+        id: orderId,
+      },
+      data: {
+        Status,
+      },
+    };
 
-  // Busca pelos pedidos concluídos
-  async GetDone(request, response) {
-    response.send("Fila");
+    const order = await Order.Update(params);
+
+    if (order.error || !Object.keys(order.data).length)
+      return response
+        .send({ message: "Não foi possível fazer a alteração" })
+        .status(501);
+
+    return response.send({ message: "Pedido atualizado" }).status(200);
   }
 }
 

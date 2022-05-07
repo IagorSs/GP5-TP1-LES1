@@ -6,5 +6,7 @@ const client = new OrderController();
 
 route.post("/new", client.CreateOrder.bind(client));
 route.get("/find", client.GetOrder.bind(client));
+route.get("/status", client.GetQueuebyStatus.bind(client));
+route.post("/status/update", client.UpdateStatusOrder.bind(client));
 
 export default route;
