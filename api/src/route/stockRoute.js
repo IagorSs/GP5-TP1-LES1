@@ -15,5 +15,6 @@ route.get("/pizza/flavor", client.GetFlavors.bind(client));
 
 route.post("/combo/new", client.CreateCombo.bind(client));
 route.get("/combo", client.GetCombo.bind(client));
+route.get("/combo/search", client.SearchCombo.bind(client));
 
 export default route;

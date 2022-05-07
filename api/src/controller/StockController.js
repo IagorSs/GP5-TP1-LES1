@@ -148,6 +148,38 @@ class StockController {
     return response.send(combos).status(200);
   }
 
+  async SearchCombo(request, response) {
+    const { Tag } = request.body;
+
+    const params = {
+      where: {
+        Tag: {
+          contains: Tag,
+        },
+      },
+    };
+
+    console.log(params);
+
+    const combo = await Combo.GetMany(params);
+
+    const list = Object.values({ ...combo.data });
+
+    if (combo.error || !list.length)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't load Combo",
+        })
+        .status(500);
+
+    // Carrega as pizzas no objeto
+    request.body = { list };
+    const combos = await BuildComboItens(request);
+
+    return response.send(combos).status(200);
+  }
+
   async GetFlavors(request, response) {
     const { flavorId } = request.body;
 
