@@ -89,7 +89,7 @@ const BuildComboItens = async (request) => {
   return list;
 };
 
-const BuidOrder = async (request) => {
+const BuildOrder = async (request) => {
   const { list } = request.body;
 
   // Carrega as pizzas
@@ -139,4 +139,4 @@ const BuidOrder = async (request) => {
   return list;
 };
 
-export { BuildPizza, BuildDrinks, BuildComboItens, BuidOrder };
+export { BuildPizza, BuildDrinks, BuildComboItens, BuildOrder };

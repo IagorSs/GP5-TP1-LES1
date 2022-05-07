@@ -3,7 +3,7 @@ import {
   BuildPizza,
   BuildDrinks,
   BuildComboItens,
-  BuidOrder,
+  BuildOrder,
 } from "./StockUtils.js";
 
 const Order = new Controller("Order");
@@ -75,7 +75,7 @@ class OrderController {
     // Converte o objeto para um vetor de ordens
     const list = Object.values({ ...order.data });
     request.body = { list };
-    const orders = await BuidOrder(request);
+    const orders = await BuildOrder(request);
 
     response.send(orders).status(200);
   }
@@ -100,7 +100,7 @@ class OrderController {
     // Converte o objeto para um vetor de ordens
     const list = Object.values({ ...order.data });
     request.body = { list };
-    const orders = await BuidOrder(request);
+    const orders = await BuildOrder(request);
     response.send(orders);
   }
 
@@ -164,6 +164,8 @@ class OrderController {
 
     return response.send({ message: "This order was cancelled" }).status(200);
   }
+
+  
 }
 
 export default OrderController;

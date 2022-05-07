@@ -3,7 +3,7 @@ import {
   BuildPizza,
   BuildDrinks,
   BuildComboItens,
-  BuidOrder,
+  BuildOrder,
 } from "./StockUtils.js";
 
 const Pizza = new Controller("Pizza");
