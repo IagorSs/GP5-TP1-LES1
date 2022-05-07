@@ -22,7 +22,6 @@ function ProductForCart({ product }) {
   };
 
   const handleSetProduct = async () => {
-    console.log(product);
     productInsertCart.push(product);
     localStorage.setItem("cart", JSON.stringify(productInsertCart));
   };
