@@ -30,8 +30,11 @@ export default function Endereco() {
   }
 
   async function handleSetAddressComplet() {
-    if (address && address.status === 200) {
-      console.log(address);
+    if (address.data.info) {
+      setStreet("");
+      setNeightboardCityState("");
+    } else if (address && address.status === 200) {
+      // console.log(address);
       setStreet(address.data.address);
       setNeightboardCityState(
         address.data.district +
