@@ -45,7 +45,7 @@ function ProductForCart({ product }) {
           <h3>{convertToMoney(product.Price)}</h3>
         </CardContent>
         <CardActions>
-          {window.location.pathname === "/cardapio" ? (
+          {window.location.pathname === "/menu" ? (
             <IconButton
               className="cart_icon"
               onClick={() => {
