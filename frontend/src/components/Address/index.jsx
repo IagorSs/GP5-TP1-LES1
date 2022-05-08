@@ -80,6 +80,30 @@ export default function Address() {
       >
         <div className="main-address">
           <div className="cepSearch">
+            {window.location.pathname !== "/user" ? (
+              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-cep">CEP</InputLabel>
+                <OutlinedInput
+                  required
+                  id="cep-required"
+                  onChange={async (e) => handleChangeCEP(e)}
+                  variant="standard"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleGetAddress} edge="end">
+                        <SearchIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="CEP"
+                />
+              </FormControl>
+            ) : (
+              <></>
+            )}
+          </div>
+
+          {/* <div className="cepSearch">
             <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-cep">CEP</InputLabel>
               <OutlinedInput
@@ -97,7 +121,7 @@ export default function Address() {
                 label="CEP"
               />
             </FormControl>
-          </div>
+          </div> */}
 
           <TextField
             id="address-street"
@@ -109,27 +133,62 @@ export default function Address() {
             variant="outlined"
           />
 
-          <TextField
-            id="address-number"
-            label="Número"
-            type="number"
-            // value={number}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            onChange={(newValue) => {
-              setNumber(newValue.target.value);
-            }}
-          />
-          <TextField
-            id="address-complement"
-            label="Complemento"
-            variant="standard"
-            onChange={(newValue) => {
-              setComplement(newValue.target.value);
-            }}
-          />
+          {window.location.pathname !== "/user" ? (
+            <>
+              <TextField
+                id="address-number"
+                label="Número"
+                type="number"
+                // value={number}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={(newValue) => {
+                  setNumber(newValue.target.value);
+                }}
+              />
+              <TextField
+                id="address-complement"
+                label="Complemento"
+                variant="standard"
+                onChange={(newValue) => {
+                  setComplement(newValue.target.value);
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <TextField
+                id="address-number"
+                label="Número"
+                type="number"
+                // value={number}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="standard"
+                onChange={(newValue) => {
+                  setNumber(newValue.target.value);
+                }}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+              <TextField
+                id="address-complement"
+                label="Complemento"
+                variant="standard"
+                onChange={(newValue) => {
+                  setComplement(newValue.target.value);
+                }}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </>
+          )}
+
           <TextField
             id="address-complete"
             label={neightboardCityState ? "" : "Bairro, Cidade, Estado"}
