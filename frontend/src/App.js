@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Menu from "./pages/Menu";
 import UserRegister from "./pages/UserRegister";
 import Cart from "./pages/Cart";
+import User from "./pages/User";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/user/register" exact element={<UserRegister />} />
         <Route path="/menu" exact element={<Menu />} />
         <Route path="/cart" exact element={<Cart />} />
+        <Route path="/user" exact element={<User />} />
       </Routes>
       <Footer />
     </BrowserRouter>
