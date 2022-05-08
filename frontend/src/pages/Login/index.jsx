@@ -12,7 +12,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import BadgeIcon from "@mui/icons-material/Badge";
-import Link from "@mui/material/Link";
+import Link from "../../components/Link";
 import "./style.css";
 
 export default function InputAdornments() {
@@ -76,7 +76,7 @@ export default function InputAdornments() {
         Entrar
       </Button>
 
-      <Link href="/user/register">
+      <Link to="/user/register">
         <Button variant="outlined" startIcon={<BadgeIcon />}>
           Cadastrar
         </Button>
