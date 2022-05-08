@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import BadgeIcon from "@mui/icons-material/Badge";
-import Endereco from "../../components/Endereco";
+import Address from "../../components/Address";
 import User from "../../components/User";
 // import * as UserService from "../../services/user";
 import "./style.css";
@@ -39,7 +39,7 @@ export default function CadastroUsuario() {
 
         <div className="user-address">
           <h3 className="address-infos-title">Dados de Endereço</h3>
-          <Endereco />
+          <Address />
         </div>
       </Box>
       <Button

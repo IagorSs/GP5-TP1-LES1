@@ -10,7 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import zipcode from "../../services/zipcode";
 import "./style.css";
 
-export default function Endereco() {
+export default function Address() {
   const [address, setAddress] = useState();
   const [cep, setCEP] = useState();
 
