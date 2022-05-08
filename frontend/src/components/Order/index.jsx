@@ -81,7 +81,7 @@ function Order() {
         </div>
 
         <div>
-          <h2 className="pizzas-title">Pizzas</h2>
+          <h2 className="pizzas-user-title">Pizzas</h2>
           {pizzaList.map(
             (pizza) => (
               (pizza.Type = "Pizza"),
@@ -91,7 +91,7 @@ function Order() {
         </div>
 
         <div>
-          <h2 className="drinks-title">Drinks</h2>
+          <h2 className="drinks-user-title">Drinks</h2>
           {drinksList.map(
             (drink) => (
               (drink.Type = "Drink"),
@@ -101,7 +101,7 @@ function Order() {
         </div>
 
         <div>
-          <h2 className="combos-title">Combos</h2>
+          <h2 className="combos-user-title">Combos</h2>
           {comboList.map(
             (combo) => (
               (combo.Type = "Combo"),

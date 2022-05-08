@@ -1,7 +1,7 @@
 .cardapio-title,
-.pizzas-title,
-.drinks-title,
-.combos-title {
+.pizzas-menu-title,
+.drinks-menu-title,
+.combos-menu-title {
   text-align: center;
   color: var(--white);
 }
