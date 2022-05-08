@@ -1,4 +1,5 @@
-import * as React from "react";
+import { useForm, Controller } from 'react-hook-form';
+import { useState } from 'react';
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,68 +14,70 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import BadgeIcon from "@mui/icons-material/Badge";
 import Link from "../../components/Link";
+import { login } from '../../services/user';
+
 import "./style.css";
 
 export default function InputAdornments() {
-  const [values, setValues] = React.useState({
-    password: "",
-    showPassword: false,
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      user: "",
+      password: ""
+    }
   });
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  const submitLogin = async (data) => {
+    await login(data);
 
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+    // TODO fazer redirecionamento de tela
+  }
 
   return (
     <Box sx={{ "& > :not(style)": { m: 1 } }} className="main-login">
       <h1 className="login-title">Login</h1>
-      <div className="dados">
+      <form onSubmit={handleSubmit(submitLogin)}>
         <Box>
           <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-          <TextField id="input-user" label="Usuário" variant="standard" />
+          <Controller
+            name="user"
+            control={control}
+            render={({ field }) => <TextField {...field} label="Usuário" variant="standard" />}
+          />
         </Box>
         <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
           <InputLabel htmlFor="standard-adornment-password">Senha</InputLabel>
-          <Input
-            id="standard-adornment-password"
-            type={values.showPassword ? "text" : "password"}
-            value={values.password}
-            onChange={handleChange("password")}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            )}
           />
         </FormControl>
-      </div>
 
-      <Button
-        variant="contained"
-        endIcon={<SendIcon />}
-        onClick={() => {
-          alert("clicou entrar");
-        }}
-      >
-        Entrar
-      </Button>
+        <Button
+          variant="contained"
+          endIcon={<SendIcon />}
+          type="submit"
+        >
+          Entrar
+        </Button>
+      </form>
 
       <Link to="/user/register">
         <Button variant="outlined" startIcon={<BadgeIcon />}>
