@@ -1,0 +1,23 @@
+.order-main {
+  margin: 50px;
+  border-width: 4px;
+  border-color: var(--secondary-color-hover);
+  border-style: solid;
+  padding: 50px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.order-infos {
+  display: flex;
+  justify-content: center;
+}
+
+.order-id,
+.order-data,
+.order-status,
+.order-observacoes,
+.value-read-only-input {
+  margin: 40px;
+  text-align: center;
+}
