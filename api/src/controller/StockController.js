@@ -4,7 +4,7 @@ import {
   BuildDrinks,
   BuildComboItens,
   BuildOrder,
-} from "./StockUtils.js";
+} from "../utils/StockUtils.js";
 
 const Pizza = new Controller("Pizza");
 const PizzaFlavor = new Controller("PizzaFlavor");

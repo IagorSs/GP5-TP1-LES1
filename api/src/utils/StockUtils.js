@@ -1,4 +1,4 @@
-import Controller from "./database/controller.js";
+import Controller from "../controller/database/controller.js";
 const Pizza = new Controller("Pizza");
 const PizzaFlavor = new Controller("PizzaFlavor");
 const Drink = new Controller("Drink");

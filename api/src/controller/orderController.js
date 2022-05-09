@@ -4,7 +4,7 @@ import {
   BuildDrinks,
   BuildComboItens,
   BuildOrder,
-} from "./StockUtils.js";
+} from "../utils/StockUtils.js";
 
 const Order = new Controller("Order");
 
@@ -23,31 +23,32 @@ class OrderController {
   }
 
   async CreateOrder(request, response) {
-    const { Pizzas, Drinks, Combos, Observation } = request.body;
-    const User = "6271c867ec5a14eb69406997";
+    const { Pizzas, Drinks, Combos, Observation, UserId, Total } = request.body;
     const params = {
       data: {
         Pizzas: this.arrayParams(Pizzas),
         Drinks: this.arrayParams(Drinks),
         Combos: this.arrayParams(Combos),
         User: {
-          connect: { id: User },
+          connect: { id: UserId },
         },
-        Total: 15.3,
+        Total,
         Date: new Date(),
-        Observation: [Observation ? Observation : " ", " "],
+        Observation: [Observation ? Observation : "Nenhuma observação ", " "],
       },
     };
 
     const order = await Order.Create(params);
 
     if (order.error)
-      return response.send({
-        Errro: true,
-        message: "Server error. Can't create a new Order",
-      });
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't create a new Order",
+        })
+        .status(501);
 
-    response.send({ ...order.data }).status(200);
+    response.send({ message: "Seu pedido foi enviado" }).status(200);
   }
 
   async GetOrder(request, response) {
@@ -164,8 +165,6 @@ class OrderController {
 
     return response.send({ message: "This order was cancelled" }).status(200);
   }
-
-  
 }
 
 export default OrderController;

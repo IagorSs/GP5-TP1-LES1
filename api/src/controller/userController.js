@@ -1,7 +1,10 @@
 import Controller from "./database/controller.js";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
+import Decode from "../utils/decode.js";
+import { BuildOrder } from "../utils/StockUtils.js";
 
+const Order = new Controller("Order");
 class UserController extends Controller {
   constructor() {
     super("User");
@@ -11,6 +14,18 @@ class UserController extends Controller {
   HashPassword(password) {
     const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(password, salt);
+  }
+  arrayParams(idString) {
+    let params = [];
+    if (!idString) return params;
+
+    const idArray = idString.split(",");
+
+    idArray.map((id) => {
+      params.push(id);
+    });
+
+    return params;
   }
 
   async Create(request, response) {
@@ -78,9 +93,9 @@ class UserController extends Controller {
       });
 
     // Envia um token para o cliente
-    const { _id, Name, Permission } = user.data;
+    const { id, Name, Permission } = user.data;
     const payload = {
-      _id,
+      id,
       Name,
       Permission,
     };
@@ -91,6 +106,102 @@ class UserController extends Controller {
 
     // Return token to client
     return response.send({ token });
+  }
+
+  async CreateOrder(request, response) {
+    const { Pizzas, Drinks, Combos, Observation, Total } = request.body;
+
+    const { id } = await Decode(request.headers);
+
+    if (!id) return response.send({ message: "A valid token is missing" });
+
+    const params = {
+      data: {
+        Pizzas: this.arrayParams(Pizzas),
+        Drinks: this.arrayParams(Drinks),
+        Combos: this.arrayParams(Combos),
+        User: {
+          connect: { id },
+        },
+        Total,
+        Date: new Date(),
+        Observation: [Observation ? Observation : "Nenhuma observação ", " "],
+      },
+    };
+
+    const order = await Order.Create(params);
+
+    if (order.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Server error. Can't create a new Order",
+        })
+        .status(501);
+
+    response.send({ message: "Seu pedido foi enviado" }).status(200);
+  }
+
+  async GetOrder(request, response) {
+    const { id } = await Decode(request.headers);
+
+    const { orderId } = request.body;
+
+    if (!id) return response.send({ message: "A valid token is missing" });
+    if (!orderId)
+      return response.send({ message: "order reference is missing" });
+
+    const params = {
+      where: {
+        id: orderId,
+        User: id,
+      },
+    };
+    const order = await Order.GetOne(params);
+
+    const list = Object.values({ ...order.data });
+
+    if (order.error) {
+      return response.send({ message: "Can't load order" }).status(500);
+    }
+
+    if (!list.length) {
+      response.send(list).status(200);
+    }
+
+    request.body = { list };
+    const orders = await BuildOrder(request);
+
+    response.send(orders).status(200);
+  }
+
+  async GetHistory(request, response) {
+    const { id } = Decode(request.headers);
+
+    if (!id) return response.send({ message: "A valid token is missing" });
+
+    const params = {
+      where: {
+        User: id,
+      },
+    };
+
+    const order = await Order.GetMany(params);
+
+    const list = Object.values({ ...order.data }).reverse();
+
+    if (order.error) {
+      return response.send({ message: "Can't load order" }).status(500);
+    }
+
+    if (!list.length) {
+      response.send(list).status(200);
+    }
+
+    request.body = { list };
+    const orders = await BuildOrder(request);
+
+    response.send(orders).status(200);
   }
 }
 
