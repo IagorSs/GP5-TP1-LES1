@@ -10,6 +10,9 @@
     "start-frontend": "cd frontend && yarn start",
     "start-backend": "cd api && yarn dev",
     "start-prisma-studio": "cd api && yarn prisma-studio",
-    "start": "concurrently \"yarn start-frontend\" \"yarn start-backend\" \"yarn start-prisma-studio\""
+    "start": "yarn concurrently \"yarn start-frontend\" \"yarn start-backend\" \"yarn start-prisma-studio\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.1.0"
   }
 }
