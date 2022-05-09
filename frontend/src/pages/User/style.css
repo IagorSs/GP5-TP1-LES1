@@ -1,0 +1,11 @@
+.user-main {
+  background-color: var(--white);
+  color: var(--gray);
+  padding-bottom: 20px;
+}
+
+.user-address-title,
+.user-orders-title {
+  padding-top: 20px;
+  text-align: center;
+}

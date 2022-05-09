@@ -1,4 +1,4 @@
 const wait = (seconds = 1500) =>
-  new Promise(setTimeout((res) => res(null), seconds));
+  new Promise((resolve) => setTimeout(() => resolve(null), seconds));
 
 export default wait;

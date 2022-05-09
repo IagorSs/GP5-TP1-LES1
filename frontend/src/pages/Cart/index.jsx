@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Endereco from "../../components/Endereco";
+import Address from "../../components/Address";
 // import Pizza from "../../components/Product/Pizza";
 // import Drink from "../../components/Product/Drink";
 // import Combo from "../../components/Product/Combo";
@@ -58,7 +58,7 @@ export default function Carrinho() {
       <div className="delivery">
         <h3>Receber em:</h3>
         <div>
-          <Endereco />
+          <Address />
         </div>
         <div>
           <TextField
