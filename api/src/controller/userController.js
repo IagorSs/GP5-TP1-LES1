@@ -40,7 +40,9 @@ class UserController extends Controller {
     const check_CPF = await super.GetOne(params);
     //Se sim, para o processo
     if (check_CPF.data)
-      return response.send({ error: true, message: "CPF já cadastrado" });
+      return response
+        .send({ error: true, message: "CPF já cadastrado" })
+        .status(501);
 
     const { Name, Birthday, Password, Zipcode, Address } = request.body;
 
@@ -88,9 +90,11 @@ class UserController extends Controller {
     const hashPassword = user.data.Password;
     const hash = bcrypt.compareSync(Password, hashPassword);
     if (!hash)
-      return response.send({
-        message: "CPF ou senha incorretos",
-      });
+      return response
+        .send({
+          message: "CPF ou senha incorretos",
+        })
+        .status(501);
 
     // Envia um token para o cliente
     const { id, Name, Permission } = user.data;
