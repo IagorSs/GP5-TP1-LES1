@@ -176,19 +176,24 @@ class UserController extends Controller {
   }
 
   async GetHistory(request, response) {
-    const { id } = Decode(request.headers);
+    const { id } = await Decode(request.headers);
 
     if (!id) return response.send({ message: "A valid token is missing" });
 
     const params = {
       where: {
-        User: id,
+        id,
+      },
+      include: {
+        Orders: true,
       },
     };
 
-    const order = await Order.GetMany(params);
+    const order = await super.GetOne(params);
 
-    const list = Object.values({ ...order.data }).reverse();
+    console.log(order);
+
+    const list = Object.values({ ...order.data.Orders }).reverse();
 
     if (order.error) {
       return response.send({ message: "Can't load order" }).status(500);
