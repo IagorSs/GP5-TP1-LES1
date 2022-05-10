@@ -1,4 +1,4 @@
-import api from "../config/axios";
+import api from "../config/api";
 
 export const getAllFlavors = async () => {
   const { data } = await api.get(`/stock/pizza/flavor`);

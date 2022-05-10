@@ -1,13 +1,18 @@
-import wait from '../tmp/wait';
-import api from '../config/axios';
+import api from '../config/api';
 
 export const register = (body) => api.post('/user/new', body);
 
-export const login = async () => {
-  // TODO
-  await wait(1500);
+export const login = async (body) => {
+  const { data: { token: jwtToken } } = await api.post('/user/login', body);
 
-  return "jwt_token";
+  console.log({jwtToken})
+  // TODO put jwtToken to api req
+
+  // TODO decoded jwt
+  const user = {};
+
+  // TODO return to put in React context
+  return user;
 }
 
 export const logout = () => {
