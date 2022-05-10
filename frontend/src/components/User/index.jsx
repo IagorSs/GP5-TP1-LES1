@@ -50,9 +50,6 @@ function User() {
             id="cpf-required"
             label="CPF"
             type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
             variant="standard"
             onChange={(newValue) => {
               setCpf(newValue.target.value);
@@ -80,7 +77,6 @@ function User() {
           />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              required
               inputFormat="dd/MM/yyyy"
               label="Data de Nascimento"
               value={birthDay}

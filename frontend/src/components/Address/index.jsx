@@ -19,7 +19,7 @@ export default function Address() {
   }
 
   useEffect(() => {
-    async function fetchAddress () {
+    async function fetchAddress() {
       const { data, status } = await zipcode(cep);
 
       // TODO resposta de erro pro usuário
@@ -45,14 +45,15 @@ export default function Address() {
           <div className="cepSearch">
             {window.location.pathname !== "/user" ? (
               <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-cep">CEP</InputLabel>
+                <InputLabel required htmlFor="outlined-adornment-cep">
+                  CEP
+                </InputLabel>
                 <OutlinedInput
-                  required
                   id="cep-required"
                   onChange={handleChangeCEP}
                   variant="standard"
                   type="number"
-                  label="CEP"
+                  label="CEP *"
                 />
               </FormControl>
             ) : (
@@ -71,13 +72,14 @@ export default function Address() {
           {window.location.pathname !== "/user" ? (
             <>
               <TextField
+                required
                 id="address-number"
                 label="Número"
                 type="number"
                 // value={number}
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
                 variant="standard"
                 onChange={(newValue) => {
                   setNumber(newValue.target.value);
@@ -100,13 +102,11 @@ export default function Address() {
                 label="Número"
                 type="number"
                 value={number}
-                InputLabelProps={{
-                  shrink: true,
-                }}
                 variant="standard"
                 onChange={(newValue) => {
                   setNumber(newValue.target.value);
                 }}
+                disabled
               />
 
               <TextField
@@ -117,6 +117,7 @@ export default function Address() {
                 onChange={(newValue) => {
                   setComplement(newValue.target.value);
                 }}
+                disabled
               />
             </>
           )}
