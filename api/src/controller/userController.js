@@ -217,6 +217,43 @@ class UserController extends Controller {
 
     response.send(orders).status(200);
   }
+
+  async GetAddress(request, response) {
+    const { id } = await Decode(request.headers);
+
+    if (!id)
+      return response.send({ message: "A valid token is missing" }).status(501);
+
+    const params = {
+      where: {
+        id,
+      },
+    };
+
+    const user = await super.GetOne(params);
+
+    if (user.error) {
+      return response.send({ message: "Can't load address" }).status(500);
+    }
+
+    const { Address, Zipcode, Name } = user.data;
+    const data = {
+      Address,
+      Zipcode,
+      Name,
+    };
+
+    return response.send({ ...data });
+  }
+
+  async TokenAuth(request, response) {
+    const token = await Decode(request.headers);
+
+    if (!Object.values(token).length)
+      return response.send({ error: "A valid token is missing" }).status(501);
+
+    return response.send({ message: "Valid" });
+  }
 }
 
 export default UserController;
