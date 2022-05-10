@@ -117,7 +117,8 @@ class UserController extends Controller {
 
     const { id } = await Decode(request.headers);
 
-    if (!id) return response.send({ message: "A valid token is missing" });
+    if (!id)
+      return response.send({ message: "A valid token is missing" }).status(501);
 
     const params = {
       data: {
@@ -151,9 +152,12 @@ class UserController extends Controller {
 
     const { orderId } = request.body;
 
-    if (!id) return response.send({ message: "A valid token is missing" });
+    if (!id)
+      return response.send({ message: "A valid token is missing" }).status(501);
     if (!orderId)
-      return response.send({ message: "order reference is missing" });
+      return response
+        .send({ message: "order reference is missing" })
+        .status(501);
 
     const params = {
       where: {
@@ -182,7 +186,8 @@ class UserController extends Controller {
   async GetHistory(request, response) {
     const { id } = await Decode(request.headers);
 
-    if (!id) return response.send({ message: "A valid token is missing" });
+    if (!id)
+      return response.send({ message: "A valid token is missing" }).status(501);
 
     const params = {
       where: {
