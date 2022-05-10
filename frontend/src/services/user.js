@@ -16,3 +16,5 @@ export const logout = (setUser) => {
   
   setUser(null);
 }
+
+export const address = () => api.get('/user/address');
