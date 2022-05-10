@@ -1,5 +1,6 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { NotLoggedRoute, UserRoute } from "./components/Routes";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
@@ -15,11 +16,55 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" exact element={<Login />} />
-          <Route path="/user/register" exact element={<UserRegister />} />
-          <Route path="/menu" exact element={<Menu />} />
-          <Route path="/cart" exact element={<Cart />} />
-          <Route path="/user" exact element={<User />} />
+          <Route
+            path="/"
+            exact
+            element={
+              <NotLoggedRoute>
+                <Login />
+              </NotLoggedRoute>
+            }
+          />
+
+          <Route
+            path="/user/register"
+            exact
+            element={
+              <NotLoggedRoute>
+                <UserRegister />
+              </NotLoggedRoute>
+            }
+          />
+
+          <Route
+            path="/menu"
+            exact
+            element={
+              <UserRoute>
+                <Menu />
+              </UserRoute>
+            }
+          />
+
+          <Route
+            path="/cart"
+            exact
+            element={
+              <UserRoute>
+                <Cart />
+              </UserRoute>
+            }
+          />
+
+          <Route
+            path="/user"
+            exact
+            element={
+              <UserRoute>
+                <User />
+              </UserRoute>
+            }
+          />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -1,12 +1,15 @@
 
 import { Navigate, Outlet } from "react-router-dom";
+import { useContext } from 'react';
+import { AuthContext } from '../../../auth/AuthContext';
 
 export default function NotLoggedRoute ({
-  userType,
   children,
 }){
-  if (userType) {
-    return <Navigate to={userType === "ADMIN" ? "/admin":"/user"} replace />;
+  const { user } = useContext(AuthContext);
+
+  if (user) {
+    return <Navigate to={user.Permission === "client" ? "/user":"/admin"} replace />;
   }
 
   return children ? children : <Outlet />;
