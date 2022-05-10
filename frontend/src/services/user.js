@@ -1,20 +1,18 @@
-import api from '../config/api';
+import api, { setApiToken, removeApiToken } from '../config/api';
+import jwt_decode from "jwt-decode";
 
 export const register = (body) => api.post('/user/new', body);
 
-export const login = async (body) => {
+export const login = async (body, setUser) => {
   const { data: { token: jwtToken } } = await api.post('/user/login', body);
 
-  console.log({jwtToken})
-  // TODO put jwtToken to api req
+  setApiToken(jwtToken);
 
-  // TODO decoded jwt
-  const user = {};
-
-  // TODO return to put in React context
-  return user;
+  setUser(jwt_decode(jwtToken));
 }
 
-export const logout = () => {
-  // TODO
+export const logout = (setUser) => {
+  removeApiToken();
+  
+  setUser(null);
 }

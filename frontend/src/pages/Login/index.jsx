@@ -1,5 +1,5 @@
 import { useForm, Controller } from 'react-hook-form';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -15,24 +15,22 @@ import SendIcon from "@mui/icons-material/Send";
 import BadgeIcon from "@mui/icons-material/Badge";
 import Link from "../../components/Link";
 import { login } from '../../services/user';
+import { AuthContext } from '../../auth/AuthContext';
 
 import "./style.css";
 
 export default function InputAdornments() {
   const [showPassword, setShowPassword] = useState(false);
+  const { setUser } = useContext(AuthContext);
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      user: "",
-      password: ""
+      CPF: "",
+      Password: ""
     }
   });
 
-  const submitLogin = async (data) => {
-    await login(data);
-
-    // TODO fazer redirecionamento de tela
-  }
+  const submitLogin = (data) => login(data, setUser);
 
   return (
     <Box sx={{ "& > :not(style)": { m: 1 } }} className="main-login">
@@ -41,15 +39,15 @@ export default function InputAdornments() {
         <Box>
           <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
           <Controller
-            name="user"
+            name="CPF"
             control={control}
-            render={({ field }) => <TextField {...field} label="Usuário" variant="standard" />}
+            render={({ field }) => <TextField {...field} label="CPF" variant="standard" />}
           />
         </Box>
         <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
           <InputLabel htmlFor="standard-adornment-password">Senha</InputLabel>
           <Controller
-            name="password"
+            name="Password"
             control={control}
             render={({ field }) => (
               <Input
