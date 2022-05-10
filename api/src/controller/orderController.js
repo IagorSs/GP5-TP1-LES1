@@ -78,7 +78,9 @@ class OrderController {
     request.body = { list };
     const orders = await BuildOrder(request);
 
-    response.send(orders).status(200);
+    if (orders.message) return response.send({ ...orders.message }).status(500);
+
+    return response.send(orders).status(200);
   }
 
   // Busca pelos pedidos em aberto
@@ -102,6 +104,9 @@ class OrderController {
     const list = Object.values({ ...order.data });
     request.body = { list };
     const orders = await BuildOrder(request);
+
+    if (orders.message) return response.send({ ...orders.message }).status(500);
+
     response.send(orders);
   }
 
