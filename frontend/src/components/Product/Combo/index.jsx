@@ -32,14 +32,20 @@ function Combo({ product }) {
       <Card>
         <ProductDescription key={product.id} product={product} />
         <div className="pizzas">
-          {pizzas.map((pizza) => (
-            <Pizza key={pizza.id} product={pizza} />
-          ))}
+          {pizzas.map(
+            (pizza) => (
+              (pizza.Father = "Combo"),
+              (<Pizza key={pizza.id} product={pizza} />)
+            )
+          )}
         </div>
         <div className="drinks">
-          {drinks.map((drink) => (
-            <Drink key={drink.id} product={drink} />
-          ))}
+          {drinks.map(
+            (drink) => (
+              (drink.Father = "Combo"),
+              (<Drink key={drink.id} product={drink} />)
+            )
+          )}
         </div>
       </Card>
     </div>

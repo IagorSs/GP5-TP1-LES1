@@ -15,6 +15,7 @@ import "./style.css";
 const SIZE_COMBO = {
   U: "Único",
 };
+
 const SIZES_PIZZA = {
   P: "4 Fatias",
   M: "6 Fatias",
@@ -56,6 +57,7 @@ function ProductDescription({ product }) {
               onChange={handleChangeSize}
               autoWidth
               label="Tamanho"
+              disabled={product.Father === "Combo"}
             >
               {/* {Object.entries(
                 // FIXME: os produtos estao instaciados de maneira incorreta no carrinho
