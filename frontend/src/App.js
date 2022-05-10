@@ -9,6 +9,7 @@ import UserRegister from "./pages/UserRegister";
 import Cart from "./pages/Cart";
 import User from "./pages/User";
 import AuthProvider from "./auth/AuthContext";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -64,6 +65,11 @@ function App() {
                 <User />
               </UserRoute>
             }
+          />
+
+          <Route
+            path="*"
+            element={<NotFound />}
           />
         </Routes>
         <Footer />
