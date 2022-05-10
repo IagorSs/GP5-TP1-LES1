@@ -9,7 +9,7 @@ export default function NotLoggedRoute ({
   const { user } = useContext(AuthContext);
 
   if (user) {
-    return <Navigate to={user.Permission === "client" ? "/user":"/admin"} replace />;
+    return <Navigate to={user.Permission === "client" ? "/menu":"/admin"} replace />;
   }
 
   return children ? children : <Outlet />;
