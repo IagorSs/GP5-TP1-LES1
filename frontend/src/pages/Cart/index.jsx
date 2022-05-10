@@ -6,6 +6,7 @@ import Address from "../../components/Address";
 import Product from "../../components/Product";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import InputAdornment from "@mui/material/InputAdornment";
 import { convertToMoney } from "../../utils/string";
@@ -14,6 +15,7 @@ import "./style.css";
 export default function Carrinho() {
   const [products, setProducts] = useState([]);
   const [orderValue, setOrderValue] = useState(0);
+  const [observations, setObservations] = useState("");
 
   async function handleSetValue() {
     let value = 0;
@@ -60,23 +62,45 @@ export default function Carrinho() {
         <div>
           <Address />
         </div>
-        <div>
-          <TextField
-            id="value-read-only-input"
-            label="Valor do pedido (R$)"
-            value={convertToMoney(orderValue)}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <InputAdornment position="start"></InputAdornment>
-              ),
+        <div className="order-results">
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
             }}
-            variant="standard"
-          />
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              id="order-observation"
+              label="Observações"
+              variant="standard"
+              value={observations}
+              onChange={(newValue) => {
+                setObservations(newValue.target.value);
+              }}
+            />
 
-          <Button variant="contained" startIcon={<ShoppingCartCheckoutIcon />}>
-            Realizar Pedido
-          </Button>
+            <TextField
+              id="value-read-only-input"
+              label="Valor do pedido (R$)"
+              value={convertToMoney(orderValue)}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <InputAdornment position="start"></InputAdornment>
+                ),
+              }}
+              variant="standard"
+            />
+
+            <Button
+              variant="contained"
+              startIcon={<ShoppingCartCheckoutIcon />}
+            >
+              Realizar Pedido
+            </Button>
+          </Box>
         </div>
       </div>
     </section>

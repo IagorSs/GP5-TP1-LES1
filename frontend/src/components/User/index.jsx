@@ -1,98 +1,72 @@
-import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./style.css";
+import { useFormContext, Controller } from 'react-hook-form';
 
 function User() {
-  const [name, setName] = useState();
-  const [cpf, setCpf] = useState();
-  const [email, setEmail] = useState();
-  const [birthDay, setBirthDay] = useState();
-  const [password, setPassword] = useState();
-  let userRegister = [];
-
-  async function handleSetUser() {
-    let user = {
-      Name: name,
-      CPF: cpf,
-      Email: email,
-      Birthday: birthDay,
-      Password: password,
-    };
-
-    console.log(user);
-    userRegister.push(user);
-    localStorage.setItem("user", JSON.stringify(userRegister));
-  }
-
-  useEffect(() => {
-    handleSetUser();
-  });
+  const { control } = useFormContext();
 
   return (
-    <section>
-      <Box>
-        <div>
+    <Box component="section">
+      <Controller
+        name="Name"
+        control={control}
+        render={({ field }) => (
           <TextField
             required
-            id="name-required"
             label="Nome"
             variant="standard"
-            onChange={(newValue) => {
-              setName(newValue.target.value);
-            }}
+            {...field}
           />
+        )}
+      />
+
+      <Controller
+        name="CPF"
+        control={control}
+        render={({ field }) => (
           <TextField
             required
-            id="cpf-required"
             label="CPF"
             type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
             variant="standard"
-            onChange={(newValue) => {
-              setCpf(newValue.target.value);
-            }}
+            {...field}
           />
+        )}
+      />
+
+      <Controller
+        name="Password"
+        control={control}
+        render={({ field }) => (
           <TextField
             required
-            id="email-required"
-            label="Email"
-            variant="standard"
-            onChange={(newValue) => {
-              setEmail(newValue.target.value);
-            }}
-          />
-          <TextField
-            required
-            id="password-input"
             label="Senha"
             type="password"
-            autoComplete="current-password"
             variant="standard"
-            onChange={(newValue) => {
-              setPassword(newValue.target.value);
-            }}
+            {...field}
           />
+        )}
+      />
+
+      <Controller
+        name="Birthday"
+        control={control}
+        render={({ field }) => (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              required
               inputFormat="dd/MM/yyyy"
               label="Data de Nascimento"
-              value={birthDay}
-              onChange={(newValue) => {
-                setBirthDay(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => <TextField required variant="standard" {...params} />}
+              {...field}
             />
           </LocalizationProvider>
-        </div>
-      </Box>
-    </section>
+        )}
+      />
+    </Box>
   );
 }
 

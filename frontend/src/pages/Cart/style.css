@@ -20,7 +20,8 @@
   padding-bottom: 30px;
 }
 
-.buttom-realizar-pedido {
+.buttom-realizar-pedido,
+.order-results {
   padding: 20px;
 }
 

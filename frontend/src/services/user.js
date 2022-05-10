@@ -1,4 +1,7 @@
-import wait from "../tmp/wait";
+import wait from '../tmp/wait';
+import api from '../config/axios';
+
+export const register = (body) => api.post('/user/new', body);
 
 export const login = async () => {
   // TODO

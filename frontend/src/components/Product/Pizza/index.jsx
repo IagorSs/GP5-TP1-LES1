@@ -70,6 +70,7 @@ function Pizza({ product }) {
               onChange={(newValue) => handleSetFlavor(newValue.target.value, 0)}
               autoWidth
               label="1/2"
+              disabled={product.Father === "Combo"}
             >
               {flavorsPizza.map((flavor) => (
                 <MenuItem value={flavor.Name}>{flavor.Name}</MenuItem>
@@ -85,6 +86,7 @@ function Pizza({ product }) {
               onChange={(newValue) => handleSetFlavor(newValue.target.value, 1)}
               autoWidth
               label="1/2"
+              disabled={product.Father === "Combo"}
             >
               {flavorsPizza.map((flavor) => (
                 <MenuItem value={flavor.Name}>{flavor.Name}</MenuItem>

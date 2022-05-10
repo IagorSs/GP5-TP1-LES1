@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
+import { useFormContext, Controller } from "react-hook-form";
 import zipcode from "../../services/zipcode";
 import "./style.css";
 
 export default function Address() {
-  const [cep, setCEP] = useState("");
+  const { control, watch, setValue } = useFormContext();
+
+  const cep = watch("Zipcode");
 
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
   const [complement, setComplement] = useState("");
 
-  function handleChangeCEP({ target: { value } }) {
-    setCEP(value.toString());
-  }
-
   useEffect(() => {
-    async function fetchAddress () {
+    async function fetchAddress() {
       const { data, status } = await zipcode(cep);
 
       // TODO resposta de erro pro usuário
@@ -30,6 +26,15 @@ export default function Address() {
 
     if (cep.length === 8) fetchAddress();
   }, [cep]);
+
+  useEffect(() => {
+    let completeAddress = street;
+
+    if (number) completeAddress += `, ${number}`;
+    if (complement) completeAddress += `, ${complement}`;
+
+    setValue("Address", completeAddress);
+  }, [street, number, complement, setValue]);
 
   return (
     <div className="main-address">
@@ -43,38 +48,29 @@ export default function Address() {
       >
         <div className="main-address">
           <div className="cepSearch">
-            {window.location.pathname !== "/user" ? (
-              <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-cep">CEP</InputLabel>
-                <OutlinedInput
-                  required
-                  id="cep-required"
-                  onChange={handleChangeCEP}
-                  variant="standard"
-                  type="number"
-                  label="CEP"
-                />
-              </FormControl>
-            ) : (
-              <></>
+            {window.location.pathname !== "/user" && (
+              <Controller
+                name="Zipcode"
+                control={control}
+                render={({ field }) => (
+                  <TextField required type="number" label="CEP" {...field} />
+                )}
+              />
             )}
           </div>
 
           <TextField
-            id="address-street"
             label="Endereço"
             value={street}
             disabled
-            variant="outlined"
+            variant="standard"
           />
 
           {window.location.pathname !== "/user" ? (
             <>
               <TextField
-                id="address-number"
                 label="Número"
                 type="number"
-                // value={number}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -84,7 +80,6 @@ export default function Address() {
                 }}
               />
               <TextField
-                id="address-complement"
                 label="Complemento"
                 variant="standard"
                 value={complement}
@@ -96,27 +91,24 @@ export default function Address() {
           ) : (
             <>
               <TextField
-                id="address-number"
                 label="Número"
                 type="number"
                 value={number}
-                InputLabelProps={{
-                  shrink: true,
-                }}
                 variant="standard"
                 onChange={(newValue) => {
                   setNumber(newValue.target.value);
                 }}
+                disabled
               />
 
               <TextField
-                id="address-complement"
                 label="Complemento"
                 variant="standard"
                 value={complement}
                 onChange={(newValue) => {
                   setComplement(newValue.target.value);
                 }}
+                disabled
               />
             </>
           )}
