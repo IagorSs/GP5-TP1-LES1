@@ -1,4 +1,4 @@
-import api from "../config/axios";
+import api from "../config/api";
 import { Pizza } from "../models/products";
 
 export const getAllPizzas = async () => {

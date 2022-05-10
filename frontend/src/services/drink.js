@@ -1,4 +1,4 @@
-import api from "../config/axios";
+import api from "../config/api";
 import { Drink } from "../models/products";
 
 export const getAllDrinks = async () => {
