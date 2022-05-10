@@ -11,7 +11,7 @@ export default function Address() {
   const cep = watch("Zipcode");
 
   const [street, setStreet] = useState("");
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState(null);
   const [complement, setComplement] = useState("");
 
   useEffect(() => {
@@ -39,12 +39,9 @@ export default function Address() {
   return (
     <div className="main-address">
       <Box
-        component="form"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
         }}
-        noValidate
-        autoComplete="off"
       >
         <div className="main-address">
           <div className="cepSearch">
@@ -63,55 +60,31 @@ export default function Address() {
             label="Endereço"
             value={street}
             disabled
+            required
             variant="standard"
           />
 
-          {window.location.pathname !== "/user" ? (
-            <>
-              <TextField
-                label="Número"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="standard"
-                onChange={(newValue) => {
-                  setNumber(newValue.target.value);
-                }}
-              />
-              <TextField
-                label="Complemento"
-                variant="standard"
-                value={complement}
-                onChange={(newValue) => {
-                  setComplement(newValue.target.value);
-                }}
-              />
-            </>
-          ) : (
-            <>
-              <TextField
-                label="Número"
-                type="number"
-                value={number}
-                variant="standard"
-                onChange={(newValue) => {
-                  setNumber(newValue.target.value);
-                }}
-                disabled
-              />
-
-              <TextField
-                label="Complemento"
-                variant="standard"
-                value={complement}
-                onChange={(newValue) => {
-                  setComplement(newValue.target.value);
-                }}
-                disabled
-              />
-            </>
-          )}
+          <TextField
+            label="Número"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            required
+            variant="standard"
+            onChange={(newValue) => {
+              setNumber(newValue.target.value);
+            }}
+          />
+    
+          <TextField
+            label="Complemento"
+            variant="standard"
+            value={complement}
+            onChange={(newValue) => {
+              setComplement(newValue.target.value);
+            }}
+          />
         </div>
       </Box>
     </div>
