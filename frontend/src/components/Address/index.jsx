@@ -45,15 +45,13 @@ export default function Address() {
       >
         <div className="main-address">
           <div className="cepSearch">
-            {window.location.pathname !== "/user" && (
-              <Controller
-                name="Zipcode"
-                control={control}
-                render={({ field }) => (
-                  <TextField required type="number" label="CEP" {...field} />
-                )}
-              />
-            )}
+            <Controller
+              name="Zipcode"
+              control={control}
+              render={({ field }) => (
+                <TextField required type="number" label="CEP" {...field} />
+              )}
+            />
           </div>
 
           <TextField
@@ -76,7 +74,7 @@ export default function Address() {
               setNumber(newValue.target.value);
             }}
           />
-    
+
           <TextField
             label="Complemento"
             variant="standard"
