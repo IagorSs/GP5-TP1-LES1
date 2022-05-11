@@ -99,8 +99,6 @@ class StockController {
       },
     };
 
-    console.log(params);
-
     const combo = await Combo.Create(params);
 
     if (combo.error)
