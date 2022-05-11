@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Product from "../../components/Product";
 import * as DrinkService from "../../services/drink";
-import * as PizzaService from "../../services/pizza";
 import * as ComboService from "../../services/combo";
 import "./style.css";
+import { Pizza } from "../../models/products";
+
+const SIZES_PRICES = {
+  Pequena: 30,
+  Media: 40,
+  Grande: 50
+}
 
 export default function Cardapio() {
   const [drinksList, setDrinksList] = useState([]);
-  const [pizzaList, setPizzaList] = useState([]);
   const [comboList, setComboList] = useState([]);
 
   useEffect(() => {
@@ -16,18 +21,12 @@ export default function Cardapio() {
       setDrinksList(drinks);
     };
 
-    const fetchPizzas = async () => {
-      const pizzas = await PizzaService.getAllPizzas();
-      setPizzaList(pizzas);
-    };
-
     const fetchCombos = async () => {
       const combos = await ComboService.getAllCombos();
       setComboList(combos);
     };
 
     fetchDrinks();
-    fetchPizzas();
     fetchCombos();
   }, []);
 
@@ -37,9 +36,22 @@ export default function Cardapio() {
 
       <section className="pizzas">
         <h2 className="pizzas-menu-title">Pizzas</h2>
-        {pizzaList.map((pizza) => (
-          <Product key={pizza.id} product={pizza} />
-        ))}
+
+        <Product product={new Pizza({
+          Name: "Pizza Simples",
+          Url: "https://cdn.discordapp.com/attachments/968666819206447204/974056571950743562/unknown.png",
+          Size: "Pequena",
+          Price: SIZES_PRICES.Pequena,
+          qtdeFlavors: 1
+        })}/>
+
+        <Product product={new Pizza({
+          Name: "Pizza Mista",
+          Url: "https://instadelivery-public.nyc3.digitaloceanspaces.com/itens/wEgPsfNvkU9ThK4WFzK4tGMUAlHFbAdXY93LC1yY.png",
+          Size: "Pequena",
+          Price: SIZES_PRICES.Pequena,
+          qtdeFlavors: 2
+        })}/>
       </section>
 
       <section className="drinks">

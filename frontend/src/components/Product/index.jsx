@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Card from "@mui/material/Card";
 import Pizza from "../../components/Product/Pizza";
 import Drink from "../../components/Product/Drink";
@@ -7,17 +8,26 @@ import ProductForCart from "./components/ForCart";
 import "./style.css";
 
 function Product({ product, isCart, updateCartItems }) {
+  const [productState, setProductState] = useState(product);
+
+  const setProperties = (propertiesToUpdate) => {
+    setProductState({
+      ...productState,
+      ...propertiesToUpdate
+    });
+  }
+  
   return (
     <div className="product-card">
       <Card>
         {product instanceof PizzaModel
-          ? <Pizza key={product.id} product={product} />
+          ? <Pizza product={productState} isCart={isCart} setProperties={setProperties} />
           : product instanceof DrinkModel
-            ? <Drink key={product.id} product={product} />
-            : product instanceof ComboModel && <Combo key={product.id} product={product} />
+            ? <Drink product={product} />
+            : product instanceof ComboModel && <Combo product={product} />
         }
 
-        <ProductForCart updateCartItems={updateCartItems} isCart={isCart} key={product.id} product={product} />
+        <ProductForCart updateCartItems={updateCartItems} isCart={isCart} product={productState} />
       </Card>
     </div>
   );
