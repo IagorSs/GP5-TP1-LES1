@@ -7,7 +7,7 @@ const Auth = (request, response, next) => {
   if (
     request.url === "/user/new" ||
     request.url === "/user/login" ||
-    !request.url.includes("/user")
+    !request.url.includes("user")
   )
     return next();
 
