@@ -212,14 +212,15 @@ class StockController {
 
   async GetDrinks(request, response) {
     const drinks = await BuildDrinks(request);
+
     if (drinks.message) return response.send({ ...drinks.message }).status(500);
-    return response.send(Object.values({ ...drinks })).status(200);
+    return response.send(drinks).status(200);
   }
 
   async GetPizzas(request, response) {
     const list = await BuildPizza(request);
     if (list.message) return response.send({ ...list.message }).status(500);
-    return response.send(Object.values(list)).status(200);
+    return response.send(list).status(200);
   }
 
   async SearchPizza(request, response) {
