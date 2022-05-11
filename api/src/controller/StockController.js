@@ -221,6 +221,64 @@ class StockController {
     if (list.message) return response.send({ ...list.message }).status(500);
     return response.send(Object.values(list)).status(200);
   }
+
+  async SearchPizza(request, response) {
+    const params = {
+      where: {
+        ...request.body,
+      },
+    };
+
+    const pizzas = await Pizza.GetMany(params);
+
+    if (pizzas.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Invalid params",
+        })
+        .status(500);
+
+    const list = Object.values(pizzas.data);
+
+    if (!list.length) return response.send([]).status(200);
+
+    request.body = { list };
+    const pizza = await BuildPizza(request);
+    if (pizza.message) return response.send({ ...pizza.message }).status(500);
+
+    return response.send(pizza).status(200);
+  }
+
+  async SearchDrink(request, response) {
+    const params = {
+      where: {
+        ...request.body,
+      },
+    };
+
+    const drinks = await Drink.GetMany(params);
+
+    if (drinks.error)
+      return response
+        .send({
+          Errro: true,
+          message: "Invalid params",
+        })
+        .status(500);
+
+    const list = Object.values(drinks.data);
+
+    if (!list.length) return response.send([]).status(200);
+
+    request.body = { list };
+    const drink = await BuildDrinks(request);
+    if (drink.message) return response.send({ ...drink.message }).status(500);
+
+    return response.send(drink).status(200);
+
+    response.send(list);
+  }
 }
 
 export default StockController;
