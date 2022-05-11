@@ -7,7 +7,5 @@ export default class Product extends Base {
 
   Price;
 
-  Size;
-
   Url;
 }
