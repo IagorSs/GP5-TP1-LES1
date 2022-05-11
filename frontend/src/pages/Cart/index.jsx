@@ -96,6 +96,7 @@ export default function Carrinho() {
 
       localStorage.removeItem("cart");
       setProducts([]);
+      setObservations("");
 
       alert("Pedido realizado");
     });
