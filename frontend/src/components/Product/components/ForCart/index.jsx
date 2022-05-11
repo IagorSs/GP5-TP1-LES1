@@ -34,7 +34,7 @@ function ProductForCart({ product, isCart, updateCartItems }) {
 
   return (
     <Card>
-      <CardContent>
+      <CardContent className="card-for-cart">
         <h3>{convertToMoney(product.Price)}</h3>
       </CardContent>
       <CardActions>

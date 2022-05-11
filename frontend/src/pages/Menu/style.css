@@ -6,7 +6,9 @@
   color: var(--white);
 }
 
-.list-products-cardapio {
+.pizzas,
+.drinks,
+.combos {
   text-align: center;
   padding: 40px;
   display: block;

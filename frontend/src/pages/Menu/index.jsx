@@ -35,19 +35,25 @@ export default function Cardapio() {
     <section className="main-cardapio">
       <h1 className="cardapio-title">Cardápio</h1>
 
-      <section>
+      <section className="pizzas">
         <h2 className="pizzas-menu-title">Pizzas</h2>
-        { pizzaList.map((pizza) => <Product key={pizza.id} product={pizza} />) }
+        {pizzaList.map((pizza) => (
+          <Product key={pizza.id} product={pizza} />
+        ))}
       </section>
 
-      <section>
+      <section className="drinks">
         <h2 className="drinks-menu-title">Drinks</h2>
-        { drinksList.map((drink) => <Product key={drink.id} product={drink} />) }
+        {drinksList.map((drink) => (
+          <Product key={drink.id} product={drink} />
+        ))}
       </section>
 
-      <section>
+      <section className="combos">
         <h2 className="combos-menu-title">Combos</h2>
-        { comboList.map((combo) => <Product key={combo.id} product={combo} />) }
+        {comboList.map((combo) => (
+          <Product key={combo.id} product={combo} />
+        ))}
       </section>
     </section>
   );

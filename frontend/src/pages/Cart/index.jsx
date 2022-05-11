@@ -127,7 +127,7 @@ export default function Carrinho() {
     <section className="main-cart">
       <h1 className="cart-title">Carrinho</h1>
 
-      <div>
+      <div className="products">
         {products.map((product) => (
           <Product
             key={product.id}
