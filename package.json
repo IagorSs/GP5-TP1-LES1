@@ -6,11 +6,13 @@
   "scripts": {
     "install-frontend": "cd frontend && yarn",
     "install-backend": "cd api && yarn",
-    "install": "yarn install-backend && yarn install-frontend",
+    "install-all": "yarn install-backend && yarn install-frontend",
+    "install": "yarn install-backend",
     "start-frontend": "cd frontend && yarn start",
     "start-backend": "cd api && yarn dev",
     "start-prisma-studio": "cd api && yarn prisma-studio",
-    "start": "yarn concurrently \"yarn start-frontend\" \"yarn start-backend\" \"yarn start-prisma-studio\"",
+    "start-all": "yarn concurrently \"yarn start-frontend\" \"yarn start-backend\" \"yarn start-prisma-studio\"",
+    "start": "cd api && yarn dev",
     "update-db": "cd api && yarn update-prisma"
   },
   "devDependencies": {
