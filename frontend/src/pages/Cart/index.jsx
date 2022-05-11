@@ -49,22 +49,17 @@ export default function Carrinho() {
 
     products.forEach((product) => {
       let flavorsIds = "";
-      let NamePizza = "";
-
       if (product instanceof Pizza) {
-        product.Flavor.map(
-          (flavor) => (
-            (flavorsIds = concatStr(flavorsIds, flavor.id, ",")),
-            (NamePizza = concatStr(NamePizza, flavor.Name, "/"))
-          )
-        );
+        flavorsIds = concatStr(flavorsIds, product.Flavor1, ",");
+        if (product.Flavor2)
+          flavorsIds = concatStr(flavorsIds, product.Flavor2, ",");
+
         const flavorsIDS = removeLastElement(flavorsIds);
-        const pizzaNames = removeLastElement(NamePizza);
 
         requests.push(
           PizzaService.registerPizza({
             Flavor: flavorsIDS,
-            Name: pizzaNames,
+            Name: product.Name,
             Size: product.Size,
             Price: product.Price,
             Url: product.Url,
@@ -72,10 +67,8 @@ export default function Carrinho() {
         );
       } else if (product instanceof Drink) {
         Drinks = concatStr(Drinks, product.id, ",");
-        Drinks = removeLastElement(Drinks);
       } else {
         Combos = concatStr(Combos, product.id, ",");
-        Combos = removeLastElement(Combos);
       }
     });
 
@@ -84,6 +77,8 @@ export default function Carrinho() {
         Pizzas = concatStr(Pizzas, pizzas.data[0].id, ",");
       });
       Pizzas = removeLastElement(Pizzas);
+      Drinks = removeLastElement(Drinks);
+      Combos = removeLastElement(Combos);
 
       UserService.registerOrder({
         Status: "Recebido",
@@ -181,7 +176,7 @@ export default function Carrinho() {
             <Button
               variant="contained"
               startIcon={<Delete />}
-              style={{backgroundColor: 'red'}}
+              style={{ backgroundColor: "red" }}
               onClick={() => {
                 window.localStorage.removeItem("cart");
                 updateProductsWithStorage();
