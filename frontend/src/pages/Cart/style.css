@@ -25,6 +25,12 @@
   padding: 20px;
 }
 
+.products {
+  text-align: center;
+  padding: 40px;
+  display: block;
+}
+
 @media (orientation: landscape) {
   .cart-title {
     font-size: 50px;
