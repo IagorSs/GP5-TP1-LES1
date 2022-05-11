@@ -200,8 +200,6 @@ class UserController extends Controller {
 
     const order = await super.GetOne(params);
 
-    console.log(order);
-
     const list = Object.values({ ...order.data.Orders }).reverse();
 
     if (order.error) {
@@ -209,13 +207,13 @@ class UserController extends Controller {
     }
 
     if (!list.length) {
-      response.send(list).status(200);
+      return response.send(list).status(200);
     }
 
     request.body = { list };
     const orders = await BuildOrder(request);
 
-    response.send(orders).status(200);
+    return response.send(orders).status(200);
   }
 
   async GetAddress(request, response) {
