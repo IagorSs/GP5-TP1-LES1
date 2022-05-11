@@ -63,13 +63,9 @@ class StockController {
   async CreatePizza(request, response) {
     const { Flavor, Name, Size, Price, Url } = request.body;
 
-    const [flavor0, flavor1] = Flavor.split(",");
-    const list = [flavor0];
-    if (flavor1) list.push(flavor1);
-
     const params = {
       data: {
-        Flavor: list,
+        Flavor: Flavor.split(","),
         Name,
         Url,
         Size,
