@@ -2,6 +2,7 @@
   "name": "les1-tp1",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://tp1-les1.s3-website-us-east-1.amazonaws.com",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
