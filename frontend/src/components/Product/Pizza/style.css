@@ -1,7 +1,12 @@
 .flavors-pizza {
-  margin-top: 20px;
+  margin: 20px;
   text-align: center;
 }
+
+.flavors-pizza > * + * {
+  margin-left: 10px !important;
+}
+
 @media (orientation: landscape) {
   .pizza-card {
     padding: 50px;
