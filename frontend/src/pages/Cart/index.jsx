@@ -80,7 +80,7 @@ export default function Carrinho() {
       </div>
 
       <div className="delivery">
-        {/* <h3>Receber em:</h3> */}
+        <h3>Receber em:</h3>
         {/* <div>
           <Address />
         </div> */}

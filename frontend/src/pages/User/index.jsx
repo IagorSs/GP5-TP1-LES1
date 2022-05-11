@@ -1,19 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { TextField } from "@mui/material";
 import Order from "../../components/Order";
 import * as UserService from "../../services/user";
+import { AuthContext } from "../../auth/AuthContext";
+import api from "../../config/api";
 import "./style.css";
 
 export default function User() {
   const [address, setAddress] = useState("");
+  const { user } = useContext(AuthContext);
 
+  console.log(user);
   useEffect(() => {
     const fetchAddress = async () => {
-      const { data: { Address } } = await UserService.address();
+      const {
+        data: { Address },
+      } = await UserService.address();
 
       setAddress(Address);
-    }
+    };
 
+    const { Permission } = user;
+    const fetchHistory = async () => {
+      const data = await api.get("/user/history");
+      console.log(data);
+    };
+    fetchHistory();
+    //  Permission === 'client' ?  const {} = api.get("/user/history")
     fetchAddress();
   }, []);
 
@@ -27,7 +40,7 @@ export default function User() {
           disabled
           required
           variant="outlined"
-          sx={{ width: '50%', minWidth: '400px' }}
+          sx={{ width: "50%", minWidth: "400px" }}
         />
       </div>
 
