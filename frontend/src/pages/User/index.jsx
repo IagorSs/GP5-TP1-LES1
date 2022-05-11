@@ -2,15 +2,13 @@ import { useEffect, useState, useContext } from "react";
 import { TextField } from "@mui/material";
 import Order from "../../components/Order";
 import * as UserService from "../../services/user";
-import { AuthContext } from "../../auth/AuthContext";
 import api from "../../config/api";
 import "./style.css";
 
 export default function User() {
   const [address, setAddress] = useState("");
-  const { user } = useContext(AuthContext);
+  const [orders, setOrders] = useState();
 
-  console.log(user);
   useEffect(() => {
     const fetchAddress = async () => {
       const {
@@ -20,13 +18,21 @@ export default function User() {
       setAddress(Address);
     };
 
-    const { Permission } = user;
     const fetchHistory = async () => {
-      const data = await api.get("/user/history");
+      const { data } = await api.get("/user/history");
       console.log(data);
+
+      const order = data.map((order) => ({
+        combos: order.Combo,
+        drinks: order.Drinks,
+        pizzas: order.Pizzas,
+        status: order.Status,
+      }));
     };
+
+    setOrders(order);
+
     fetchHistory();
-    //  Permission === 'client' ?  const {} = api.get("/user/history")
     fetchAddress();
   }, []);
 
@@ -44,9 +50,11 @@ export default function User() {
         />
       </div>
 
+      <compPizza> orders[0].pizza.flavor</compPizza>
+
       <div className="user-orders">
         <h2 className="user-orders-title">Histórico de Pedidos</h2>
-        <Order />
+
       </div>
     </section>
   );
