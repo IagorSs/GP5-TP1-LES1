@@ -9,7 +9,7 @@ import { convertToMoney } from "../../utils/string";
 import * as PizzaService from "../../services/pizza";
 import * as DrinkService from "../../services/drink";
 import { address as getAddress } from '../../services/user';
-import { Pizza, Drink } from '../../models/products';
+import { Pizza, Drink, Combo } from '../../models/products';
 import "./style.css";
 
 export default function Carrinho() {
@@ -26,7 +26,8 @@ export default function Carrinho() {
 
     productsStorage.forEach((prod) => {
       if (prod.Type === 'Pizza') productsModels.push(new Pizza(prod));
-      if (prod.Type === 'Drink') productsModels.push(new Drink(prod));
+      else if (prod.Type === 'Drink') productsModels.push(new Drink(prod));
+      else productsModels.push(new Combo(prod));
     });
 
     setProducts(productsModels);
@@ -128,7 +129,7 @@ export default function Carrinho() {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <InputAdornment position="start"></InputAdornment>
+                  <InputAdornment position="start" />
                 ),
               }}
               variant="standard"
