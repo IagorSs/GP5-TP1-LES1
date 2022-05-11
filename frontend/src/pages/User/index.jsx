@@ -1,33 +1,39 @@
-import * as React from "react";
-import Address from "../../components/Address";
+import { useEffect, useState } from "react";
+import { TextField } from "@mui/material";
 import Order from "../../components/Order";
-// import * as UserService from "../../services/user";
+import * as UserService from "../../services/user";
 import "./style.css";
 
 export default function User() {
-  // async function handleInsertUser() {
-  //   let userInfos = JSON.parse(localStorage.getItem("user"));
-  //   let addressInfos = JSON.parse(localStorage.getItem("address"));
+  const [address, setAddress] = useState("");
 
-  //   // console.log(userInfos);
-  //   // console.log(addressInfos);
-  //   // let index = productsStorage.findIndex((item) => item.id === product.id);
-  //   // productsStorage.splice(index, 1);
-  //   // localStorage.setItem("cart", JSON.stringify(productsStorage));
-  //   // window.location.reload();
-  // }
+  useEffect(() => {
+    const fetchAddress = async () => {
+      const { data: { Address } } = await UserService.address();
+
+      setAddress(Address);
+    }
+
+    fetchAddress();
+  }, []);
 
   return (
     <section className="user-main">
       <div className="user-address">
         <h2 className="user-address-title">Endereço Padrão</h2>
-        <Address />
+        <TextField
+          label="Endereço"
+          value={address}
+          disabled
+          required
+          variant="outlined"
+          sx={{ width: '50%', minWidth: '400px' }}
+        />
       </div>
 
       <div className="user-orders">
         <h2 className="user-orders-title">Histórico de Pedidos</h2>
         <Order />
-        {/* <Order /> */}
       </div>
     </section>
   );

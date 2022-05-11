@@ -37,12 +37,9 @@ export default function CadastroUsuario() {
         <h1 className="userRegister-title">Cadastro de Usuários</h1>
 
         <Box
-          component="form"
           sx={{
             "& .MuiTextField-root": { m: 1, width: "25ch" },
           }}
-          noValidate
-          autoComplete="off"
         >
           <div className="user-infos">
             <h3 className="user-infos-title">Dados cadastrais</h3>

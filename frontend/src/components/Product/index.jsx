@@ -9,20 +9,6 @@ function Product({ product }) {
   return (
     <div className="product-card">
       <Card>
-        {/* {product instanceof Pizza ? (
-          // (
-          //   <Pizza key={product.id} product={product} />
-          // ) : (
-          //   <Drink key={product.id} product={product} />
-          // )
-          <Pizza key={product.id} product={product} />
-        ) : // <Drink key={product.id} product={product} />
-        product instanceof Drink ? (
-          <Drink key={product.id} product={product} />
-        ) : (
-          // <Pizza key={product.id} product={product} />
-          <Combo key={product.id} product={product} />
-        )} */}
         {product.Type === "Pizza" ? (
           <Pizza key={product.id} product={product} />
         ) : product.Type === "Drink" ? (
