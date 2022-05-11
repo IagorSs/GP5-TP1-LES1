@@ -4,6 +4,8 @@ import dotev from "dotenv";
 dotev.config();
 
 const Auth = (request, response, next) => {
+
+    console.log({ HEADERS: request.headers });
   if (
     request.url === "/user/new" ||
     request.url === "/user/login" ||
@@ -11,7 +13,7 @@ const Auth = (request, response, next) => {
   )
     return next();
 
-  console.log({ HEADERS: request.headers });
+  
 
   const { token } = request.headers;
 
