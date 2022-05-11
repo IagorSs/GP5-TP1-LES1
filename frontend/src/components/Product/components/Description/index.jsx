@@ -11,26 +11,24 @@ import "./style.css";
 
 function ProductDescription({ product }) {
   return (
-    <div>
-      <Card>
-        <CardMedia component="img" height="250" image={product.Url} />
+    <Card>
+      <CardMedia component="img" height="250" image={product.Url} />
 
-        <CardContent>
-          <h2>{product.Name}</h2>
+      <CardContent>
+        <h2>{product.Name}</h2>
 
-          {
-            !(product instanceof Combo) && 
-            <TextField
-              value={product.Size}
-              autoWidth
-              label="Tamanho"
-              disabled
-              sx={{ m: 1, minWidth: 80, display: 'flex' }}
-            />
-          }
-        </CardContent>
-      </Card>
-    </div>
+        {
+          !(product instanceof Combo) && 
+          <TextField
+            value={product.Size}
+            autoWidth
+            label="Tamanho"
+            disabled
+            sx={{ m: 1, minWidth: 80, display: 'flex' }}
+          />
+        }
+      </CardContent>
+    </Card>
   );
 }
 
