@@ -153,12 +153,12 @@ class StockController {
   }
 
   async SearchCombo(request, response) {
-    const { Tag } = request.body;
+    const { Description } = request.body;
 
     const params = {
       where: {
-        Tag: {
-          contains: Tag,
+        Description: {
+          contains: Description,
         },
       },
     };
@@ -276,9 +276,7 @@ class StockController {
     const drink = await BuildDrinks(request);
     if (drink.message) return response.send({ ...drink.message }).status(500);
 
-    return response.send(drink).status(200);
-
-    response.send(list);
+    return response.send(list).status(200);
   }
 }
 

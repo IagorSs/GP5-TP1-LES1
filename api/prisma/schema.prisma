@@ -23,16 +23,13 @@ model Order {
   Combos      String[] @db.ObjectId
   Observation String[]
   Total       Float
-
-
-  userId String
+  userId      String   @db.ObjectId
 }
 
 model Combo {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  Tag         String
   Url         String
   Name        String
   Description String

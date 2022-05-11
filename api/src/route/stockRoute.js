@@ -6,7 +6,7 @@ const client = new StockController();
 
 route.post("/drink/new", client.CreateDrink.bind(client));
 route.get("/drink", client.GetDrinks.bind(client));
-route.get("/drink/search", client.SearchPizza.bind(client));
+route.get("/drink/search", client.SearchDrink.bind(client));
 
 route.post("/pizza/new", client.CreatePizza.bind(client));
 route.get("/pizza", client.GetPizzas.bind(client));
