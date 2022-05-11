@@ -1,5 +1,5 @@
 import { useForm, Controller } from 'react-hook-form';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import BadgeIcon from "@mui/icons-material/Badge";
 import Link from "../../components/Link";
-import { login } from '../../services/user';
+import { login, setUserToken } from '../../services/user';
 import { AuthContext } from '../../auth/AuthContext';
 
 import "./style.css";
@@ -31,6 +31,12 @@ export default function InputAdornments() {
   });
 
   const submitLogin = (data) => login(data, setUser);
+
+  useEffect(() => {
+    const jwtUserToken = window.localStorage.getItem("@pizzaria-pizzada/user-token");
+
+    if (jwtUserToken) setUserToken(jwtUserToken, setUser);
+  }, []);
 
   return (
     <Box sx={{ "& > :not(style)": { m: 1 } }} className="main-login">
