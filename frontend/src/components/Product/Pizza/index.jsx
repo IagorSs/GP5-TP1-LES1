@@ -1,78 +1,31 @@
-import { useState, useEffect } from "react";
-import Card from "@mui/material/Card";
+import { Card, TextField } from "@mui/material";
 import ProductDescription from "../components/Description";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import * as PizzaFlavorService from "../../../services/flavor";
 
 import "./style.css";
 
 function Pizza({ product }) {
-  product.Type = "Pizza";
-  const [flavorsPizza, setFlavorsPizza] = useState([]);
-  const [flavorOne, setFlavorOne] = useState(product.Flavor[0].Name);
-  const [flavorTwo, setFlavorTwo] = useState(product.Flavor[1].Name);
-
-  async function handleSetFlavor(newValue, flavor) {
-    let index = flavorsPizza.findIndex((item) => item.Name === newValue);
-    let newFlavor = flavorsPizza[index];
-
-    if (flavor === 0) {
-      product.Flavor[0] = newFlavor;
-      setFlavorOne(newFlavor.Name);
-    } else {
-      product.Flavor[1] = newFlavor;
-      setFlavorTwo(newFlavor.Name);
-    }
-  }
-
-  useEffect(() => {
-    const fetchFlavors = async () => {
-      const flavors = await PizzaFlavorService.getAllFlavors();
-      setFlavorsPizza(flavors);
-    };
-
-    fetchFlavors();
-  }, []);
-
   return (
     <div className="pizza-card">
       <Card>
         <ProductDescription key={product.id} product={product} />
-        <div className="flavors-pizza">
-          <FormControl sx={{ m: 1, minWidth: 80 }}>
-            <InputLabel>1/2</InputLabel>
-            <Select
-              id={"pizza-select" + 0}
-              value={flavorOne}
-              onChange={(newValue) => handleSetFlavor(newValue.target.value, 0)}
-              autoWidth
-              label="1/2"
-              disabled={product.Father === "Combo"}
-            >
-              {flavorsPizza.map((flavor) => (
-                <MenuItem value={flavor.Name}>{flavor.Name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
 
-          <FormControl sx={{ m: 1, minWidth: 80 }}>
-            <InputLabel>1/2</InputLabel>
-            <Select
-              id={"pizza-select" + 1}
-              value={flavorTwo}
-              onChange={(newValue) => handleSetFlavor(newValue.target.value, 1)}
+        <div className="flavors-pizza">
+          <TextField
+            value={product.Flavor[0].Name}
+            autoWidth
+            label={product.Flavor.length === 2 ? "1/2":"Sabor"}
+            disabled
+          />
+
+          
+          {product.Flavor.length === 2
+            && <TextField
+              value={product.Flavor[1].Name}
               autoWidth
               label="1/2"
-              disabled={product.Father === "Combo"}
-            >
-              {flavorsPizza.map((flavor) => (
-                <MenuItem value={flavor.Name}>{flavor.Name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              disabled
+            />
+          }
         </div>
       </Card>
     </div>

@@ -1,12 +1,12 @@
 import Product from "./Product";
 
-export default class Pizza extends Product {
+export default class Combo extends Product {
+  Drinks;
+
+  Pizzas;
+
   constructor(obj) {
     super();
     this.serialize(obj);
   }
-
-  Drinks;
-
-  Pizzas;
 }

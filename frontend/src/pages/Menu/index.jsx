@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import Pizza from "../../components/Product/Pizza";
-// import Drink from "../../components/Product/Drink";
-// import Combo from "../../components/Product/Combo";
 import Product from "../../components/Product";
 import * as DrinkService from "../../services/drink";
 import * as PizzaService from "../../services/pizza";
@@ -38,50 +35,20 @@ export default function Cardapio() {
     <section className="main-cardapio">
       <h1 className="cardapio-title">Cardápio</h1>
 
-      {/* <div>
-        {pizzaList.map((pizza) => (
-          <Pizza key={pizza.id} product={pizza} />
-        ))}
-      </div>
-
-      <div>
-        {drinksList.map((drink) => (
-          <Drink key={drink.id} product={drink} />
-        ))}
-      </div> */}
-
-      {/* <div>
-        {comboList.map((combo) => (
-          <Combo key={combo.id} product={combo} />
-        ))}
-      </div> */}
-
-      <div>
+      <section>
         <h2 className="pizzas-menu-title">Pizzas</h2>
-        {pizzaList.map(
-          (pizza) => (
-            (pizza.Type = "Pizza"), (<Product key={pizza.id} product={pizza} />)
-          )
-        )}
-      </div>
+        { pizzaList.map((pizza) => <Product key={pizza.id} product={pizza} />) }
+      </section>
 
-      <div>
+      <section>
         <h2 className="drinks-menu-title">Drinks</h2>
-        {drinksList.map(
-          (drink) => (
-            (drink.Type = "Drink"), (<Product key={drink.id} product={drink} />)
-          )
-        )}
-      </div>
+        { drinksList.map((drink) => <Product key={drink.id} product={drink} />) }
+      </section>
 
-      <div>
+      <section>
         <h2 className="combos-menu-title">Combos</h2>
-        {comboList.map(
-          (combo) => (
-            (combo.Type = "Combo"), (<Product key={combo.id} product={combo} />)
-          )
-        )}
-      </div>
+        { comboList.map((combo) => <Product key={combo.id} product={combo} />) }
+      </section>
     </section>
   );
 }
