@@ -10,6 +10,7 @@ import * as PizzaFlavorService from "../../../services/flavor";
 import "./style.css";
 
 function Pizza({ product }) {
+  product.Type = "Pizza";
   const [flavorsPizza, setFlavorsPizza] = useState([]);
   const [flavorOne, setFlavorOne] = useState(product.Flavor[0].Name);
   const [flavorTwo, setFlavorTwo] = useState(product.Flavor[1].Name);
@@ -41,27 +42,6 @@ function Pizza({ product }) {
       <Card>
         <ProductDescription key={product.id} product={product} />
         <div className="flavors-pizza">
-          {/* {Object.entries(LABELS).map(([value]) => (
-            <FormControl sx={{ m: 1, minWidth: 80 }}>
-              <InputLabel>1/2</InputLabel>
-              <Select
-                id={"pizza-select" + value}
-                value={value === 0 ? flavorOne : flavorTwo}
-                onChange={(newValue) =>
-                  handleSetFlavor(newValue.target.value, value)
-                }
-                autoWidth
-                label="1/2"
-              >
-                {Object.entries(FLAVORS_PIZZA).map(([key, description]) => (
-                  <MenuItem key={key} value={key}>
-                    {description}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          ))} */}
-
           <FormControl sx={{ m: 1, minWidth: 80 }}>
             <InputLabel>1/2</InputLabel>
             <Select
