@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "main": "index.js",
+  "homepage": "https://gp5-tp1-les1.herokuapp.com/",
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "prisma-studio": "yarn prisma studio",
