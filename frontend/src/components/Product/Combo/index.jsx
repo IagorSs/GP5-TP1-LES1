@@ -1,31 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import ProductDescription from "../components/Description";
 
 import Pizza from "../Pizza";
 import Drink from "../Drink";
-// import ProductForCart from "../components/ForCart";
-// import InputLabel from "@mui/material/InputLabel";
-// import MenuItem from "@mui/material/MenuItem";
-// import FormControl from "@mui/material/FormControl";
-// import Select from "@mui/material/Select";
-// import * as PizzaFlavorService from "../../../services/flavor";
 
 import "./style.css";
 
 function Combo({ product }) {
-  const [pizzas, setPizzas] = useState(product.Pizzas);
-  const [drinks, setDrinks] = useState(product.Drinks);
-
-  // console.log(pizzas);
-  // useEffect(() => {
-  //   const fetchPizzas = async () => {
-  //     const pizzas = await PizzaFlavorService.getAllFlavors();
-  //     setFlavorsPizza(flavors);
-  //   };
-
-  //   fetchFlavors();
-  // }, []);
+  const [pizzas] = useState(product.Pizzas);
+  const [drinks] = useState(product.Drinks);
 
   return (
     <div className="combo-card">
