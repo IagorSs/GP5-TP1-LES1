@@ -50,14 +50,12 @@ class StockController {
     const drink = await Drink.Create(params);
 
     if (drink.error)
-      return response
-        .send({
-          Errro: true,
-          message: "Server error. Can't create a new Drink",
-        })
-        .status(500);
+      return response.status(500).send({
+        Errro: true,
+        message: "Server error. Can't create a new Drink",
+      });
 
-    return response.send({ message: "Drink created!" }).status(200);
+    return response.status(200).send({ ...drink.data });
   }
 
   async CreatePizza(request, response) {
@@ -75,14 +73,17 @@ class StockController {
 
     const pizza = await Pizza.Create(params);
     if (pizza.error)
-      return response
-        .send({
-          Errro: true,
-          message: "Server error. Can't create a new Pizza",
-        })
-        .status(500);
+      return response.status(500).send({
+        Errro: true,
+        message: "Server error. Can't create a new Pizza",
+      });
 
-    return response.send({ message: "Pizza created!" }).status(200);
+    request.body = { pizzaId: pizza.data.id };
+    const pizzas = await BuildPizza(request);
+
+    if (pizzas.message) return response.status(500).send({ ...pizzas.message });
+
+    return response.send(pizzas).status(200);
   }
 
   async CreateCombo(request, response) {
@@ -109,7 +110,7 @@ class StockController {
         })
         .status(500);
 
-    return response.send({ message: "Combo created!" }).status(200);
+    return response.status(200).send({ message: "Combo created!" });
   }
 
   async GetCombo(request, response) {
@@ -136,15 +137,15 @@ class StockController {
         })
         .status(500);
 
-    if (!list.length) return response.send([]).status(200);
+    if (!list.length) return response.status(200).send([]);
 
     // Carrega as pizzas no objeto
     request.body = { list };
     const combos = await BuildComboItens(request);
 
-    if (combos.message) return response.send({ ...combos.message }).status(500);
+    if (combos.message) return response.status(500).send({ ...combos.message });
 
-    return response.send(combos).status(200);
+    return response.status(200).send(combos);
   }
 
   async SearchCombo(request, response) {
@@ -172,13 +173,13 @@ class StockController {
         })
         .status(500);
 
-    if (!list.length) return response.send([]).status(200);
+    if (!list.length) return response.status(200).send([]);
     // Carrega as pizzas no objeto
     request.body = { list };
     const combos = await BuildComboItens(request);
-    if (combos.message) return response.send({ ...combos.message }).status(500);
+    if (combos.message) return response.status(500).send({ ...combos.message });
 
-    return response.send(combos).status(200);
+    return response.status(200).send(combos);
   }
 
   async GetFlavors(request, response) {
@@ -202,20 +203,20 @@ class StockController {
         })
         .status(500);
 
-    return response.send(Object.values({ ...flavors.data })).status(200);
+    return response.status(200).send(Object.values({ ...flavors.data }));
   }
 
   async GetDrinks(request, response) {
     const drinks = await BuildDrinks(request);
 
-    if (drinks.message) return response.send({ ...drinks.message }).status(500);
-    return response.send(drinks).status(200);
+    if (drinks.message) return response.status(500).send({ ...drinks.message });
+    return response.status(200).send(drinks);
   }
 
   async GetPizzas(request, response) {
     const list = await BuildPizza(request);
-    if (list.message) return response.send({ ...list.message }).status(500);
-    return response.send(list).status(200);
+    if (list.message) return response.status(500).send({ ...list.message });
+    return response.status(200).send(list);
   }
 
   async SearchPizza(request, response) {
@@ -237,13 +238,13 @@ class StockController {
 
     const list = Object.values(pizzas.data);
 
-    if (!list.length) return response.send([]).status(200);
+    if (!list.length) return response.status(200).send([]);
 
     request.body = { list };
     const pizza = await BuildPizza(request);
-    if (pizza.message) return response.send({ ...pizza.message }).status(500);
+    if (pizza.message) return response.status(500).send({ ...pizza.message });
 
-    return response.send(pizza).status(200);
+    return response.status(200).send(pizza);
   }
 
   async SearchDrink(request, response) {
@@ -265,13 +266,13 @@ class StockController {
 
     const list = Object.values(drinks.data);
 
-    if (!list.length) return response.send([]).status(200);
+    if (!list.length) return response.status(200).send([]);
 
     request.body = { list };
     const drink = await BuildDrinks(request);
-    if (drink.message) return response.send({ ...drink.message }).status(500);
+    if (drink.message) return response.status(500).send({ ...drink.message });
 
-    return response.send(list).status(200);
+    return response.status(200).send(list);
   }
 }
 

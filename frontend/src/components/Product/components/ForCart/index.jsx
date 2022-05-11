@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -10,65 +9,68 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { convertToMoney } from "../../../../utils/string";
 import "./style.css";
 
-let productInsertCart = [];
+function ProductForCart({ product, isCart, updateCartItems }) {
+  const handleAddProduct = async () => {
+    const products = JSON.parse(localStorage.getItem("cart"))
+      ? JSON.parse(localStorage.getItem("cart"))
+      : [];
 
-function ProductForCart({ product }) {
-  const handleSetProductInsertCart = async () => {
-    productInsertCart = [];
-    let productsStorage = JSON.parse(localStorage.getItem("cart"));
-    productsStorage.forEach((item) => {
-      productInsertCart.push(item);
-    });
-  };
+    products.push(product);
+    localStorage.setItem("cart", JSON.stringify(products));
 
-  const handleSetProduct = async () => {
-    productInsertCart.push(product);
-    localStorage.setItem("cart", JSON.stringify(productInsertCart));
+    if (updateCartItems) updateCartItems();
   };
 
   const handleRemoveProduct = async () => {
-    let productsStorage = JSON.parse(localStorage.getItem("cart"));
-    let index = productsStorage.findIndex((item) => item.id === product.id);
-    productsStorage.splice(index, 1);
-    localStorage.setItem("cart", JSON.stringify(productsStorage));
-    window.location.href("/cart");
+    const products = JSON.parse(localStorage.getItem("cart"));
+
+    const indexProduct = products.findIndex((item) => item.id === product.id);
+
+    products.splice(indexProduct, 1);
+    localStorage.setItem("cart", JSON.stringify(products));
+
+    if (updateCartItems) updateCartItems();
   };
 
-  useEffect(() => {
-    handleSetProductInsertCart();
-  });
-
   return (
-    <div>
-      <Card>
-        <CardContent>
-          <h3>{convertToMoney(product.Price)}</h3>
-        </CardContent>
-        <CardActions>
-          {window.location.pathname === "/menu" ? (
-            <IconButton
-              className="cart_icon"
-              onClick={() => {
-                handleSetProduct();
-              }}
-              style={{ color: "#fa3937" }}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-          ) : (
-            <IconButton
-              className="delete_icon"
-              onClick={() => {
-                handleRemoveProduct();
-              }}
-              style={{ color: "#fa3937" }}
-            >
-              <DeleteIcon />
-            </IconButton>
+    <Card>
+      <CardContent className="card-for-cart">
+        <h3>
+          {convertToMoney(
+            product.Type === "Pizza"
+              ? product.Size === "Pequena"
+                ? product.Price + 10
+                : product.Size === "Media"
+                ? product.Price + 20
+                : product.Price + 30
+              : product.Price
           )}
-        </CardActions>
-      </Card>
-    </div>
+        </h3>
+      </CardContent>
+      <CardActions>
+        {!isCart ? (
+          <IconButton
+            className="cart_icon"
+            onClick={() => {
+              handleAddProduct();
+            }}
+            style={{ color: "#fa3937" }}
+          >
+            <ShoppingCartIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            className="delete_icon"
+            onClick={() => {
+              handleRemoveProduct();
+            }}
+            style={{ color: "#fa3937" }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
+      </CardActions>
+    </Card>
   );
 }
 

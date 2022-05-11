@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import Address from "../../components/Address";
 import Product from "../../components/Product";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,82 +7,138 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import InputAdornment from "@mui/material/InputAdornment";
 import { convertToMoney } from "../../utils/string";
 import * as PizzaService from "../../services/pizza";
-import * as DrinkService from "../../services/drink";
+import * as UserService from "../../services/user";
+import { address as getAddress } from "../../services/user";
+import { Pizza, Drink, Combo } from "../../models/products";
 import "./style.css";
+
+function concatStr(str, parameter, separator) {
+  return str + parameter + separator;
+}
+
+function removeLastElement(str) {
+  return str.substring(0, str.length - 1);
+}
 
 export default function Carrinho() {
   const [products, setProducts] = useState([]);
   const [orderValue, setOrderValue] = useState(0);
   const [observations, setObservations] = useState("");
 
-  async function handleRegisterOrder() {
-    // let flavorsIds = "";
+  const [address, setAddress] = useState("");
 
-    // console.log("XX");
-    // console.log(products);
+  const updateProductsWithStorage = () => {
+    const productsStorage = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const productsModels = [];
+
+    productsStorage.forEach((prod) => {
+      if (prod.Type === "Pizza") productsModels.push(new Pizza(prod));
+      else if (prod.Type === "Drink") productsModels.push(new Drink(prod));
+      else productsModels.push(new Combo(prod));
+    });
+
+    setProducts(productsModels);
+  };
+
+  async function handleRegisterOrder() {
+    let Pizzas = "";
+    let Drinks = "";
+    let Combos = "";
+    const requests = [];
 
     products.forEach((product) => {
       let flavorsIds = "";
-      // adicionando os ids necessários
-      if (product.Type === "Pizza") {
-        product.Flavor.map(
-          (flavor) => (flavorsIds = flavorsIds + flavor.id + ",")
-        );
-        const flavorsIDS = flavorsIds.substring(0, flavorsIds.length - 1);
+      let NamePizza = "";
 
-        let newPizza = PizzaService.registerPizza({
-          Flavor: flavorsIDS,
-          Name: product.Name,
-          Price: product.Price,
-          Size: product.Size,
-          Url: product.Url,
-          Description: product.Description,
-        });
-      } else if (product.Type === "Drink") {
-        let newDrink = DrinkService.registerDrink({
-          Name: product.Name,
-          Price: product.Price,
-          Size: product.Size,
-          Url: product.Url,
-          Description: product.Description,
-        });
+      if (product instanceof Pizza) {
+        product.Flavor.map(
+          (flavor) => (
+            (flavorsIds = concatStr(flavorsIds, flavor.id, ",")),
+            (NamePizza = concatStr(NamePizza, flavor.Name, "/"))
+          )
+        );
+        const flavorsIDS = removeLastElement(flavorsIds);
+        const pizzaNames = removeLastElement(NamePizza);
+
+        requests.push(
+          PizzaService.registerPizza({
+            Flavor: flavorsIDS,
+            Name: pizzaNames,
+            Size: product.Size,
+            Price: product.Price,
+            Url: product.Url,
+          })
+        );
+      } else if (product instanceof Drink) {
+        Drinks = concatStr(Drinks, product.id, ",");
+        Drinks = removeLastElement(Drinks);
+      } else {
+        Combos = concatStr(Combos, product.id, ",");
+        Combos = removeLastElement(Combos);
       }
     });
-  }
 
-  async function handleSetValue() {
-    let value = 0;
-    products.forEach((product) => {
-      value += product.Price;
+    Promise.all(requests).then((response) => {
+      response.forEach((pizzas) => {
+        Pizzas = concatStr(Pizzas, pizzas.data[0].id, ",");
+      });
+      Pizzas = removeLastElement(Pizzas);
+
+      UserService.registerOrder({
+        Status: "Recebido",
+        Pizzas: Pizzas,
+        Drinks: Drinks,
+        Combos: Combos,
+        Observation: observations,
+        Total: orderValue,
+      });
+
+      localStorage.removeItem("cart");
+      setProducts([]);
+
+      alert("Pedido realizado");
     });
-    setOrderValue(value);
   }
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      let productsStorage = JSON.parse(localStorage.getItem("cart"));
-      setProducts(productsStorage);
-      handleSetValue();
+    const fetchAddress = async () => {
+      const {
+        data: { Address },
+      } = await getAddress();
+
+      setAddress(Address);
     };
 
-    fetchProducts();
-  });
+    updateProductsWithStorage();
+
+    fetchAddress();
+  }, []);
+
+  useEffect(() => {
+    setOrderValue(products.reduce((acc, product) => acc + product.Price, 0));
+  }, [products]);
 
   return (
     <section className="main-cart">
       <h1 className="cart-title">Carrinho</h1>
 
-      <div>
+      <div className="products">
         {products.map((product) => (
-          <Product key={product.id} product={product} />
+          <Product
+            key={product.id}
+            product={product}
+            isCart
+            updateCartItems={updateProductsWithStorage}
+          />
         ))}
       </div>
 
       <div className="delivery">
-        <h3>Receber em:</h3>
-        {/* <div>
-          <Address />
-        </div> */}
+        <h2>
+          Você receberá em: <u>{address}</u>
+        </h2>
+
         <div className="order-results">
           <Box
             component="form"
@@ -109,9 +164,7 @@ export default function Carrinho() {
               value={convertToMoney(orderValue)}
               InputProps={{
                 readOnly: true,
-                startAdornment: (
-                  <InputAdornment position="start"></InputAdornment>
-                ),
+                startAdornment: <InputAdornment position="start" />,
               }}
               variant="standard"
             />
