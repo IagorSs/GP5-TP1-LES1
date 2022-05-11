@@ -3,7 +3,7 @@ import Product from "../../components/Product";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import { ShoppingCartCheckout, Delete } from "@mui/icons-material";
 import InputAdornment from "@mui/material/InputAdornment";
 import { convertToMoney } from "../../utils/string";
 import * as PizzaService from "../../services/pizza";
@@ -172,10 +172,22 @@ export default function Carrinho() {
 
             <Button
               variant="contained"
-              startIcon={<ShoppingCartCheckoutIcon />}
+              startIcon={<ShoppingCartCheckout />}
               onClick={handleRegisterOrder}
             >
               Realizar Pedido
+            </Button>
+
+            <Button
+              variant="contained"
+              startIcon={<Delete />}
+              style={{backgroundColor: 'red'}}
+              onClick={() => {
+                window.localStorage.removeItem("cart");
+                updateProductsWithStorage();
+              }}
+            >
+              Limpar carrinho
             </Button>
           </Box>
         </div>
