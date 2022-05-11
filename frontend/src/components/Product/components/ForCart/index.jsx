@@ -31,7 +31,7 @@ function ProductForCart({ product }) {
     let index = productsStorage.findIndex((item) => item.id === product.id);
     productsStorage.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(productsStorage));
-    window.location.reload();
+    window.location.href("/cart");
   };
 
   useEffect(() => {
