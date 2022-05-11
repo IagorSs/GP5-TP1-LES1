@@ -4,6 +4,7 @@ import ProductDescription from "../components/Description";
 import "./style.css";
 
 function Pizza({ product }) {
+  product.Type = "Pizza";
   return (
     <div className="pizza-card">
       <Card>
@@ -13,19 +14,18 @@ function Pizza({ product }) {
           <TextField
             value={product.Flavor[0].Name}
             autoWidth
-            label={product.Flavor.length === 2 ? "1/2":"Sabor"}
+            label={product.Flavor.length === 2 ? "1/2" : "Sabor"}
             disabled
           />
 
-          
-          {product.Flavor.length === 2
-            && <TextField
+          {product.Flavor.length === 2 && (
+            <TextField
               value={product.Flavor[1].Name}
               autoWidth
               label="1/2"
               disabled
             />
-          }
+          )}
         </div>
       </Card>
     </div>

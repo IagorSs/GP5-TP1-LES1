@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Address from "../../components/Address";
-// import Pizza from "../../components/Product/Pizza";
-// import Drink from "../../components/Product/Drink";
-// import Combo from "../../components/Product/Combo";
+// import Address from "../../components/Address";
 import Product from "../../components/Product";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -10,12 +7,49 @@ import Box from "@mui/material/Box";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import InputAdornment from "@mui/material/InputAdornment";
 import { convertToMoney } from "../../utils/string";
+import * as PizzaService from "../../services/pizza";
+import * as DrinkService from "../../services/drink";
 import "./style.css";
 
 export default function Carrinho() {
   const [products, setProducts] = useState([]);
   const [orderValue, setOrderValue] = useState(0);
   const [observations, setObservations] = useState("");
+
+  async function handleRegisterOrder() {
+    // let flavorsIds = "";
+
+    // console.log("XX");
+    // console.log(products);
+
+    products.forEach((product) => {
+      let flavorsIds = "";
+      // adicionando os ids necessários
+      if (product.Type === "Pizza") {
+        product.Flavor.map(
+          (flavor) => (flavorsIds = flavorsIds + flavor.id + ",")
+        );
+        const flavorsIDS = flavorsIds.substring(0, flavorsIds.length - 1);
+
+        let newPizza = PizzaService.registerPizza({
+          Flavor: flavorsIDS,
+          Name: product.Name,
+          Price: product.Price,
+          Size: product.Size,
+          Url: product.Url,
+          Description: product.Description,
+        });
+      } else if (product.Type === "Drink") {
+        let newDrink = DrinkService.registerDrink({
+          Name: product.Name,
+          Price: product.Price,
+          Size: product.Size,
+          Url: product.Url,
+          Description: product.Description,
+        });
+      }
+    });
+  }
 
   async function handleSetValue() {
     let value = 0;
@@ -24,6 +58,7 @@ export default function Carrinho() {
     });
     setOrderValue(value);
   }
+
   useEffect(() => {
     const fetchProducts = async () => {
       let productsStorage = JSON.parse(localStorage.getItem("cart"));
@@ -38,19 +73,6 @@ export default function Carrinho() {
     <section className="main-cart">
       <h1 className="cart-title">Carrinho</h1>
 
-      {/* <div>
-        {products.map((product) =>
-          // FIXME: os produtos estao instaciados de maneira incorreta no carrinho
-          product instanceof Pizza ? (
-            <Pizza key={product.id} product={product} />
-          ) : product instanceof Drink ? (
-            <Drink key={product.id} product={product} />
-          ) : (
-            <Combo key={product.id} product={product} />
-          )
-        )}
-      </div> */}
-
       <div>
         {products.map((product) => (
           <Product key={product.id} product={product} />
@@ -58,10 +80,10 @@ export default function Carrinho() {
       </div>
 
       <div className="delivery">
-        <h3>Receber em:</h3>
-        <div>
+        {/* <h3>Receber em:</h3> */}
+        {/* <div>
           <Address />
-        </div>
+        </div> */}
         <div className="order-results">
           <Box
             component="form"
@@ -97,6 +119,7 @@ export default function Carrinho() {
             <Button
               variant="contained"
               startIcon={<ShoppingCartCheckoutIcon />}
+              onClick={handleRegisterOrder}
             >
               Realizar Pedido
             </Button>
