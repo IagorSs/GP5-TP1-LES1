@@ -7,11 +7,18 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import InputAdornment from "@mui/material/InputAdornment";
 import { convertToMoney } from "../../utils/string";
 import * as PizzaService from "../../services/pizza";
-import * as DrinkService from "../../services/drink";
-import * as OrderService from "../../services/order";
+import * as UserService from "../../services/user";
 import { address as getAddress } from "../../services/user";
 import { Pizza, Drink, Combo } from "../../models/products";
 import "./style.css";
+
+function concatStr(str, parameter, separator) {
+  return str + parameter + separator;
+}
+
+function removeLastElement(str) {
+  return str.substring(0, str.length - 1);
+}
 
 export default function Carrinho() {
   const [products, setProducts] = useState([]);
@@ -35,9 +42,9 @@ export default function Carrinho() {
   };
 
   async function handleRegisterOrder() {
-    let Pizzas = [];
-    let Drinks = [];
-    let Combos = [];
+    let Pizzas = "";
+    let Drinks = "";
+    let Combos = "";
     const requests = [];
 
     products.forEach((product) => {
@@ -47,12 +54,12 @@ export default function Carrinho() {
       if (product instanceof Pizza) {
         product.Flavor.map(
           (flavor) => (
-            (flavorsIds = flavorsIds + flavor.id + ","),
-            (NamePizza = NamePizza + flavor.Name + "/")
+            (flavorsIds = concatStr(flavorsIds, flavor.id, ",")),
+            (NamePizza = concatStr(NamePizza, flavor.Name, "/"))
           )
         );
-        const flavorsIDS = flavorsIds.substring(0, flavorsIds.length - 1);
-        const pizzaNames = NamePizza.substring(0, NamePizza.length - 1);
+        const flavorsIDS = removeLastElement(flavorsIds);
+        const pizzaNames = removeLastElement(NamePizza);
 
         requests.push(
           PizzaService.registerPizza({
@@ -60,46 +67,35 @@ export default function Carrinho() {
             Name: pizzaNames,
             Size: product.Size,
             Price: product.Price,
-            // product.Size === "Pequena"
-            //   ? product.Price + 10
-            //   : product.Size === "Media"
-            //   ? product.Price + 20
-            //   : product.Price + 30,
             Url: product.Url,
           })
         );
       } else if (product instanceof Drink) {
-        Drinks.push(product.id);
-        // requests.push(
-        //   DrinkService.registerDrink({
-        //     Name: product.Name,
-        //     Price: product.Price,
-        //     Size: product.Size,
-        //     Url: product.Url,
-        //     Description: product.Description,
-        //   })
-        // );
+        Drinks = concatStr(Drinks, product.id, ",");
+        Drinks = removeLastElement(Drinks);
       } else {
-        Combos.push(product.id);
+        Combos = concatStr(Combos, product.id, ",");
+        Combos = removeLastElement(Combos);
       }
     });
 
-    // TODO implementar resposta pra usuário
     Promise.all(requests).then((response) => {
       response.forEach((pizzas) => {
-        // temos que esperar o retorno do id da pizza para criar uma order
-        Pizzas.push(pizzas.data[0].id);
-        // Promise.all(
-        //   OrderService.registerOrder({
-        //     Status: "Recebido",
-        //     Pizzas: Pizzas,
-        //     Drinks: Drinks,
-        //     Combos: Combos,
-        //     Observation: observations,
-        //     Price: orderValue,
-        //   })
-        // );
+        Pizzas = concatStr(Pizzas, pizzas.data[0].id, ",");
       });
+      Pizzas = removeLastElement(Pizzas);
+
+      UserService.registerOrder({
+        Status: "Recebido",
+        Pizzas: Pizzas,
+        Drinks: Drinks,
+        Combos: Combos,
+        Observation: observations,
+        Total: orderValue,
+      });
+
+      localStorage.removeItem("cart");
+      setProducts([]);
 
       alert("Pedido realizado");
     });
