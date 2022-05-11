@@ -66,7 +66,7 @@ function Footer() {
                 style={{ margin: "10px" }}
                 src="https://github.com/t4rcisio.png"
               />
-              Tarcisio Amaral
+              Tarcisio Prates
             </a>
           </Box>
         </div>
