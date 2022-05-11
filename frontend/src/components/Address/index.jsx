@@ -20,7 +20,7 @@ export default function Address() {
 
       // TODO resposta de erro pro usuário
       if (status === 200) {
-        setStreet(data.address);
+        setStreet(data.address + " / " + data.district);
       }
     }
 
