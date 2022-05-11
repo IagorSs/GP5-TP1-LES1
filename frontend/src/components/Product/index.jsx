@@ -6,7 +6,7 @@ import { Drink as DrinkModel, Pizza as PizzaModel, Combo as ComboModel } from '.
 import ProductForCart from "./components/ForCart";
 import "./style.css";
 
-function Product({ product }) {
+function Product({ product, isCart, updateCartItems }) {
   return (
     <div className="product-card">
       <Card>
@@ -17,7 +17,7 @@ function Product({ product }) {
             : product instanceof ComboModel && <Combo key={product.id} product={product} />
         }
 
-        <ProductForCart key={product.id} product={product} />
+        <ProductForCart updateCartItems={updateCartItems} isCart={isCart} key={product.id} product={product} />
       </Card>
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import Address from "../../components/Address";
 import Product from "../../components/Product";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -9,6 +8,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { convertToMoney } from "../../utils/string";
 import * as PizzaService from "../../services/pizza";
 import * as DrinkService from "../../services/drink";
+import { address as getAddress } from '../../services/user';
+import { Pizza, Drink, Combo } from '../../models/products';
 import "./style.css";
 
 export default function Carrinho() {
@@ -16,58 +17,78 @@ export default function Carrinho() {
   const [orderValue, setOrderValue] = useState(0);
   const [observations, setObservations] = useState("");
 
-  async function handleRegisterOrder() {
-    // let flavorsIds = "";
+  const [address, setAddress] = useState("");
 
-    // console.log("XX");
-    // console.log(products);
+  const updateProductsWithStorage = () => {
+    const productsStorage = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const productsModels = [];
+
+    productsStorage.forEach((prod) => {
+      if (prod.Type === 'Pizza') productsModels.push(new Pizza(prod));
+      else if (prod.Type === 'Drink') productsModels.push(new Drink(prod));
+      else productsModels.push(new Combo(prod));
+    });
+
+    setProducts(productsModels);
+  }
+
+  async function handleRegisterOrder() {
+    const requests = [];
 
     products.forEach((product) => {
       let flavorsIds = "";
-      // adicionando os ids necessários
-      if (product.Type === "Pizza") {
+
+      if (product instanceof Pizza) {
         product.Flavor.map(
           (flavor) => (flavorsIds = flavorsIds + flavor.id + ",")
         );
         const flavorsIDS = flavorsIds.substring(0, flavorsIds.length - 1);
 
-        let newPizza = PizzaService.registerPizza({
+        requests.push(PizzaService.registerPizza({
           Flavor: flavorsIDS,
           Name: product.Name,
           Price: product.Price,
           Size: product.Size,
           Url: product.Url,
           Description: product.Description,
-        });
-      } else if (product.Type === "Drink") {
-        let newDrink = DrinkService.registerDrink({
+        }));
+      } else if (product instanceof Drink) {
+        requests.push(DrinkService.registerDrink({
           Name: product.Name,
           Price: product.Price,
           Size: product.Size,
           Url: product.Url,
           Description: product.Description,
-        });
+        }));
       }
     });
-  }
 
-  async function handleSetValue() {
-    let value = 0;
-    products.forEach((product) => {
-      value += product.Price;
-    });
-    setOrderValue(value);
+    // TODO implementar resposta pra usuário
+    Promise.all(requests)
+      .then(() => {
+        localStorage.removeItem("cart");
+        setProducts([]);
+
+        alert("Pedido realizado");
+      })
   }
+  
+  useEffect(() => {
+    const fetchAddress = async () => {
+      const { data: { Address } } = await getAddress();
+
+      setAddress(Address);
+    }
+
+    updateProductsWithStorage();
+
+    fetchAddress();
+  }, []);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      let productsStorage = JSON.parse(localStorage.getItem("cart"));
-      setProducts(productsStorage);
-      handleSetValue();
-    };
-
-    fetchProducts();
-  });
+    setOrderValue(products.reduce((acc, product) => acc + product.Price, 0));
+  }, [products]);
 
   return (
     <section className="main-cart">
@@ -75,15 +96,13 @@ export default function Carrinho() {
 
       <div>
         {products.map((product) => (
-          <Product key={product.id} product={product} />
+          <Product key={product.id} product={product} isCart updateCartItems={updateProductsWithStorage} />
         ))}
       </div>
 
       <div className="delivery">
-        {/* <h3>Receber em:</h3> */}
-        {/* <div>
-          <Address />
-        </div> */}
+        <h2>Você receberá em: <u>{address}</u></h2>
+
         <div className="order-results">
           <Box
             component="form"
@@ -110,7 +129,7 @@ export default function Carrinho() {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <InputAdornment position="start"></InputAdornment>
+                  <InputAdornment position="start" />
                 ),
               }}
               variant="standard"
