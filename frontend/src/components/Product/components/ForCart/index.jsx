@@ -35,7 +35,17 @@ function ProductForCart({ product, isCart, updateCartItems }) {
   return (
     <Card>
       <CardContent className="card-for-cart">
-        <h3>{convertToMoney(product.Price)}</h3>
+        <h3>
+          {convertToMoney(
+            product.Type === "Pizza"
+              ? product.Size === "Pequena"
+                ? product.Price + 10
+                : product.Size === "Media"
+                ? product.Price + 20
+                : product.Price + 30
+              : product.Price
+          )}
+        </h3>
       </CardContent>
       <CardActions>
         {!isCart ? (
