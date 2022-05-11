@@ -11,12 +11,14 @@ import "./style.css";
 
 function ProductForCart({ product, isCart, updateCartItems }) {
   const handleAddProduct = async () => {
-    const products = JSON.parse(localStorage.getItem("cart"));
+    const products = JSON.parse(localStorage.getItem("cart"))
+      ? JSON.parse(localStorage.getItem("cart"))
+      : [];
 
     products.push(product);
     localStorage.setItem("cart", JSON.stringify(products));
 
-    if(updateCartItems) updateCartItems();
+    if (updateCartItems) updateCartItems();
   };
 
   const handleRemoveProduct = async () => {
@@ -27,7 +29,7 @@ function ProductForCart({ product, isCart, updateCartItems }) {
     products.splice(indexProduct, 1);
     localStorage.setItem("cart", JSON.stringify(products));
 
-    if(updateCartItems) updateCartItems();
+    if (updateCartItems) updateCartItems();
   };
 
   return (

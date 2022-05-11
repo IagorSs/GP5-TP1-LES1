@@ -6,4 +6,4 @@ export const getAllDrinks = async () => {
   return data.map((drink) => new Drink(drink));
 };
 
-export const registerDrink = (body) => api.post(`stock/drink/new`, body);
+// export const registerDrink = (body) => api.post(`stock/drink/new`, body);

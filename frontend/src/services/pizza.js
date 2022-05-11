@@ -6,4 +6,6 @@ export const getAllPizzas = async () => {
   return data.map((pizza) => new Pizza(pizza));
 };
 
-export const registerPizza = (body) => api.post(`stock/pizza/new`, body);
+export const registerPizza = (body) => {
+  return api.post(`stock/pizza/new`, body);
+};
