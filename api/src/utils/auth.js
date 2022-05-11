@@ -11,6 +11,8 @@ const Auth = (request, response, next) => {
   )
     return next();
 
+  console.log({ HEADERS: request.headers });
+
   const { token } = request.headers;
 
   let payload = {};
