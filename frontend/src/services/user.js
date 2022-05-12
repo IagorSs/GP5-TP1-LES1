@@ -30,3 +30,5 @@ export const logout = (setUser) => {
 export const address = () => api.get("/user/address");
 
 export const registerOrder = async (body) => api.post(`user/order/new`, body);
+
+export const getOrders = () => api.get(`user/history`);
