@@ -2,11 +2,17 @@
   margin: 50px;
   padding: 50px;
   text-align: center;
+  border-top: dotted;
 }
 
-.order-infos, .order-payment {
+.order-infos {
   display: flex;
   justify-content: center;
+}
+
+.order-payment {
+  display: flex;
+  justify-content: space-around;
 }
 
 .order-id,
