@@ -61,6 +61,7 @@ $yarn dev
 ```bash
 $cd /frontend
 
+
 $npm run start
 
 #or
@@ -72,9 +73,11 @@ $yarn start
 
 This project is protected by [copyright law](https://en.wikipedia.org/wiki/Copyright) making your copy or distribution illegal.
 
+## Video
+[Pizzaria Pizzada](https://youtu.be/WRI7TFMip2E)
 
 ## Developed by 
-[Erick Henrique](https://github.com/ErickHDdS)
-[Iagor Souza](https://github.com/IagorSs)
-[Vitor Laguardia](https://github.com/vitor-laguardia)
-[Tarcisio Prates](https://github.com/t4rcisio)
+[Erick Henrique](https://github.com/ErickHDdS) <br />
+[Iagor Souza](https://github.com/IagorSs) <br />
+[Vitor Laguardia](https://github.com/vitor-laguardia) <br />
+[Tarcisio Prates](https://github.com/t4rcisio) <br />
