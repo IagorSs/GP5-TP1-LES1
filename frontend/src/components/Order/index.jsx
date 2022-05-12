@@ -7,11 +7,11 @@ import { convertToMoney } from "../../utils/string";
 import "./style.css";
 
 function Order({ order }) {
-  const [id, setId] = useState(order.id);
-  const [status, setStatus] = useState(order.status);
-  const [date, setDate] = useState(order.createdAt);
-  const [total, setTotal] = useState(order.total);
-  const [observation, setObservation] = useState(order.observation);
+  const [id] = useState(order.id);
+  const [status] = useState(order.status);
+  const [date] = useState(order.createdAt);
+  const [total] = useState(order.total);
+  const [observation] = useState(order.observation);
 
   return (
     <section>
